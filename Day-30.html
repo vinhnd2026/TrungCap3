@@ -190,6 +190,23 @@ img, svg { max-width: 100%; }
 .sentence-sub.cover.covered::after { content: "👁 Bấm để xem pinyin + dịch nghĩa"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #6b7280; font-size: 13px; font-weight: 600; }
 /* --- Nghĩa tiếng Việt của từ mới (ngay dưới tiêu đề thẻ từ) --- */
 .word-meaning { font-size: 15px; color: #1e293b; margin: 2px 0 10px; }
+/* --- Bài 7 Đọc hiểu: đoạn văn dạng đoạn liền mạch + thẻ câu hỏi (mẫu HSK 3) --- */
+.read-para { background: #fffdf6; border: 1px solid #eadfc8; border-radius: 12px; padding: 14px 16px; margin: 12px 0; }
+/* --- Bỏ viền trái màu đậm, chỉ tô màu nền (theo ý anh 06/11) --- */
+.mn { border: 1px solid #f5d9a8; border-left: none; }
+.colloc { border: 1px solid #bbf7d0; border-left: none; }
+.reveal { border: 1px solid #bfdbfe; border-left: none; }
+.reading-box { background: #eff6ff; border-left: none; }
+/* --- Chỗ trống điền từ hiển thị dạng "......" không gạch chân, bấm vào mới hiện danh sách từ (theo ý anh 06/11) --- */
+.cloze-select { border: none; border-radius: 0; background: transparent; padding: 3px 2px; min-width: 90px; text-align: center; }
+.read-para-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.read-para-text { font-size: 19px; line-height: 2.15; text-align: justify; text-indent: 2em; margin: 0; color: #1e293b; }
+.read-para-trans { margin: 10px 0; font-size: 14px; color: #475569; line-height: 1.65; }
+.read-para-trans b { color: #92400e; }
+.read-para-trans p { margin: 2px 0 0; }
+.read-q { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px 16px; margin: 12px 0; }
+.read-q-head { display: flex; gap: 10px; align-items: flex-start; font-size: 15.5px; font-weight: 600; margin-bottom: 6px; }
+.read-q-num { flex: none; width: 26px; height: 26px; border-radius: 50%; background: #2563eb; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; margin-top: 1px; }
 
 .dlg-line{padding:8px 10px;border:1px solid #e5e7eb;border-radius:8px;margin-bottom:8px;background:#fff}
 .dlg-sp{display:inline-block;padding:2px 9px;border-radius:12px;color:#fff;font-weight:700;font-size:13px;margin-right:8px;vertical-align:middle}
@@ -198,7 +215,18 @@ img, svg { max-width: 100%; }
 .dlg-zh.hide-ruby rt{display:none}
 .dlg-vi{color:#64748b;font-size:14px;margin:2px 0 0 30px}
 .dlg-voice-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0}
-.dlg-voice-row select{max-width:100%;padding:4px 6px;border:1px solid #d1d5db;border-radius:6px;font-size:14px}
+.dlg-voice-row select{flex:1;min-width:120px;max-width:100%;padding:4px 6px;border:1px solid #d1d5db;border-radius:6px;font-size:14px}
+/* --- Nút điều khiển Bài 8 gọn: chỉ icon, không chữ; tốc độ cùng hàng (theo ý anh 06/11) --- */
+.dlg-controls-row input[type=range]{flex:1;min-width:60px;vertical-align:middle}
+.dlg-controls-row input[type=number]{width:64px;padding:4px 6px;border:1px solid #d1d5db;border-radius:6px;font-size:14px}
+.dlg-play-btn{font-size:16px;padding:5px 12px;min-width:44px}
+.dlg-icon-btn.dlg-btn-on{background:#dbeafe;border-color:#93c5fd}
+.dlg-pinyin-btn{font-weight:700;border-radius:6px;padding:4px 10px;cursor:pointer}
+.dlg-pinyin-btn.on{background:#2563eb;color:#fff;border:1px solid #2563eb}
+.dlg-pinyin-btn.off{background:#e5e7eb;color:#6b7280;border:1px solid #d1d5db}
+
+.tts-voice-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0}
+.tts-voice-row select{flex:1;min-width:120px;max-width:100%;padding:4px 6px;border:1px solid #d1d5db;border-radius:6px;font-size:14px}
 </style>
 </head>
 <body>
@@ -613,11 +641,11 @@ img, svg { max-width: 100%; }
 <h2>📖 Bài 5: Hoàn thành đoạn văn ngắn <span class="badge">Điền từ vào chỗ trống</span></h2>
 <div class="sub" style="margin-bottom:8px;">Chọn từ thích hợp điền vào đoạn văn — đoạn văn dùng cả 5 từ mới hôm nay:</div>
 <div class="cloze-passage" id="cloze-box">
-他喜欢<select class="cloze-select" data-ans="创作"><option value="">-- chọn --</option><option>创作</option><option>得奖</option><option>噩梦</option><option>钢琴</option><option>歌曲</option></select>，也喜欢唱歌。
-他<select class="cloze-select" data-ans="得奖"><option value="">-- chọn --</option><option>创作</option><option>得奖</option><option>噩梦</option><option>钢琴</option><option>歌曲</option></select>了，家人都很高兴。
-我昨天有一个<select class="cloze-select" data-ans="噩梦"><option value="">-- chọn --</option><option>创作</option><option>得奖</option><option>噩梦</option><option>钢琴</option><option>歌曲</option></select>。
-这是他的<select class="cloze-select" data-ans="钢琴"><option value="">-- chọn --</option><option>创作</option><option>得奖</option><option>噩梦</option><option>钢琴</option><option>歌曲</option></select>。
-<select class="cloze-select" data-ans="歌曲"><option value="">-- chọn --</option><option>创作</option><option>得奖</option><option>噩梦</option><option>钢琴</option><option>歌曲</option></select>得奖了。
+他喜欢<select class="cloze-select" data-ans="创作"><option value="">......</option><option>创作</option><option>得奖</option><option>噩梦</option><option>钢琴</option><option>歌曲</option></select>，也喜欢唱歌。
+他<select class="cloze-select" data-ans="得奖"><option value="">......</option><option>创作</option><option>得奖</option><option>噩梦</option><option>钢琴</option><option>歌曲</option></select>了，家人都很高兴。
+我昨天有一个<select class="cloze-select" data-ans="噩梦"><option value="">......</option><option>创作</option><option>得奖</option><option>噩梦</option><option>钢琴</option><option>歌曲</option></select>。
+这是他的<select class="cloze-select" data-ans="钢琴"><option value="">......</option><option>创作</option><option>得奖</option><option>噩梦</option><option>钢琴</option><option>歌曲</option></select>。
+<select class="cloze-select" data-ans="歌曲"><option value="">......</option><option>创作</option><option>得奖</option><option>噩梦</option><option>钢琴</option><option>歌曲</option></select>得奖了。
 </div>
 <div class="input-check" style="margin-top:10px;">
 <button class="btn-primary" onclick="checkCloze()">Kiểm tra đoạn văn</button>
@@ -649,40 +677,51 @@ img, svg { max-width: 100%; }
 <h2>📚 Bài 7: Đọc hiểu đoạn văn – Chọn đáp án <span class="badge">Đọc hiểu Trung cấp 3</span></h2>
 <div class="sub" style="margin-bottom:8px;">Đọc đoạn văn dưới đây (dùng các từ mới hôm nay) rồi chọn đáp án đúng cho 3 câu hỏi bên dưới:</div>
 <div class="reading-box">
-<div class="reading-zh hide-ruby"><ruby>他<rt>Tā</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>作<rt>zuò</rt></ruby>，<ruby>也<rt>yě</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>唱<rt>chàng</rt></ruby><ruby>歌<rt>gē</rt></ruby>。<ruby>他<rt>Tā</rt></ruby><ruby>得<rt>dé</rt></ruby><ruby>奖<rt>jiǎng</rt></ruby><ruby>了<rt>le</rt></ruby>，<ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>高<rt>gāo</rt></ruby><ruby>兴<rt>xìng</rt></ruby>。<ruby>我<rt>Wǒ</rt></ruby><ruby>昨<rt>zuó</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>个<rt>gè</rt></ruby><ruby>噩<rt>è</rt></ruby><ruby>梦<rt>mèng</rt></ruby>。<ruby>这<rt>Zhè</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>他<rt>tā</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>钢<rt>gāng</rt></ruby><ruby>琴<rt>qín</rt></ruby>。<ruby>歌<rt>Gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>得<rt>dé</rt></ruby><ruby>奖<rt>jiǎng</rt></ruby><ruby>了<rt>le</rt></ruby>。</div>
+<div class="tts-voice-row"><span class="hint"><b>Giọng đọc:</b></span> <select class="tts-voice-select" id="tts-voice-read" aria-label="Chọn giọng đọc tiếng Trung"></select> <button class="tts-btn" type="button" onclick="previewCommonVoice()">🔊 Nghe thử</button></div><div class="hint" id="tts-voice-note-read">Đang kiểm tra giọng đọc trên thiết bị…</div>
+<div class="reading-zh hide-ruby">
+<section class="read-para">
+<div class="read-para-head"><button class="tts-btn" onclick="playChunked('read', 0.88, 0, 0)">🔊 Nghe đoạn này</button></div>
+<p class="read-para-text"><ruby>他<rt>Tā</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>作<rt>zuò</rt></ruby>，<ruby>也<rt>yě</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>唱<rt>chàng</rt></ruby><ruby>歌<rt>gē</rt></ruby>。 <ruby>他<rt>Tā</rt></ruby><ruby>得<rt>dé</rt></ruby><ruby>奖<rt>jiǎng</rt></ruby><ruby>了<rt>le</rt></ruby>，<ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>高<rt>gāo</rt></ruby><ruby>兴<rt>xìng</rt></ruby>。 <ruby>我<rt>Wǒ</rt></ruby><ruby>昨<rt>zuó</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>个<rt>gè</rt></ruby><ruby>噩<rt>è</rt></ruby><ruby>梦<rt>mèng</rt></ruby>。 <ruby>这<rt>Zhè</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>他<rt>tā</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>钢<rt>gāng</rt></ruby><ruby>琴<rt>qín</rt></ruby>。 <ruby>歌<rt>Gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>得<rt>dé</rt></ruby><ruby>奖<rt>jiǎng</rt></ruby><ruby>了<rt>le</rt></ruby>。</p>
+</section>
+</div>
+<script>window.CHUNK_DATA = window.CHUNK_DATA || {}; window.CHUNK_DATA['read'] = ["他喜欢创作，也喜欢唱歌。他得奖了，家人都很高兴。我昨天有一个噩梦。这是他的钢琴。歌曲得奖了。"];</script>
 <div class="reading-Controls">
-<button class="tts-btn" onclick="speakRate('他喜欢创作，也喜欢唱歌。他得奖了，家人都很高兴。我昨天有一个噩梦。这是他的钢琴。歌曲得奖了。', 0.88)">🔊 Nghe đoạn văn</button>
-<button class="tts-btn" onclick="speakRate('他喜欢创作，也喜欢唱歌。他得奖了，家人都很高兴。我昨天有一个噩梦。这是他的钢琴。歌曲得奖了。', 0.62)">🐢 Nghe chậm</button>
+<button class="tts-btn" onclick="playChunked('read', 0.88)">▶️ Nghe đoạn văn</button>
+<button class="tts-btn" id="chunk-pause-read" onclick="toggleChunkPause('read')">⏸️ Tạm dừng</button>
+<button class="tts-btn" onclick="restartChunked('read')">↺ Nghe lại từ đầu</button>
+<button class="tts-btn" onclick="playChunked('read', 0.6)">🐢 Nghe chậm</button>
 <button class="btn-sm" onclick="document.getElementById('read-help').classList.toggle('show')">👁️ Ẩn/Hiện Dịch nghĩa</button>
 <button class="btn-sm" onclick="document.querySelector('.reading-zh').classList.toggle('hide-ruby')">🔤 Ẩn/Hiện Pinyin trên chữ</button>
 </div>
-<div class="reading-help" id="read-help"><div><b>Dịch nghĩa:</b> Anh ấy thích sáng tác, cũng thích hát. Anh ấy đoạt giải rồi, cả nhà đều rất vui. Hôm qua tôi có một cơn ác mộng. Đây là đàn piano của anh ấy. Bài hát đã đoạt giải.</div></div>
+<div class="reading-help" id="read-help">
+<div class="read-para-trans"><p>Anh ấy thích sáng tác, cũng thích hát. Anh ấy đoạt giải rồi, cả nhà đều rất vui. Hôm qua tôi có một cơn ác mộng. Đây là đàn piano của anh ấy. Bài hát đã đoạt giải.</p></div>
 </div>
-<div class="q-item" id="read-1">
-<div><b>Câu 1.</b> 创作 是什么意思？ <span class="hint">(“创作” nghĩa là gì?)</span></div>
-<div class="mc-options">
-<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 创作 nghĩa là “sáng tác; sáng tạo”.')">A. đoạt giải; được giải thưởng</button>
-<button class="mc-btn" onclick="checkMC(this, true, 'read-1', '✓ Chính xác! 创作 (chuàngzuò) nghĩa là “sáng tác; sáng tạo”.')">B. sáng tác; sáng tạo</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 创作 nghĩa là “sáng tác; sáng tạo”.')">C. đàn piano</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 创作 nghĩa là “sáng tác; sáng tạo”.')">D. ác mộng</button>
 </div>
-<div class="feedback" style="margin-top:6px;"></div></div>
-<div class="q-item" id="read-2">
-<div><b>Câu 2.</b> 噩梦 是什么意思？ <span class="hint">(“噩梦” nghĩa là gì?)</span></div>
+<div class="q-item read-q" id="read-1">
+<div class="read-q-head"><span class="read-q-num">1</span><span>他喜欢什么？</span></div>
 <div class="mc-options">
-<button class="mc-btn" onclick="checkMC(this, true, 'read-2', '✓ Chính xác! 噩梦 (èmèng) nghĩa là “ác mộng”.')">A. ác mộng</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 噩梦 nghĩa là “ác mộng”.')">B. đoạt giải; được giải thưởng</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 噩梦 nghĩa là “ác mộng”.')">C. sáng tác; sáng tạo</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 噩梦 nghĩa là “ác mộng”.')">D. đàn piano</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 他喜欢创作，也喜欢唱歌。')">A. 跑步</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 他喜欢创作，也喜欢唱歌。')">B. 学习</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'read-1', '✓ Chính xác! 他喜欢创作，也喜欢唱歌。')">C. 创作</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 他喜欢创作，也喜欢唱歌。')">D. 游泳</button>
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
-<div class="q-item" id="read-3">
-<div><b>Câu 3.</b> 哪个句子和这段话一样？ <span class="hint">(Câu nào giống với đoạn văn?)</span></div>
+<div class="q-item read-q" id="read-2">
+<div class="read-q-head"><span class="read-q-num">2</span><span>他怎么了？</span></div>
 <div class="mc-options">
-<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: câu đó không có trong đoạn văn.')">A. 他创作了，家人都很高兴。</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: câu đó không có trong đoạn văn.')">B. 我昨天有一个创作。</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: câu đó không có trong đoạn văn.')">C. 他喜欢得奖，也喜欢唱歌。</button>
-<button class="mc-btn" onclick="checkMC(this, true, 'read-3', '✓ Chính xác! 歌曲得奖了。')">D. 歌曲得奖了。</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 他得奖了，家人都很高兴。')">A. 很忙</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 他得奖了，家人都很高兴。')">B. 很累</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'read-2', '✓ Chính xác! 他得奖了，家人都很高兴。')">C. 得奖了</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 他得奖了，家人都很高兴。')">D. 睡觉了</button>
+</div>
+<div class="feedback" style="margin-top:6px;"></div></div>
+<div class="q-item read-q" id="read-3">
+<div class="read-q-head"><span class="read-q-num">3</span><span>这是谁的钢琴？</span></div>
+<div class="mc-options">
+<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: 这是他的钢琴。')">A. 妈妈的</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: 这是他的钢琴。')">B. 爸爸的</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'read-3', '✓ Chính xác! 这是他的钢琴。')">C. 他的</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: 这是他的钢琴。')">D. 我的</button>
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
 </div>
@@ -690,40 +729,38 @@ img, svg { max-width: 100%; }
 <h2>🎧 Bài 8: Nghe hội thoại – Suy luận <span class="badge">Nghe hiểu Trung cấp 3</span></h2>
 <div class="sub" style="margin-bottom:8px;">Nghe đoạn hội thoại giữa 小明 và 小红 (14 câu), rồi chọn đáp án đúng cho 4 câu hỏi bên dưới. Lời thoại đang ẩn — hãy nghe trước, chỉ hiện lời thoại khi nghe không rõ. Tình huống: 小红 sáng tác bài hát và đoạt giải; 小明 hỏi về ác mộng của 小红.</div>
 <div class="reading-box">
-<div class="reading-Controls">
-<button class="tts-btn" onclick="playDlgAll()">▶️ Nghe cả đoạn hội thoại</button>
-<button class="tts-btn" id="dlg-pause-btn" onclick="toggleDlgPause()">⏸️ Tạm dừng</button>
-<button class="tts-btn" onclick="stopDlg()">⏹️ Dừng</button>
-<button class="btn-sm" id="dlg-toggle" onclick="toggleDlgScript()">👁️ Hiện lời thoại</button>
-<button class="btn-sm" onclick="toggleDlgRuby()">🔤 Ẩn/Hiện Pinyin</button>
-</div>
-<div style="margin-top:8px;"><span class="hint">Tốc độ:</span>
-<input type="range" id="dlg-speed-range" min="0.5" max="1.5" step="0.01" value="0.88" oninput="setDlgRateNum(this.value)" style="vertical-align:middle;width:160px">
-<input type="number" id="dlg-speed-num" min="0.5" max="1.5" step="0.05" value="0.88" onchange="setDlgRateNum(this.value)" style="width:70px;padding:4px 6px;border:1px solid #d1d5db;border-radius:6px;font-size:14px"> ×
+<div class="reading-Controls dlg-controls-row">
+<span class="hint">Tốc độ:</span>
+<input type="range" id="dlg-speed-range" min="0.5" max="1.5" step="0.01" value="0.88" oninput="setDlgRateNum(this.value)">
+<input type="number" id="dlg-speed-num" min="0.5" max="1.5" step="0.05" value="0.88" onchange="setDlgRateNum(this.value)">
+<button class="tts-btn dlg-play-btn" id="dlg-play-btn" onclick="toggleDlgPlay()" title="Nghe / Tạm dừng">▶️</button>
+<button class="tts-btn" onclick="restartDlg()" title="Nghe lại từ đầu">↺</button>
+<button class="btn-sm dlg-icon-btn" id="dlg-toggle" onclick="toggleDlgScript()" title="Hiện/Ẩn lời thoại">👁️</button>
+<button class="btn-sm dlg-pinyin-btn off" id="dlg-pinyin-btn" onclick="toggleDlgRuby()" title="Hiện/Ẩn Pinyin">Pinyin</button>
 </div>
 <div id="dlg-voice-pickers" style="margin-top:8px;"><span class="hint">Đang kiểm tra giọng đọc trên thiết bị…</span></div>
 <div class="hint" id="dlg-voice-note" style="margin-top:4px;"></div>
 <div style="margin:8px 0;"><span class="hint">Nghe từng câu:</span> <button class="tts-btn" onclick="playDlgLine(0)">1</button> <button class="tts-btn" onclick="playDlgLine(1)">2</button> <button class="tts-btn" onclick="playDlgLine(2)">3</button> <button class="tts-btn" onclick="playDlgLine(3)">4</button> <button class="tts-btn" onclick="playDlgLine(4)">5</button> <button class="tts-btn" onclick="playDlgLine(5)">6</button> <button class="tts-btn" onclick="playDlgLine(6)">7</button> <button class="tts-btn" onclick="playDlgLine(7)">8</button> <button class="tts-btn" onclick="playDlgLine(8)">9</button> <button class="tts-btn" onclick="playDlgLine(9)">10</button> <button class="tts-btn" onclick="playDlgLine(10)">11</button> <button class="tts-btn" onclick="playDlgLine(11)">12</button> <button class="tts-btn" onclick="playDlgLine(12)">13</button> <button class="tts-btn" onclick="playDlgLine(13)">14</button></div>
 <div class="dlg-script" id="dlg-script" style="display:none">
-<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>小<rt>Xiǎo</rt></ruby><ruby>红<rt>hóng</rt></ruby>，<ruby>你<rt>nǐ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>什<rt>shén</rt></ruby><ruby>么<rt>me</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>？</span><div class="dlg-vi">Tiểu Hồng, bạn thích bài hát nào?</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>我<rt>Wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>。<ruby>我<rt>Wǒ</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>作<rt>zuò</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>。</span><div class="dlg-vi">Tôi rất thích bài hát. Tôi đang sáng tác bài hát.</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>你<rt>Nǐ</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>作<rt>zuò</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>，<ruby>你<rt>nǐ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>钢<rt>gāng</rt></ruby><ruby>琴<rt>qín</rt></ruby><ruby>吗<rt>ma</rt></ruby>？</span><div class="dlg-vi">Bạn sáng tác bài hát, bạn có thích đàn piano không?</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>我<rt>Wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>钢<rt>gāng</rt></ruby><ruby>琴<rt>qín</rt></ruby>。<ruby>我<rt>Wǒ</rt></ruby><ruby>每<rt>měi</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>唱<rt>chàng</rt></ruby><ruby>歌<rt>gē</rt></ruby>。</span><div class="dlg-vi">Tôi rất thích đàn piano. Tôi ngày nào cũng hát.</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>你<rt>Nǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>听<rt>tīng</rt></ruby>。<ruby>你<rt>Nǐ</rt></ruby><ruby>得<rt>dé</rt></ruby><ruby>奖<rt>jiǎng</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>吗<rt>ma</rt></ruby>？</span><div class="dlg-vi">Bài hát của bạn rất hay. Bạn đã đoạt giải chưa?</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>我<rt>Wǒ</rt></ruby><ruby>得<rt>dé</rt></ruby><ruby>奖<rt>jiǎng</rt></ruby><ruby>了<rt>le</rt></ruby>。<ruby>我<rt>Wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby>。</span><div class="dlg-vi">Tôi đoạt giải rồi. Bài hát của tôi rất hay.</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>得<rt>Dé</rt></ruby><ruby>奖<rt>jiǎng</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby>！<ruby>你<rt>Nǐ</rt></ruby><ruby>昨<rt>zuó</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>晚<rt>wǎn</rt></ruby><ruby>上<rt>shang</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>吗<rt>ma</rt></ruby>？</span><div class="dlg-vi">Đoạt giải rất tốt! Tối qua bạn có khỏe không?</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>我<rt>Wǒ</rt></ruby><ruby>昨<rt>zuó</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>晚<rt>wǎn</rt></ruby><ruby>上<rt>shang</rt></ruby><ruby>睡<rt>shuì</rt></ruby><ruby>觉<rt>jiào</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>好<rt>hǎo</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>噩<rt>è</rt></ruby><ruby>梦<rt>mèng</rt></ruby>。</span><div class="dlg-vi">Tối qua tôi ngủ không ngon, tôi gặp ác mộng.</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>你<rt>Nǐ</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>噩<rt>è</rt></ruby><ruby>梦<rt>mèng</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>噩<rt>è</rt></ruby><ruby>梦<rt>mèng</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>什<rt>shén</rt></ruby><ruby>么<rt>me</rt></ruby>？</span><div class="dlg-vi">Bạn gặp ác mộng à? Ác mộng của bạn là gì?</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>我<rt>Wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>噩<rt>è</rt></ruby><ruby>梦<rt>mèng</rt></ruby><ruby>是<rt>shì</rt></ruby>：<ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>没<rt>méi</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby>。</span><div class="dlg-vi">Ác mộng của tôi là: bài hát của tôi không ai thích.</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>你<rt>Nǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>听<rt>tīng</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby>。</span><div class="dlg-vi">Bài hát của bạn rất hay, tôi rất thích.</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>谢<rt>Xiè</rt></ruby><ruby>谢<rt>xie</rt></ruby>！<ruby>你<rt>Nǐ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>高<rt>gāo</rt></ruby><ruby>兴<rt>xìng</rt></ruby>。</span><div class="dlg-vi">Cảm ơn! Bạn thích bài hát của tôi, tôi rất vui.</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>你<rt>Nǐ</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>作<rt>zuò</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>，<ruby>你<rt>nǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>支<rt>zhī</rt></ruby><ruby>持<rt>chí</rt></ruby><ruby>你<rt>nǐ</rt></ruby><ruby>吗<rt>ma</rt></ruby>？</span><div class="dlg-vi">Bạn sáng tác bài hát, người nhà bạn có ủng hộ bạn không?</div></div>
-<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>我<rt>Wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>支<rt>zhī</rt></ruby><ruby>持<rt>chí</rt></ruby><ruby>我<rt>wǒ</rt></ruby>。<ruby>他<rt>Tā</rt></ruby><ruby>们<rt>men</rt></ruby><ruby>觉<rt>jué</rt></ruby><ruby>得<rt>de</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>听<rt>tīng</rt></ruby>。</span><div class="dlg-vi">Người nhà tôi đều rất ủng hộ tôi. Họ thấy bài hát của tôi rất hay.</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>小<rt>Xiǎo</rt></ruby><ruby>红<rt>hóng</rt></ruby>，<ruby>你<rt>nǐ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>什<rt>shén</rt></ruby><ruby>么<rt>me</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>唱<rt>chàng</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>吗<rt>ma</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>觉<rt>jué</rt></ruby><ruby>得<rt>de</rt></ruby><ruby>呢<rt>ne</rt></ruby>？</span><div class="dlg-vi">Tiểu Hồng, bạn thích bài hát nào? Bạn thích hát không? Bạn thấy sao?</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>我<rt>Wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>。<ruby>我<rt>Wǒ</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>作<rt>zuò</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>，<ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>听<rt>tīng</rt></ruby>，<ruby>你<rt>nǐ</rt></ruby><ruby>呢<rt>ne</rt></ruby>？</span><div class="dlg-vi">Tôi rất thích bài hát. Tôi đang sáng tác bài hát, bài hát rất hay, còn bạn?</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>你<rt>Nǐ</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>作<rt>zuò</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>，<ruby>你<rt>nǐ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>钢<rt>gāng</rt></ruby><ruby>琴<rt>qín</rt></ruby><ruby>吗<rt>ma</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>每<rt>měi</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>唱<rt>chàng</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>吗<rt>ma</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>呢<rt>ne</rt></ruby>？</span><div class="dlg-vi">Bạn sáng tác bài hát, bạn có thích đàn piano không? Ngày nào bạn cũng hát à? Còn bạn?</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>我<rt>Wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>钢<rt>gāng</rt></ruby><ruby>琴<rt>qín</rt></ruby>。<ruby>我<rt>Wǒ</rt></ruby><ruby>每<rt>měi</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>唱<rt>chàng</rt></ruby><ruby>歌<rt>gē</rt></ruby>，<ruby>唱<rt>chàng</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>意<rt>yì</rt></ruby><ruby>思<rt>si</rt></ruby>，<ruby>你<rt>nǐ</rt></ruby><ruby>呢<rt>ne</rt></ruby>？</span><div class="dlg-vi">Tôi rất thích đàn piano. Ngày nào tôi cũng hát, hát rất thú vị, còn bạn?</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>你<rt>Nǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>听<rt>tīng</rt></ruby>。<ruby>你<rt>Nǐ</rt></ruby><ruby>得<rt>dé</rt></ruby><ruby>奖<rt>jiǎng</rt></ruby><ruby>了<rt>le</rt></ruby><ruby>吗<rt>ma</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>高<rt>gāo</rt></ruby><ruby>兴<rt>xìng</rt></ruby><ruby>吗<rt>ma</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>呢<rt>ne</rt></ruby>？</span><div class="dlg-vi">Bài hát của bạn rất hay. Bạn đã đoạt giải chưa? Bạn có vui không? Còn bạn?</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>我<rt>Wǒ</rt></ruby><ruby>得<rt>dé</rt></ruby><ruby>奖<rt>jiǎng</rt></ruby><ruby>了<rt>le</rt></ruby>。<ruby>我<rt>Wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>高<rt>gāo</rt></ruby><ruby>兴<rt>xìng</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>，<ruby>是<rt>shì</rt></ruby><ruby>吗<rt>ma</rt></ruby>？</span><div class="dlg-vi">Tôi đoạt giải rồi. Bài hát của tôi rất hay, tôi rất vui, tôi thích bài hát, phải không?</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>得<rt>Dé</rt></ruby><ruby>奖<rt>jiǎng</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby>！<ruby>你<rt>Nǐ</rt></ruby><ruby>昨<rt>zuó</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>晚<rt>wǎn</rt></ruby><ruby>上<rt>shàng</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>吗<rt>ma</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>睡<rt>shuì</rt></ruby><ruby>觉<rt>jiào</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>吗<rt>ma</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>呢<rt>ne</rt></ruby>？</span><div class="dlg-vi">Đoạt giải rất tốt! Tối qua bạn có khỏe không? Bạn ngủ có ngon không? Còn bạn?</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>我<rt>Wǒ</rt></ruby><ruby>昨<rt>zuó</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>晚<rt>wǎn</rt></ruby><ruby>上<rt>shàng</rt></ruby><ruby>睡<rt>shuì</rt></ruby><ruby>觉<rt>jiào</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>好<rt>hǎo</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>噩<rt>è</rt></ruby><ruby>梦<rt>mèng</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>难<rt>nán</rt></ruby><ruby>过<rt>guò</rt></ruby>，<ruby>你<rt>nǐ</rt></ruby><ruby>呢<rt>ne</rt></ruby>？</span><div class="dlg-vi">Tối qua tôi ngủ không ngon, tôi gặp ác mộng, tôi rất buồn, còn bạn?</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>你<rt>Nǐ</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>噩<rt>è</rt></ruby><ruby>梦<rt>mèng</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>噩<rt>è</rt></ruby><ruby>梦<rt>mèng</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>什<rt>shén</rt></ruby><ruby>么<rt>me</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>难<rt>nán</rt></ruby><ruby>过<rt>guò</rt></ruby><ruby>吗<rt>ma</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>觉<rt>jué</rt></ruby><ruby>得<rt>de</rt></ruby><ruby>呢<rt>ne</rt></ruby>？</span><div class="dlg-vi">Bạn gặp ác mộng à? Ác mộng của bạn là gì? Bạn có buồn không? Bạn thấy sao?</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>我<rt>Wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>噩<rt>è</rt></ruby><ruby>梦<rt>mèng</rt></ruby><ruby>是<rt>shì</rt></ruby>：<ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>没<rt>méi</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>难<rt>nán</rt></ruby><ruby>过<rt>guò</rt></ruby>。</span><div class="dlg-vi">Ác mộng của tôi là: bài hát của tôi không ai thích, tôi rất buồn.</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>你<rt>Nǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>听<rt>tīng</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby>，<ruby>你<rt>nǐ</rt></ruby><ruby>不<rt>bú</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>难<rt>nán</rt></ruby><ruby>过<rt>guò</rt></ruby>。</span><div class="dlg-vi">Bài hát của bạn rất hay, tôi rất thích, bạn đừng buồn.</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>谢<rt>Xiè</rt></ruby><ruby>谢<rt>xiè</rt></ruby>！<ruby>你<rt>Nǐ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>高<rt>gāo</rt></ruby><ruby>兴<rt>xìng</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>唱<rt>chàng</rt></ruby><ruby>歌<rt>gē</rt></ruby>，<ruby>你<rt>nǐ</rt></ruby><ruby>呢<rt>ne</rt></ruby>？</span><div class="dlg-vi">Cảm ơn! Bạn thích bài hát của tôi, tôi rất vui, tôi thích hát, còn bạn?</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#2563eb">小明</span> <span class="dlg-zh hide-ruby"><ruby>你<rt>Nǐ</rt></ruby><ruby>创<rt>chuàng</rt></ruby><ruby>作<rt>zuò</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby>，<ruby>你<rt>nǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>支<rt>zhī</rt></ruby><ruby>持<rt>chí</rt></ruby><ruby>你<rt>nǐ</rt></ruby><ruby>吗<rt>ma</rt></ruby>？<ruby>他<rt>Tā</rt></ruby><ruby>们<rt>men</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huān</rt></ruby><ruby>吗<rt>ma</rt></ruby>？<ruby>你<rt>Nǐ</rt></ruby><ruby>呢<rt>ne</rt></ruby>？</span><div class="dlg-vi">Bạn sáng tác bài hát, người nhà bạn có ủng hộ bạn không? Họ có thích không? Còn bạn?</div></div>
+<div class="dlg-line"><span class="dlg-sp" style="background:#db2777">小红</span> <span class="dlg-zh hide-ruby"><ruby>我<rt>Wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>支<rt>zhī</rt></ruby><ruby>持<rt>chí</rt></ruby><ruby>我<rt>wǒ</rt></ruby>。<ruby>他<rt>Tā</rt></ruby><ruby>们<rt>men</rt></ruby><ruby>觉<rt>jué</rt></ruby><ruby>得<rt>de</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>歌<rt>gē</rt></ruby><ruby>曲<rt>qǔ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>听<rt>tīng</rt></ruby>，<ruby>是<rt>shì</rt></ruby><ruby>吗<rt>ma</rt></ruby>？</span><div class="dlg-vi">Người nhà tôi đều rất ủng hộ tôi. Họ thấy bài hát của tôi rất hay, phải không?</div></div>
 </div>
 <div class="hint" id="dlg-tip">💡 Mẹo: nghe 2–3 lần trước khi hiện lời thoại. Chọn giọng cho từng người ở trên — giọng nam cho người nam, giọng nữ cho người nữ, bấm 🔊 Nghe thử để nghe giọng trước khi chọn.</div>
 </div>
 <div class="q-item" id="dlg-1">
-<div><b>Câu 1.</b> 小红在创作什么？ <span class="hint">(Tiểu Hồng đang sáng tác gì?)</span></div>
+<div><b>Câu 1.</b> 小红在创作什么？</div>
 <div class="mc-options">
 <button class="mc-btn" onclick="checkMC(this, true, 'dlg-1', '✓ Chính xác！小红：我在创作歌曲。')">A. 歌曲</button>
 <button class="mc-btn" onclick="checkMC(this, false, 'dlg-1', '✗ Chưa đúng：小红：我在创作歌曲。')">B. 钢琴</button>
@@ -732,7 +769,7 @@ img, svg { max-width: 100%; }
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
 <div class="q-item" id="dlg-2">
-<div><b>Câu 2.</b> 小红的歌曲有人喜欢吗？ <span class="hint">(Có ai thích bài hát của Tiểu Hồng không?)</span></div>
+<div><b>Câu 2.</b> 小红的歌曲有人喜欢吗？</div>
 <div class="mc-options">
 <button class="mc-btn" onclick="checkMC(this, true, 'dlg-2', '✓ Chính xác！小明：你的歌曲很好听，我很喜欢。')">A. 有，小明很喜欢她的歌曲</button>
 <button class="mc-btn" onclick="checkMC(this, false, 'dlg-2', '✗ Chưa đúng：小明：你的歌曲很好听，我很喜欢。')">B. 没有，没有人喜欢她的歌曲</button>
@@ -741,7 +778,7 @@ img, svg { max-width: 100%; }
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
 <div class="q-item" id="dlg-3">
-<div><b>Câu 3.</b> 小红担心她的歌曲没有人喜欢吗？ <span class="hint">(Tiểu Hồng có lo bài hát của mình không ai thích không?)</span></div>
+<div><b>Câu 3.</b> 小红担心她的歌曲没有人喜欢吗？</div>
 <div class="mc-options">
 <button class="mc-btn" onclick="checkMC(this, true, 'dlg-3', '✓ Chính xác！小红：我的噩梦是：我的歌曲没有人喜欢。')">A. 担心，她的噩梦是歌曲没有人喜欢</button>
 <button class="mc-btn" onclick="checkMC(this, false, 'dlg-3', '✗ Chưa đúng：小红：我的噩梦是：我的歌曲没有人喜欢。')">B. 不担心，她很喜欢噩梦</button>
@@ -750,7 +787,7 @@ img, svg { max-width: 100%; }
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
 <div class="q-item" id="dlg-4">
-<div><b>Câu 4.</b> 小红得奖，她的歌曲怎么样？ <span class="hint">(Tiểu Hồng đoạt giải, bài hát của cô ấy thế nào?)</span></div>
+<div><b>Câu 4.</b> 小红得奖，她的歌曲怎么样？</div>
 <div class="mc-options">
 <button class="mc-btn" onclick="checkMC(this, true, 'dlg-4', '✓ Chính xác！小红：我得奖了。我的歌曲很好。')">A. 很好听，她得奖了</button>
 <button class="mc-btn" onclick="checkMC(this, false, 'dlg-4', '✗ Chưa đúng：小红：我得奖了。我的歌曲很好。')">B. 不好听，她没有得奖</button>
@@ -802,7 +839,7 @@ img, svg { max-width: 100%; }
 <p><b>Bài 4 (Ngữ pháp):</b> 1. A — 他得奖了，家人都很高兴。 &nbsp;|&nbsp; 2. A — 中国队比日本队强。</p>
 <p><b>Bài 5 (Đoạn văn):</b> 创作 → 得奖 → 噩梦 → 钢琴 → 歌曲</p>
 <p><b>Bài 6 (Sắp xếp câu):</b><br>1. 他喜欢创作，也喜欢唱歌。<br>2. 我昨天有一个噩梦。<br>3. 他得奖了，家人都很高兴。</p>
-<p><b>Bài 7 (Đọc hiểu):</b> 1. B — sáng tác; sáng tạo &nbsp;|&nbsp; 2. A — ác mộng &nbsp;|&nbsp; 3. D — 歌曲得奖了。</p>
+<p><b>Bài 7 (Đọc hiểu):</b> 1. C — 创作 &nbsp;|&nbsp; 2. C — 得奖了 &nbsp;|&nbsp; 3. C — 他的</p>
 <p><b>Bài 8 (Nghe hội thoại):</b> 1. A — 歌曲 &nbsp; 2. A — 有，小明很喜欢她的歌曲 &nbsp; 3. A — 担心，她的噩梦是歌曲没有人喜欢 &nbsp; 4. A — 很好听，她得奖了</p>
 </details>
 </div>
@@ -908,15 +945,15 @@ var ITEM_INFO = {
   ],
   "read-1": [
     "Đọc hiểu câu 1",
-    "B — sáng tác; sáng tạo"
+    "C — 创作"
   ],
   "read-2": [
     "Đọc hiểu câu 2",
-    "A — ác mộng"
+    "C — 得奖了"
   ],
   "read-3": [
     "Đọc hiểu câu 3",
-    "D — 歌曲得奖了。"
+    "C — 他的"
   ],
   "dlg-1": [
     "Nghe hội thoại 1 (小红在创作什么？)",
@@ -3426,7 +3463,7 @@ flashShuffleDeck(); flashRender();
 <script>
 // ====== Bài 8: Nghe hội thoại ======
 var DLG_SPEAKERS = [{"id": "ming", "name": "小明", "py": "Xiǎo Míng", "gender": "nam", "vi": "Minh", "color": "#2563eb"}, {"id": "hong", "name": "小红", "py": "Xiǎo Hóng", "gender": "nữ", "vi": "Hồng", "color": "#db2777"}];
-var DLG_LINES = [{"sp": "ming", "zh": "小红，你喜欢什么歌曲？"}, {"sp": "hong", "zh": "我很喜欢歌曲。我在创作歌曲。"}, {"sp": "ming", "zh": "你创作歌曲，你喜欢钢琴吗？"}, {"sp": "hong", "zh": "我很喜欢钢琴。我每天都唱歌。"}, {"sp": "ming", "zh": "你的歌曲很好听。你得奖了吗？"}, {"sp": "hong", "zh": "我得奖了。我的歌曲很好。"}, {"sp": "ming", "zh": "得奖很好！你昨天晚上好吗？"}, {"sp": "hong", "zh": "我昨天晚上睡觉不好，我有噩梦。"}, {"sp": "ming", "zh": "你有噩梦？你的噩梦是什么？"}, {"sp": "hong", "zh": "我的噩梦是：我的歌曲没有人喜欢。"}, {"sp": "ming", "zh": "你的歌曲很好听，我很喜欢。"}, {"sp": "hong", "zh": "谢谢！你喜欢我的歌曲，我很高兴。"}, {"sp": "ming", "zh": "你创作歌曲，你的家人支持你吗？"}, {"sp": "hong", "zh": "我的家人都很支持我。他们觉得我的歌曲很好听。"}];
+var DLG_LINES = [{"sp": "ming", "zh": "小红，你喜欢什么歌曲？你喜欢唱歌吗？你觉得呢？"}, {"sp": "hong", "zh": "我很喜欢歌曲。我在创作歌曲，歌曲很好听，你呢？"}, {"sp": "ming", "zh": "你创作歌曲，你喜欢钢琴吗？你每天都唱歌吗？你呢？"}, {"sp": "hong", "zh": "我很喜欢钢琴。我每天都唱歌，唱歌很有意思，你呢？"}, {"sp": "ming", "zh": "你的歌曲很好听。你得奖了吗？你高兴吗？你呢？"}, {"sp": "hong", "zh": "我得奖了。我的歌曲很好，我很高兴，我喜欢歌曲，是吗？"}, {"sp": "ming", "zh": "得奖很好！你昨天晚上好吗？你睡觉好吗？你呢？"}, {"sp": "hong", "zh": "我昨天晚上睡觉不好，我有噩梦，我很难过，你呢？"}, {"sp": "ming", "zh": "你有噩梦？你的噩梦是什么？你难过吗？你觉得呢？"}, {"sp": "hong", "zh": "我的噩梦是：我的歌曲没有人喜欢，我很难过。"}, {"sp": "ming", "zh": "你的歌曲很好听，我很喜欢，你不要难过。"}, {"sp": "hong", "zh": "谢谢！你喜欢我的歌曲，我很高兴，我喜欢唱歌，你呢？"}, {"sp": "ming", "zh": "你创作歌曲，你的家人支持你吗？他们喜欢吗？你呢？"}, {"sp": "hong", "zh": "我的家人都很支持我。他们觉得我的歌曲很好听，是吗？"}];
 var dlgPlaying = false;
 var dlgPaused = false;
 var dlgRate = 0.88;
@@ -3503,7 +3540,7 @@ function buildVoicePickers() {
     var badge = document.createElement('span');
     badge.className = 'dlg-sp'; badge.style.background = s.color; badge.textContent = s.name;
     var lab = document.createElement('span');
-    lab.innerHTML = '<b>Giọng của ' + s.name + '</b> (' + s.vi + ' · ' + (s.gender === 'nam' ? 'Nam' : 'Nữ') + '):';
+    lab.textContent = '(' + s.vi + ' · ' + (s.gender === 'nam' ? 'Nam' : 'Nữ') + ')';
     var sel = document.createElement('select');
     sel.id = 'dlg-voice-' + s.id;
     DLG_ZH_VOICES.forEach(function (v) {
@@ -3564,23 +3601,32 @@ function playDlgAll() {
   dlgPlaying = true;
   var i = 0;
   (function next() {
-    if (!dlgPlaying || i >= DLG_LINES.length) { dlgPlaying = false; dlgPaused = false; updateDlgPauseBtn(); return; }
+    if (!dlgPlaying || i >= DLG_LINES.length) { dlgPlaying = false; dlgPaused = false; updateDlgPlayBtn(); return; }
     dlgSpeak(i, function () { i++; if (dlgPlaying) next(); });
   })();
+  updateDlgPlayBtn();
 }
-function updateDlgPauseBtn() {
-  var b = document.getElementById('dlg-pause-btn');
-  if (b) b.textContent = dlgPaused ? '▶️ Tiếp tục nghe' : '⏸️ Tạm dừng';
+function updateDlgPlayBtn() {
+  var b = document.getElementById('dlg-play-btn');
+  if (b) b.textContent = (dlgPlaying && !dlgPaused) ? '⏸️' : '▶️';
 }
-function toggleDlgPause() {
+function toggleDlgPlay() {
   if (!('speechSynthesis' in window)) return;
   var ss = window.speechSynthesis;
-  if (ss.paused) { ss.resume(); dlgPaused = false; }
-  else if (ss.speaking) { ss.pause(); dlgPaused = true; }
-  else return;
-  updateDlgPauseBtn();
+  if (dlgPlaying && !dlgPaused) {
+    if (!ss.speaking) return;
+    ss.pause(); dlgPaused = true;
+  } else if (dlgPlaying && dlgPaused) {
+    if (!ss.paused) { dlgPaused = false; updateDlgPlayBtn(); return; }
+    ss.resume(); dlgPaused = false;
+  } else {
+    playDlgAll();
+    return;
+  }
+  updateDlgPlayBtn();
 }
-function stopDlg() { dlgPlaying = false; dlgPaused = false; if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); window.speechSynthesis.resume(); } updateDlgPauseBtn(); }
+function restartDlg() { playDlgAll(); updateDlgPlayBtn(); }
+function stopDlg() { dlgPlaying = false; dlgPaused = false; if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); window.speechSynthesis.resume(); } updateDlgPlayBtn(); }
 function playDlgLine(i) { stopDlg(); dlgSpeak(i); }
 function previewDlgVoice(spId) {
   for (var i = 0; i < DLG_LINES.length; i++)
@@ -3591,12 +3637,185 @@ function toggleDlgScript() {
   var btn = document.getElementById('dlg-toggle');
   var show = el.style.display === 'none';
   el.style.display = show ? 'block' : 'none';
-  btn.textContent = show ? '🙈 Ẩn lời thoại' : '👁️ Hiện lời thoại';
+  if (btn) btn.classList.toggle('dlg-btn-on', show);
 }
 function toggleDlgRuby() {
   var els = document.querySelectorAll('.dlg-zh');
   for (var k = 0; k < els.length; k++) els[k].classList.toggle('hide-ruby');
+  var btn = document.getElementById('dlg-pinyin-btn');
+  if (btn) {
+    var first = document.querySelector('.dlg-zh');
+    var on = first && !first.classList.contains('hide-ruby');
+    btn.classList.toggle('on', !!on);
+    btn.classList.toggle('off', !on);
+  }
 }
+</script>
+
+<script>
+// ====== Giọng đọc chung + Nghe theo đoạn (chunked TTS) ======
+// Ghi đè speak()/speakRate() của file mẫu: mọi lần đọc lẻ đều dùng giọng
+// chung đã chọn (localStorage 'tts-voice'). Bài 8 không dùng 2 hàm này
+// (nó dùng dlgSpeak + giọng riêng theo nhân vật) nên không bị ảnh hưởng.
+var TTS_VOICE_LS = 'tts-voice';
+var TTS_ZH_VOICES = [];
+// Các chunk do từng thẻ nghe khai báo trước đó:
+//   window.CHUNK_DATA['story'] = [<cảnh 1>, ...]; window.CHUNK_DATA['read'] = [<nhóm câu 1>, ...]
+var CHUNK_DATA = window.CHUNK_DATA || {};
+window.CHUNK_DATA = CHUNK_DATA;
+
+function ttsVoiceKey(v) { return v.voiceURI || v.name; }
+function ttsSavedVoiceKey() {
+  try { return localStorage.getItem(TTS_VOICE_LS) || ''; } catch (e) { return ''; }
+}
+function ttsVoiceFor() {
+  var saved = ttsSavedVoiceKey();
+  for (var i = 0; i < TTS_ZH_VOICES.length; i++)
+    if (ttsVoiceKey(TTS_ZH_VOICES[i]) === saved) return TTS_ZH_VOICES[i];
+  return TTS_ZH_VOICES.length ? TTS_ZH_VOICES[0] : null;
+}
+function ttsVoiceNote() {
+  var cur = ttsVoiceFor();
+  var txt;
+  if (!TTS_ZH_VOICES.length) txt = 'Thiết bị chưa tìm thấy giọng tiếng Trung — sẽ dùng giọng mặc định.';
+  else if (TTS_ZH_VOICES.length === 1) txt = 'Giọng đang dùng: ' + cur.name + '. Thiết bị chỉ có 1 giọng tiếng Trung.';
+  else txt = 'Giọng đang dùng: ' + cur.name + ' (' + TTS_ZH_VOICES.length + ' giọng tiếng Trung trên thiết bị).';
+  var notes = document.querySelectorAll('[id^="tts-voice-note-"]');
+  for (var k = 0; k < notes.length; k++) notes[k].textContent = txt;
+}
+function buildCommonVoicePickers() {
+  var sels = document.querySelectorAll('.tts-voice-select');
+  if (!sels.length) { ttsVoiceNote(); return; }
+  for (var s = 0; s < sels.length; s++) {
+    var sel = sels[s];
+    sel.innerHTML = '';
+    if (!('speechSynthesis' in window) || !TTS_ZH_VOICES.length) {
+      var o = document.createElement('option');
+      o.value = ''; o.textContent = 'Giọng mặc định';
+      sel.appendChild(o); sel.disabled = true;
+    } else {
+      sel.disabled = false;
+      TTS_ZH_VOICES.forEach(function (v) {
+        var op = document.createElement('option');
+        op.value = ttsVoiceKey(v); op.textContent = v.name;
+        sel.appendChild(op);
+      });
+      var cur = ttsVoiceFor();
+      if (cur) sel.value = ttsVoiceKey(cur);
+    }
+    sel.onchange = function () { setCommonVoice(this.value); };
+  }
+  ttsVoiceNote();
+}
+function setCommonVoice(key) {
+  try { localStorage.setItem(TTS_VOICE_LS, key); } catch (e) {}
+  var sels = document.querySelectorAll('.tts-voice-select');
+  for (var i = 0; i < sels.length; i++) sels[i].value = key;
+  ttsVoiceNote();
+}
+function pickCommonVoices() {
+  if (!('speechSynthesis' in window)) return;
+  TTS_ZH_VOICES = window.speechSynthesis.getVoices().filter(function (v) {
+    return (v.lang || '').toLowerCase().indexOf('zh') === 0;
+  });
+  buildCommonVoicePickers();
+}
+if ('speechSynthesis' in window) {
+  pickCommonVoices();
+  // Nối tiếp handler onvoiceschanged đã có (của Bài 8) thay vì ghi đè nó.
+  var _prevOnVoicesChanged = window.speechSynthesis.onvoiceschanged;
+  window.speechSynthesis.onvoiceschanged = function () {
+    if (typeof _prevOnVoicesChanged === 'function') { try { _prevOnVoicesChanged(); } catch (e) {} }
+    pickCommonVoices();
+  };
+}
+function previewCommonVoice() {
+  speakRate('你好，很高兴认识你。', 0.88);
+}
+
+// ----- Nghe theo đoạn: mỗi chunk = 1 utterance, onend gọi chunk tiếp theo -----
+var chunkCur = null; // {id, chunks, idx, end, rate, playing, paused, gen}
+function chunkChunks(id) { return (window.CHUNK_DATA && window.CHUNK_DATA[id]) || []; }
+function chunkPauseBtn(id) { return document.getElementById('chunk-pause-' + id); }
+function updateChunkPauseBtn(id) {
+  var b = chunkPauseBtn(id);
+  if (b) b.textContent = (chunkCur && chunkCur.id === id && chunkCur.paused) ? '▶️ Tiếp tục nghe' : '⏸️ Tạm dừng';
+}
+function stopChunked(id) {
+  var stoppedId = null;
+  if (chunkCur && (!id || chunkCur.id === id)) {
+    chunkCur.playing = false; chunkCur.paused = false; chunkCur.gen++;
+    stoppedId = chunkCur.id; chunkCur = null;
+  }
+  if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); window.speechSynthesis.resume(); }
+  if (stoppedId) updateChunkPauseBtn(stoppedId);
+  else if (!id) {
+    var btns = document.querySelectorAll('[id^="chunk-pause-"]');
+    for (var i = 0; i < btns.length; i++) btns[i].textContent = '⏸️ Tạm dừng';
+  }
+}
+function playChunked(id, rate, start, end) {
+  if (!('speechSynthesis' in window)) return;
+  var chunks = chunkChunks(id);
+  if (!chunks.length) return;
+  stopChunked();
+  if (typeof stopDlg === 'function') { try { stopDlg(); } catch (e) {} }
+  rate = rate || 0.88;
+  start = (typeof start === 'number') ? start : 0;
+  end = (typeof end === 'number') ? end : chunks.length - 1;
+  chunkCur = { id: id, chunks: chunks, idx: start, end: end, rate: rate, playing: true, paused: false, gen: 0 };
+  updateChunkPauseBtn(id);
+  speakChunk(chunkCur, chunkCur.gen);
+}
+function speakChunk(p, gen) {
+  if (!p.playing || gen !== p.gen) return;
+  if (p.idx > p.end) { chunkCur = null; p.playing = false; p.paused = false; updateChunkPauseBtn(p.id); return; }
+  var text = p.chunks[p.idx];
+  if (!text) { p.idx++; speakChunk(p, gen); return; }
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN'; u.rate = p.rate;
+  var v = ttsVoiceFor(); if (v) u.voice = v;
+  u.onend = function () {
+    if (!p.playing || gen !== p.gen) return;
+    p.idx++;
+    speakChunk(p, gen);
+  };
+  u.onerror = function () {
+    // cancel() (bấm nút khác / dừng / Bài 8 bắt đầu) cũng kích hoạt onerror:
+    // dừng hẳn chuỗi, KHÔNG đọc chunk tiếp theo.
+    if (gen !== p.gen) return;
+    if (chunkCur === p) chunkCur = null;
+    p.playing = false; p.paused = false; updateChunkPauseBtn(p.id);
+  };
+  window.speechSynthesis.speak(u);
+}
+function toggleChunkPause(id) {
+  if (!('speechSynthesis' in window)) return;
+  if (!chunkCur || chunkCur.id !== id) return;
+  var ss = window.speechSynthesis;
+  if (ss.paused) { ss.resume(); chunkCur.paused = false; }
+  else if (ss.speaking) { ss.pause(); chunkCur.paused = true; }
+  else return;
+  updateChunkPauseBtn(id);
+}
+function restartChunked(id) {
+  var rate = (chunkCur && chunkCur.id === id) ? chunkCur.rate : 0.88;
+  playChunked(id, rate);
+}
+
+// ----- Ghi đè speak()/speakRate() của file mẫu (giữ nguyên chữ ký) -----
+// Mọi lần đọc lẻ (từ mới, câu ví dụ, bài nghe, đáp án đúng...) đều dùng
+// giọng chung đã chọn; đồng thời dừng mọi chuỗi chunk đang đọc dở.
+function speakRate(text, rate) {
+  if (!('speechSynthesis' in window)) return;
+  stopChunked();
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN'; u.rate = rate || 0.88;
+  var v = ttsVoiceFor(); if (v) u.voice = v;
+  window.speechSynthesis.speak(u);
+}
+function speak(text) { speakRate(text, 0.88); }
 </script>
 
 </body>
