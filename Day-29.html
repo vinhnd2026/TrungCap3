@@ -198,7 +198,12 @@ img, svg { max-width: 100%; }
 .reveal { border: 1px solid #bfdbfe; border-left: none; }
 .reading-box { background: #eff6ff; border-left: none; }
 /* --- Chỗ trống điền từ hiển thị dạng "......" không gạch chân, bấm vào mới hiện danh sách từ (theo ý anh 06/11) --- */
-.cloze-select { border: none; border-radius: 0; background: transparent; padding: 3px 2px; min-width: 90px; text-align: center; }
+.cloze-select { border: none; border-radius: 0; background: transparent; padding: 3px 2px; min-width: 90px; text-align: center; appearance: none; -webkit-appearance: none; }
+.cloze-select::-ms-expand { display: none; }
+/* --- Bài 4 Ngữ pháp mới: hộp giới thiệu điểm ngữ pháp + ví dụ (theo ý anh 06/11) --- */
+.gram-intro { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px; padding: 12px 14px; margin: 10px 0; line-height: 1.7; }
+.gram-ex { margin: 8px 0; font-size: 16px; line-height: 1.9; }
+.gram-blank { font-weight: 700; letter-spacing: 1px; }
 .read-para-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .read-para-text { font-size: 19px; line-height: 2.15; text-align: justify; text-indent: 2em; margin: 0; color: #1e293b; }
 .read-para-trans { margin: 10px 0; font-size: 14px; color: #475569; line-height: 1.65; }
@@ -620,20 +625,28 @@ img, svg { max-width: 100%; }
 <div class="feedback" id="match-feedback" style="margin-top:10px;"></div>
 </div>
 <div class="card">
-<h2>⚖️ Bài 4: Bắt lỗi ngữ pháp Trung cấp 3 <span class="badge">Tránh bẫy phòng thi</span></h2>
-<div class="sub" style="margin-bottom:8px;">Mỗi cặp dưới đây chỉ có <b>1 câu đúng ngữ pháp</b> (đã ẩn ký hiệu gợi ý). Hãy chọn câu đúng:</div>
+<h2>⚖️ Bài 4: Ngữ pháp — V + 下 — bổ ngữ kết quả (đặt xuống, ghi lại) <span class="badge">Điểm ngữ pháp hôm nay</span></h2>
+<div class="gram-intro">
+<div><b>Công thức:</b> V + 下 (+ O)</div>
+<div>下 làm bổ ngữ kết quả, diễn tả hành động &#x27;xuống, đặt xuống, ghi lại&#x27;. 下 đứng ngay sau động từ, trước tân ngữ.</div>
+</div>
+<div class="sub" style="margin-bottom:8px;">Nghe 2 ví dụ rồi làm 2 bài tập dưới đây:</div>
+<div class="gram-ex"><button class="tts-btn" onclick="speakRate('你取下东西，去旅游。', 0.88)">🔊</button> <span class="hide-ruby"><ruby>你<rt>Nǐ</rt></ruby><ruby>取<rt>qǔ</rt></ruby><ruby>下<rt>xià</rt></ruby><ruby>东<rt>dōng</rt></ruby><ruby>西<rt>xi</rt></ruby>，<ruby>去<rt>qù</rt></ruby><ruby>旅<rt>lǚ</rt></ruby><ruby>游<rt>yóu</rt></ruby>。</span> <span class="hint">(Anh lấy đồ xuống rồi đi du lịch.)</span></div>
+<div class="gram-ex"><button class="tts-btn" onclick="speakRate('他许下愿望，去旅游。', 0.88)">🔊</button> <span class="hide-ruby"><ruby>他<rt>Tā</rt></ruby><ruby>许<rt>xǔ</rt></ruby><ruby>下<rt>xià</rt></ruby><ruby>愿<rt>yuàn</rt></ruby><ruby>望<rt>wàng</rt></ruby>，<ruby>去<rt>qù</rt></ruby><ruby>旅<rt>lǚ</rt></ruby><ruby>游<rt>yóu</rt></ruby>。</span> <span class="hint">(Anh ấy ước một điều rồi đi du lịch.)</span></div>
 <div class="q-item" id="gram-1">
-<div><b>1. Câu có 了 chỉ sự việc đã xảy ra:</b> (Tôi hôm qua đã mua đồ)</div>
+<div><b>1. Điền từ đúng vào chỗ trống:</b> 你取<span class="gram-blank">......</span>东西，去旅游。</div>
 <div class="mc-options">
-<button class="mc-btn" onclick="checkMC(this, true, 'gram-1', '✓ Đúng! 了 ở cuối câu đánh dấu sự việc đã hoàn thành.')">A. 我昨天买了东西。</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'gram-1', '✗ Sai: việc đã xảy ra hôm qua cần 了 ở cuối câu — 我昨天买了东西 mới đúng.')">B. 我昨天买东西。</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'gram-1', '✗ Chưa đúng. 下 là bổ ngữ kết quả, đứng ngay sau động từ (取下), không đặt sau tân ngữ.')">A. 来</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'gram-1', '✓ Đúng! 下 là bổ ngữ kết quả, đứng ngay sau động từ (取下), không đặt sau tân ngữ.')">B. 下</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'gram-1', '✗ Chưa đúng. 下 là bổ ngữ kết quả, đứng ngay sau động từ (取下), không đặt sau tân ngữ.')">C. 去</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'gram-1', '✗ Chưa đúng. 下 là bổ ngữ kết quả, đứng ngay sau động từ (取下), không đặt sau tân ngữ.')">D. 在</button>
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
 <div class="q-item" id="gram-2">
-<div><b>2. So sánh với 比 không dùng 很:</b> (Đội Trung Quốc mạnh hơn đội Nhật Bản)</div>
+<div><b>2. V + 下 (bổ ngữ kết quả):</b></div>
 <div class="mc-options">
-<button class="mc-btn" onclick="checkMC(this, true, 'gram-2', '✓ Đúng! Cấu trúc: A + 比 + B + tính từ, không thêm 很。')">A. 中国队比日本队强。</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'gram-2', '✗ Sai: câu so sánh 比 KHÔNG dùng 很 trước tính từ — bỏ 很 đi.')">B. 中国队比日本队很强。</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'gram-2', '✗ Sai: 下 là bổ ngữ kết quả, đứng ngay sau động từ, không đặt sau tân ngữ.')">A. 你取东西下，去旅游。</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'gram-2', '✓ Đúng! 下 đứng ngay sau động từ (取下).')">B. 你取下东西，去旅游。</button>
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
 </div>
@@ -654,22 +667,22 @@ img, svg { max-width: 100%; }
 <div class="card">
 <h2>🧩 Bài 6: Sắp xếp câu (连词成句) <span class="badge">Tư duy trật tự từ</span></h2>
 <div class="sub" style="margin-bottom:8px;">Chạm vào từng từ ở khung xám để ghép thành câu hoàn chỉnh:</div>
-<div class="scramble-box" id="scr-1" data-target="很多传统都用阴历来算日子。">
-<div><b>Câu 1:</b> Rất nhiều truyền thống đều dùng âm lịch để tính ngày.</div>
+<div class="scramble-box" id="scr-1" data-target="我的家人支持我的愿望，也祝福我。">
+<div><b>Câu 1:</b> Gia đình tôi ủng hộ nguyện vọng của tôi, cũng chúc phúc cho tôi.</div>
 <div class="answer-zone"></div>
-<div class="word-bank" data-words="来|用|很|都|多|阴历|算|。|传统|日子"></div>
+<div class="word-bank" data-words="也|愿望|我的|我的|家人|，|祝福|。|支持|我"></div>
 <div class="input-check"><button class="btn-primary" onclick="checkScramble(this)">Kiểm tra câu</button><button class="btn-sm" onclick="resetScramble(this)">Làm lại</button><span class="feedback"></span></div>
 </div>
-<div class="scramble-box" id="scr-2" data-target="我的家人都很支持我。">
-<div><b>Câu 2:</b> Gia đình tôi đều rất ủng hộ tôi.</div>
+<div class="scramble-box" id="scr-2" data-target="他毕竟是我的家人，我祝福他。">
+<div><b>Câu 2:</b> Dù sao anh ấy cũng là người nhà của tôi, tôi chúc phúc cho anh ấy.</div>
 <div class="answer-zone"></div>
-<div class="word-bank" data-words="很|我|我的|支持|家人|。|都"></div>
+<div class="word-bank" data-words="祝福|。|我的|我|他|毕竟|他|是|家人|，"></div>
 <div class="input-check"><button class="btn-primary" onclick="checkScramble(this)">Kiểm tra câu</button><button class="btn-sm" onclick="resetScramble(this)">Làm lại</button><span class="feedback"></span></div>
 </div>
-<div class="scramble-box" id="scr-3" data-target="我的愿望是去中国旅游。">
-<div><b>Câu 3:</b> Nguyện vọng của tôi là đi du lịch Trung Quốc.</div>
+<div class="scramble-box" id="scr-3" data-target="阴历很好，传统都用阴历。">
+<div><b>Câu 3:</b> Âm lịch rất tốt, truyền thống đều dùng âm lịch.</div>
 <div class="answer-zone"></div>
-<div class="word-bank" data-words="是|。|旅游|愿望|去|中国|我的"></div>
+<div class="word-bank" data-words="。|，|用|都|阴历|传统|很|阴历|好"></div>
 <div class="input-check"><button class="btn-primary" onclick="checkScramble(this)">Kiểm tra câu</button><button class="btn-sm" onclick="resetScramble(this)">Làm lại</button><span class="feedback"></span></div>
 </div>
 </div>
@@ -681,10 +694,10 @@ img, svg { max-width: 100%; }
 <div class="reading-zh hide-ruby">
 <section class="read-para">
 <div class="read-para-head"><button class="tts-btn" onclick="playChunked('read', 0.88, 0, 0)">🔊 Nghe đoạn này</button></div>
-<p class="read-para-text"><ruby>很<rt>Hěn</rt></ruby><ruby>多<rt>duō</rt></ruby><ruby>传<rt>chuán</rt></ruby><ruby>统<rt>tǒng</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>用<rt>yòng</rt></ruby><ruby>阴<rt>yīn</rt></ruby><ruby>历<rt>lì</rt></ruby><ruby>来<rt>lái</rt></ruby><ruby>算<rt>suàn</rt></ruby><ruby>日<rt>rì</rt></ruby><ruby>子<rt>zi</rt></ruby>。 <ruby>我<rt>Wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>愿<rt>yuàn</rt></ruby><ruby>望<rt>wàng</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>去<rt>qù</rt></ruby><ruby>中<rt>Zhōng</rt></ruby><ruby>国<rt>guó</rt></ruby><ruby>旅<rt>lǚ</rt></ruby><ruby>游<rt>yóu</rt></ruby>。 <ruby>我<rt>Wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>支<rt>zhī</rt></ruby><ruby>持<rt>chí</rt></ruby><ruby>我<rt>wǒ</rt></ruby>。 <ruby>我<rt>Wǒ</rt></ruby><ruby>祝<rt>zhù</rt></ruby><ruby>福<rt>fú</rt></ruby><ruby>你<rt>nǐ</rt></ruby>，<ruby>也<rt>yě</rt></ruby><ruby>祝<rt>zhù</rt></ruby><ruby>福<rt>fú</rt></ruby><ruby>你<rt>nǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby>。 <ruby>他<rt>Tā</rt></ruby><ruby>毕<rt>bì</rt></ruby><ruby>竟<rt>jìng</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>支<rt>zhī</rt></ruby><ruby>持<rt>chí</rt></ruby><ruby>他<rt>tā</rt></ruby>。</p>
+<p class="read-para-text"><ruby>传<rt>Chuán</rt></ruby><ruby>统<rt>tǒng</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>用<rt>yòng</rt></ruby><ruby>阴<rt>yīn</rt></ruby><ruby>历<rt>lì</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby>。 <ruby>我<rt>Wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>愿<rt>yuàn</rt></ruby><ruby>望<rt>wàng</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>去<rt>qù</rt></ruby><ruby>中<rt>Zhōng</rt></ruby><ruby>国<rt>guó</rt></ruby><ruby>旅<rt>lǚ</rt></ruby><ruby>游<rt>yóu</rt></ruby>，<ruby>也<rt>yě</rt></ruby><ruby>去<rt>qù</rt></ruby><ruby>爬<rt>pá</rt></ruby><ruby>山<rt>shān</rt></ruby>。 <ruby>我<rt>Wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>都<rt>dōu</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>支<rt>zhī</rt></ruby><ruby>持<rt>chí</rt></ruby><ruby>我<rt>wǒ</rt></ruby>，<ruby>也<rt>yě</rt></ruby><ruby>支<rt>zhī</rt></ruby><ruby>持<rt>chí</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>愿<rt>yuàn</rt></ruby><ruby>望<rt>wàng</rt></ruby>。 <ruby>我<rt>Wǒ</rt></ruby><ruby>祝<rt>zhù</rt></ruby><ruby>福<rt>fú</rt></ruby><ruby>你<rt>nǐ</rt></ruby>，<ruby>也<rt>yě</rt></ruby><ruby>祝<rt>zhù</rt></ruby><ruby>福<rt>fú</rt></ruby><ruby>你<rt>nǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby>，<ruby>很<rt>hěn</rt></ruby><ruby>高<rt>gāo</rt></ruby><ruby>兴<rt>xìng</rt></ruby>。 <ruby>他<rt>Tā</rt></ruby><ruby>毕<rt>bì</rt></ruby><ruby>竟<rt>jìng</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>支<rt>zhī</rt></ruby><ruby>持<rt>chí</rt></ruby><ruby>他<rt>tā</rt></ruby>，<ruby>也<rt>yě</rt></ruby><ruby>祝<rt>zhù</rt></ruby><ruby>福<rt>fú</rt></ruby><ruby>他<rt>tā</rt></ruby>。</p>
 </section>
 </div>
-<script>window.CHUNK_DATA = window.CHUNK_DATA || {}; window.CHUNK_DATA['read'] = ["很多传统都用阴历来算日子。我的愿望是去中国旅游。我的家人都很支持我。我祝福你，也祝福你的家人。他毕竟是我的家人，我要支持他。"];</script>
+<script>window.CHUNK_DATA = window.CHUNK_DATA || {}; window.CHUNK_DATA['read'] = ["传统都用阴历，我很喜欢。我的愿望是去中国旅游，也去爬山。我的家人都很支持我，也支持我的愿望。我祝福你，也祝福你的家人，很高兴。他毕竟是我的家人，我要支持他，也祝福他。"];</script>
 <div class="reading-Controls">
 <button class="tts-btn" onclick="playChunked('read', 0.88)">▶️ Nghe đoạn văn</button>
 <button class="tts-btn" id="chunk-pause-read" onclick="toggleChunkPause('read')">⏸️ Tạm dừng</button>
@@ -694,34 +707,34 @@ img, svg { max-width: 100%; }
 <button class="btn-sm" onclick="document.querySelector('.reading-zh').classList.toggle('hide-ruby')">🔤 Ẩn/Hiện Pinyin trên chữ</button>
 </div>
 <div class="reading-help" id="read-help">
-<div class="read-para-trans"><p>Rất nhiều truyền thống đều dùng âm lịch để tính ngày. Nguyện vọng của tôi là đi du lịch Trung Quốc. Gia đình tôi đều rất ủng hộ tôi. Tôi chúc phúc cho bạn, cũng chúc phúc cho gia đình bạn. Dù sao anh ấy cũng là người nhà của tôi, tôi phải ủng hộ anh ấy.</p></div>
+<div class="read-para-trans"><p>Truyền thống đều dùng âm lịch, tôi rất thích. Nguyện vọng của tôi là đi du lịch Trung Quốc, cũng đi leo núi. Gia đình tôi đều rất ủng hộ tôi, cũng ủng hộ nguyện vọng của tôi. Tôi chúc phúc cho bạn, cũng chúc phúc cho gia đình bạn, rất vui. Dù sao anh ấy cũng là người nhà của tôi, tôi phải ủng hộ anh ấy, cũng chúc phúc cho anh ấy.</p></div>
 </div>
 </div>
 <div class="q-item read-q" id="read-1">
-<div class="read-q-head"><span class="read-q-num">1</span><span>很多传统用什么来算日子？</span></div>
+<div class="read-q-head"><span class="read-q-num">1</span><span>我的愿望是什么？</span></div>
 <div class="mc-options">
-<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 很多传统都用阴历来算日子。')">A. 日历</button>
-<button class="mc-btn" onclick="checkMC(this, true, 'read-1', '✓ Chính xác! 很多传统都用阴历来算日子。')">B. 阴历</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 很多传统都用阴历来算日子。')">C. 手机</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 很多传统都用阴历来算日子。')">D. 阳历</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'read-1', '✓ Chính xác! 我的愿望是去中国旅游，也去爬山。')">A. 去中国旅游</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 我的愿望是去中国旅游，也去爬山。')">B. 学习</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 我的愿望是去中国旅游，也去爬山。')">C. 工作</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 我的愿望是去中国旅游，也去爬山。')">D. 去爬山</button>
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
 <div class="q-item read-q" id="read-2">
-<div class="read-q-head"><span class="read-q-num">2</span><span>我的愿望是什么？</span></div>
+<div class="read-q-head"><span class="read-q-num">2</span><span>我的家人支持谁？</span></div>
 <div class="mc-options">
-<button class="mc-btn" onclick="checkMC(this, true, 'read-2', '✓ Chính xác! 我的愿望是去中国旅游。')">A. 去中国旅游</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 我的愿望是去中国旅游。')">B. 去家里睡觉</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 我的愿望是去中国旅游。')">C. 去学校学习</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 我的愿望是去中国旅游。')">D. 去商店买东西</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 我的家人都很支持我，也支持我的愿望。')">A. 朋友</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'read-2', '✓ Chính xác! 我的家人都很支持我，也支持我的愿望。')">B. 我</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 我的家人都很支持我，也支持我的愿望。')">C. 他</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 我的家人都很支持我，也支持我的愿望。')">D. 老师</button>
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
 <div class="q-item read-q" id="read-3">
-<div class="read-q-head"><span class="read-q-num">3</span><span>我的家人怎么样？</span></div>
+<div class="read-q-head"><span class="read-q-num">3</span><span>他毕竟是我的什么人？</span></div>
 <div class="mc-options">
-<button class="mc-btn" onclick="checkMC(this, true, 'read-3', '✓ Chính xác! 我的家人都很支持我。')">A. 都很支持我</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: 我的家人都很支持我。')">B. 都很高兴</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: 我的家人都很支持我。')">C. 都很累</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: 我的家人都很支持我。')">D. 都很忙</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'read-3', '✓ Chính xác! 他毕竟是我的家人，我要支持他，也祝福他。')">A. 家人</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: 他毕竟是我的家人，我要支持他，也祝福他。')">B. 朋友</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: 他毕竟是我的家人，我要支持他，也祝福他。')">C. 学生</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: 他毕竟是我的家人，我要支持他，也祝福他。')">D. 老师</button>
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
 </div>
@@ -762,36 +775,36 @@ img, svg { max-width: 100%; }
 <div class="q-item" id="dlg-1">
 <div><b>Câu 1.</b> 小红的生日是阳历还是阴历？</div>
 <div class="mc-options">
-<button class="mc-btn" onclick="checkMC(this, true, 'dlg-1', '✓ Chính xác！小红：我的生日是阴历。')">A. 阴历</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'dlg-1', '✗ Chưa đúng：小红：我的生日是阴历。')">B. 阳历</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'dlg-1', '✗ Chưa đúng：小红：我的生日是阴历。')">C. 日历</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'dlg-1', '✗ Chưa đúng：小红：我的生日是阴历。')">D. 世纪</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'dlg-1', '✗ Chưa đúng：小红：我的生日是阴历。')">A. 世纪</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'dlg-1', '✓ Chính xác！小红：我的生日是阴历。')">B. 阴历</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'dlg-1', '✗ Chưa đúng：小红：我的生日是阴历。')">C. 阳历</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'dlg-1', '✗ Chưa đúng：小红：我的生日是阴历。')">D. 日历</button>
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
 <div class="q-item" id="dlg-2">
 <div><b>Câu 2.</b> 小红的家人为什么支持小红？</div>
 <div class="mc-options">
 <button class="mc-btn" onclick="checkMC(this, true, 'dlg-2', '✓ Chính xác！小明：你的愿望是家人健康，你的家人也很喜欢你。')">A. 因为他们很喜欢小红</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'dlg-2', '✗ Chưa đúng：小明：你的愿望是家人健康，你的家人也很喜欢你。')">B. 因为他们不喜欢小红</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'dlg-2', '✗ Chưa đúng：小明：你的愿望是家人健康，你的家人也很喜欢你。')">B. 因为小红不喜欢家人</button>
 <button class="mc-btn" onclick="checkMC(this, false, 'dlg-2', '✗ Chưa đúng：小明：你的愿望是家人健康，你的家人也很喜欢你。')">C. 因为今天是小明的生日</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'dlg-2', '✗ Chưa đúng：小明：你的愿望是家人健康，你的家人也很喜欢你。')">D. 因为小红不喜欢家人</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'dlg-2', '✗ Chưa đúng：小明：你的愿望是家人健康，你的家人也很喜欢你。')">D. 因为他们不喜欢小红</button>
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
 <div class="q-item" id="dlg-3">
 <div><b>Câu 3.</b> 小红觉得什么最好？</div>
 <div class="mc-options">
-<button class="mc-btn" onclick="checkMC(this, true, 'dlg-3', '✓ Chính xác！小红：对！毕竟家人是最好的。')">A. 家人</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'dlg-3', '✗ Chưa đúng：小红：对！毕竟家人是最好的。')">B. 蛋糕</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'dlg-3', '✗ Chưa đúng：小红：对！毕竟家人是最好的。')">C. 蜡烛</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'dlg-3', '✗ Chưa đúng：小红：对！毕竟家人是最好的。')">D. 电视</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'dlg-3', '✗ Chưa đúng：小红：对！毕竟家人是最好的。')">A. 蜡烛</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'dlg-3', '✗ Chưa đúng：小红：对！毕竟家人是最好的。')">B. 电视</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'dlg-3', '✗ Chưa đúng：小红：对！毕竟家人是最好的。')">C. 蛋糕</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'dlg-3', '✓ Chính xác！小红：对！毕竟家人是最好的。')">D. 家人</button>
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
 <div class="q-item" id="dlg-4">
 <div><b>Câu 4.</b> 小红的家人今天来，他们支持小红吗？</div>
 <div class="mc-options">
-<button class="mc-btn" onclick="checkMC(this, true, 'dlg-4', '✓ Chính xác！小红：他们今天都来。他们都支持我的愿望。')">A. 支持，他们都支持小红的愿望</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'dlg-4', '✗ Chưa đúng：小红：他们今天都来。他们都支持我的愿望。')">B. 不支持，他们不来</button>
-<button class="mc-btn" onclick="checkMC(this, false, 'dlg-4', '✗ Chưa đúng：小红：他们今天都来。他们都支持我的愿望。')">C. 支持，他们不喜欢小红</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'dlg-4', '✗ Chưa đúng：小红：他们今天都来。他们都支持我的愿望。')">A. 不支持，他们不来</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'dlg-4', '✗ Chưa đúng：小红：他们今天都来。他们都支持我的愿望。')">B. 支持，他们不喜欢小红</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'dlg-4', '✓ Chính xác！小红：他们今天都来。他们都支持我的愿望。')">C. 支持，他们都支持小红的愿望</button>
 <button class="mc-btn" onclick="checkMC(this, false, 'dlg-4', '✗ Chưa đúng：小红：他们今天都来。他们都支持我的愿望。')">D. 不支持，他们今天很忙</button>
 </div>
 <div class="feedback" style="margin-top:6px;"></div></div>
@@ -836,11 +849,11 @@ img, svg { max-width: 100%; }
 <p><b>Bài 2 (Nghe):</b> Câu 1: C — 很多传统都用阴历来算日子。 &nbsp;|&nbsp; Câu 2: D — 我的家人都很支持我。</p>
 <p><b>Bài phụ (Pinyin):</b> Câu 1: A — yīnlì &nbsp;|&nbsp; Câu 2: C — yuànwàng</p>
 <p><b>Bài 3 (Ghép cặp):</b> 阴历 = yīnlì · 愿望 = yuànwàng · 支持 = zhīchí · 祝福 = zhùfú · 毕竟 = bìjìng</p>
-<p><b>Bài 4 (Ngữ pháp):</b> 1. A — 我昨天买了东西。 &nbsp;|&nbsp; 2. A — 中国队比日本队强。</p>
+<p><b>Bài 4 (Ngữ pháp):</b> 1. B — 下 &nbsp;|&nbsp; 2. B — 你取下东西，去旅游。</p>
 <p><b>Bài 5 (Đoạn văn):</b> 阴历 → 愿望 → 支持 → 祝福 → 毕竟</p>
-<p><b>Bài 6 (Sắp xếp câu):</b><br>1. 很多传统都用阴历来算日子。<br>2. 我的家人都很支持我。<br>3. 我的愿望是去中国旅游。</p>
-<p><b>Bài 7 (Đọc hiểu):</b> 1. B — 阴历 &nbsp;|&nbsp; 2. A — 去中国旅游 &nbsp;|&nbsp; 3. A — 都很支持我</p>
-<p><b>Bài 8 (Nghe hội thoại):</b> 1. A — 阴历 &nbsp; 2. A — 因为他们很喜欢小红 &nbsp; 3. A — 家人 &nbsp; 4. A — 支持，他们都支持小红的愿望</p>
+<p><b>Bài 6 (Sắp xếp câu):</b><br>1. 我的家人支持我的愿望，也祝福我。<br>2. 他毕竟是我的家人，我祝福他。<br>3. 阴历很好，传统都用阴历。</p>
+<p><b>Bài 7 (Đọc hiểu):</b> 1. A — 去中国旅游 &nbsp;|&nbsp; 2. B — 我 &nbsp;|&nbsp; 3. A — 家人</p>
+<p><b>Bài 8 (Nghe hội thoại):</b> 1. B — 阴历 &nbsp; 2. A — 因为他们很喜欢小红 &nbsp; 3. D — 家人 &nbsp; 4. C — 支持，他们都支持小红的愿望</p>
 </details>
 </div>
 <div class="footer">Học tốt nhé anh! Làm xong anh chép phần Tổng kết gửi em nhé — câu nào sai em sẽ đưa vào danh sách “Cần ôn thêm”.</div>
@@ -920,12 +933,12 @@ var ITEM_INFO = {
     "bìjìng — dù sao; rốt cuộc"
   ],
   "gram-1": [
-    "Ngữ pháp 1 (Câu có 了 chỉ sự việc đã xảy ra)",
-    "A — 我昨天买了东西。"
+    "Ngữ pháp 1",
+    "B — 下"
   ],
   "gram-2": [
-    "Ngữ pháp 2 (So sánh với 比 không dùng 很)",
-    "A — 中国队比日本队强。"
+    "Ngữ pháp 2",
+    "B — 你取下东西，去旅游。"
   ],
   "cloze-task": [
     "Đoạn văn (5 chỗ trống)",
@@ -933,27 +946,27 @@ var ITEM_INFO = {
   ],
   "scr-1": [
     "Sắp xếp câu 1",
-    "很多传统都用阴历来算日子。"
+    "我的家人支持我的愿望，也祝福我。"
   ],
   "scr-2": [
     "Sắp xếp câu 2",
-    "我的家人都很支持我。"
+    "他毕竟是我的家人，我祝福他。"
   ],
   "scr-3": [
     "Sắp xếp câu 3",
-    "我的愿望是去中国旅游。"
+    "阴历很好，传统都用阴历。"
   ],
   "read-1": [
     "Đọc hiểu câu 1",
-    "B — 阴历"
+    "A — 去中国旅游"
   ],
   "read-2": [
     "Đọc hiểu câu 2",
-    "A — 去中国旅游"
+    "B — 我"
   ],
   "read-3": [
     "Đọc hiểu câu 3",
-    "A — 都很支持我"
+    "A — 家人"
   ],
   "dlg-1": [
     "Nghe hội thoại 1 (小红的生日是阳历还是阴历？)",
@@ -3467,6 +3480,8 @@ var DLG_LINES = [{"sp": "ming", "zh": "小红，今天是你的生日，你有�
 var dlgPlaying = false;
 var dlgPaused = false;
 var dlgRate = 0.88;
+var dlgIdx = 0; // câu hội thoại đang đọc / đang tạm dừng ở đó
+var dlgGen = 0; // tăng mỗi lần dừng/bắt đầu chuỗi mới: chuỗi cũ hết hiệu lực
 var DLG_VOICE_LS = 'dialogue-voices';
 var DLG_ZH_VOICES = [];
 function dlgVoiceKey(v) { return v.voiceURI || v.name; }
@@ -3595,38 +3610,51 @@ function dlgSpeak(i, onDone) {
   u.onerror = function () { if (onDone) onDone(); };
   window.speechSynthesis.speak(u);
 }
-function playDlgAll() {
+function playDlgAllFrom(start) {
   if (!('speechSynthesis' in window)) return;
   stopDlg();
   dlgPlaying = true;
-  var i = 0;
+  dlgPaused = false;
+  dlgIdx = (typeof start === 'number') ? start : 0;
+  var gen = ++dlgGen;
   (function next() {
-    if (!dlgPlaying || i >= DLG_LINES.length) { dlgPlaying = false; dlgPaused = false; updateDlgPlayBtn(); return; }
-    dlgSpeak(i, function () { i++; if (dlgPlaying) next(); });
+    if (gen !== dlgGen || !dlgPlaying || dlgIdx >= DLG_LINES.length) {
+      if (gen === dlgGen) { dlgPlaying = false; dlgPaused = false; updateDlgPlayBtn(); }
+      return;
+    }
+    dlgSpeak(dlgIdx, function () {
+      if (gen !== dlgGen || !dlgPlaying) return;
+      dlgIdx++;
+      next();
+    });
   })();
   updateDlgPlayBtn();
 }
+function playDlgAll() { playDlgAllFrom(0); }
 function updateDlgPlayBtn() {
   var b = document.getElementById('dlg-play-btn');
   if (b) b.textContent = (dlgPlaying && !dlgPaused) ? '⏸️' : '▶️';
 }
 function toggleDlgPlay() {
   if (!('speechSynthesis' in window)) return;
-  var ss = window.speechSynthesis;
   if (dlgPlaying && !dlgPaused) {
-    if (!ss.speaking) return;
-    ss.pause(); dlgPaused = true;
-  } else if (dlgPlaying && dlgPaused) {
-    if (!ss.paused) { dlgPaused = false; updateDlgPlayBtn(); return; }
-    ss.resume(); dlgPaused = false;
+    // Tạm dừng: hủy utterance đang đọc, nhớ vị trí (đọc tiếp sẽ đọc lại
+    // từ đầu câu đang dở). KHÔNG dùng pause()/resume(): trên Chrome/Android
+    // resume() sau pause() thường không đọc tiếp, chuỗi hội thoại chết hẳn.
+    var cur = dlgIdx;
+    stopDlg();
+    dlgIdx = cur;
+    dlgPaused = true;
+    updateDlgPlayBtn();
+  } else if (dlgPaused) {
+    // Đọc tiếp từ câu đang dừng.
+    playDlgAllFrom(dlgIdx);
   } else {
     playDlgAll();
-    return;
   }
-  updateDlgPlayBtn();
 }
 function restartDlg() { playDlgAll(); updateDlgPlayBtn(); }
-function stopDlg() { dlgPlaying = false; dlgPaused = false; if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); window.speechSynthesis.resume(); } updateDlgPlayBtn(); }
+function stopDlg() { dlgGen++; dlgPlaying = false; dlgPaused = false; if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); window.speechSynthesis.resume(); } updateDlgPlayBtn(); }
 function playDlgLine(i) { stopDlg(); dlgSpeak(i); }
 function previewDlgVoice(spId) {
   for (var i = 0; i < DLG_LINES.length; i++)
@@ -3740,6 +3768,9 @@ function chunkPauseBtn(id) { return document.getElementById('chunk-pause-' + id)
 function updateChunkPauseBtn(id) {
   var b = chunkPauseBtn(id);
   if (b) b.textContent = (chunkCur && chunkCur.id === id && chunkCur.paused) ? '▶️ Tiếp tục nghe' : '⏸️ Tạm dừng';
+  // Nút play/pause dạng icon (file tổng kết): ▶️ khi chưa đọc/tạm dừng, ⏸️ khi đang đọc.
+  var pb = document.getElementById('chunk-play-' + id);
+  if (pb) pb.textContent = (chunkCur && chunkCur.id === id && chunkCur.playing && !chunkCur.paused) ? '⏸️' : '▶️';
 }
 function stopChunked(id) {
   var stoppedId = null;
@@ -3760,7 +3791,7 @@ function playChunked(id, rate, start, end) {
   if (!chunks.length) return;
   stopChunked();
   if (typeof stopDlg === 'function') { try { stopDlg(); } catch (e) {} }
-  rate = rate || 0.88;
+  rate = (typeof chunkRate !== 'undefined' && chunkRate[id]) || rate || 0.88;
   start = (typeof start === 'number') ? start : 0;
   end = (typeof end === 'number') ? end : chunks.length - 1;
   chunkCur = { id: id, chunks: chunks, idx: start, end: end, rate: rate, playing: true, paused: false, gen: 0 };
@@ -3792,15 +3823,79 @@ function speakChunk(p, gen) {
 function toggleChunkPause(id) {
   if (!('speechSynthesis' in window)) return;
   if (!chunkCur || chunkCur.id !== id) return;
-  var ss = window.speechSynthesis;
-  if (ss.paused) { ss.resume(); chunkCur.paused = false; }
-  else if (ss.speaking) { ss.pause(); chunkCur.paused = true; }
-  else return;
-  updateChunkPauseBtn(id);
+  if (chunkCur.paused) {
+    // Đọc tiếp: đọc lại từ đầu chunk đang dừng (KHÔNG dùng pause()/
+    // resume(): trên Chrome/Android resume() sau pause() thường không đọc
+    // tiếp, chuỗi đọc chết hẳn).
+    chunkCur.paused = false;
+    updateChunkPauseBtn(id);
+    speakChunk(chunkCur, chunkCur.gen);
+  } else {
+    // Tạm dừng: hủy utterance đang đọc, giữ nguyên idx (đọc tiếp sẽ đọc
+    // lại chunk này). Tăng gen TRƯỚC khi cancel để callback onerror/onend
+    // của utterance bị hủy không động vào chuỗi nữa.
+    chunkCur.paused = true;
+    chunkCur.gen++;
+    window.speechSynthesis.cancel();
+    updateChunkPauseBtn(id);
+  }
 }
 function restartChunked(id) {
   var rate = (chunkCur && chunkCur.id === id) ? chunkCur.rate : 0.88;
   playChunked(id, rate);
+}
+
+// Tốc độ riêng từng player chunked (file tổng kết): thanh trượt tốc độ
+// ghi vào đây, playChunked dùng nó thay cho tốc độ mặc định 0.88.
+var chunkRate = {};
+function setChunkRateNum(id, v) {
+  var val = parseFloat(v);
+  if (isNaN(val)) val = 0.88;
+  val = Math.min(1.5, Math.max(0.5, val));
+  chunkRate[id] = val;
+  var r = document.getElementById('chunk-speed-range-' + id);
+  var n = document.getElementById('chunk-speed-num-' + id);
+  if (r) r.value = val;
+  if (n) n.value = val;
+}
+// Nút play/pause 1 nút duy nhất (file tổng kết, theo format Bài 8 mới):
+// chưa đọc thì đọc từ đầu, đang đọc/tạm dừng thì đổi trạng thái.
+function toggleChunkPlay(id) {
+  if (!('speechSynthesis' in window)) return;
+  if (chunkCur && chunkCur.id === id) { toggleChunkPause(id); return; }
+  playChunked(id, chunkRate[id] || 0.88);
+}
+// Nút Pinyin (file tổng kết): ẩn/hiện pinyin trên chữ trong hộp của
+// chính player đó + trạng thái nút (bật = nền xanh dương).
+function toggleChunkRuby(zhId, btnId) {
+  var zh = document.getElementById(zhId);
+  if (!zh) return;
+  zh.classList.toggle('hide-ruby');
+  var btn = document.getElementById(btnId);
+  if (btn) {
+    var on = !zh.classList.contains('hide-ruby');
+    btn.classList.toggle('on', on);
+    btn.classList.toggle('off', !on);
+  }
+}
+// Nút 👁️ dịch nghĩa kiểu truyện (file tổng kết): dịch nghĩa nằm trong hộp
+// chữ, ẩn bằng hide-trans.
+function toggleChunkTrans(zhId, btnId) {
+  var zh = document.getElementById(zhId);
+  if (!zh) return;
+  var show = zh.classList.contains('hide-trans');
+  zh.classList.toggle('hide-trans', !show);
+  var btn = document.getElementById(btnId);
+  if (btn) btn.classList.toggle('dlg-btn-on', show);
+}
+// Nút 👁️ dịch nghĩa kiểu Bài 7 (file tổng kết): dịch nghĩa ở hộp riêng,
+// hiện bằng .show.
+function toggleChunkHelp(helpId, btnId) {
+  var help = document.getElementById(helpId);
+  if (!help) return;
+  var shown = help.classList.toggle('show');
+  var btn = document.getElementById(btnId);
+  if (btn) btn.classList.toggle('dlg-btn-on', shown);
 }
 
 // ----- Ghi đè speak()/speakRate() của file mẫu (giữ nguyên chữ ký) -----
@@ -3809,6 +3904,7 @@ function restartChunked(id) {
 function speakRate(text, rate) {
   if (!('speechSynthesis' in window)) return;
   stopChunked();
+  if (typeof stopDlg === 'function') { try { stopDlg(); } catch (e) {} }
   window.speechSynthesis.cancel();
   var u = new SpeechSynthesisUtterance(text);
   u.lang = 'zh-CN'; u.rate = rate || 0.88;
