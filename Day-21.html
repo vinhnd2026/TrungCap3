@@ -1,0 +1,3339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trung cấp 3 — Day 21 (Bài 5)</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; background: #f4f1ea; color: #22252b; line-height: 1.55; }
+.wrap { max-width: 740px; margin: 0 auto; padding: 12px 14px 50px; }
+h1 { font-size: 22px; margin: 10px 0 4px; }
+.sub { color: #6b7280; font-size: 14px; margin-bottom: 14px; }
+.progress-bar { position: sticky; top: 0; z-index: 30; background: rgba(244,241,234,0.96); backdrop-filter: blur(4px); padding: 8px 0; border-bottom: 1px solid #e2ddd2; display: flex; justify-content: space-between; align-items: center; font-size: 13px; gap: 6px; flex-wrap: wrap; }
+.progress-track { flex: 1; min-width: 80px; height: 8px; background: #e2ddd2; border-radius: 4px; margin: 0 6px; overflow: hidden; }
+.progress-fill { height: 100%; background: #16a34a; width: 0%; transition: width 0.3s ease; }
+.card { background: #fff; border-radius: 14px; padding: 18px 20px; margin: 16px 0; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.card h2 { font-size: 18px; margin: 0 0 12px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #f4f1ea; padding-bottom: 8px; }
+.badge { font-size: 12px; font-weight: 600; background: #eef2ff; color: #3730a3; padding: 3px 8px; border-radius: 6px; }
+.char-section { border-top: 1px dashed #e5e0d5; padding-top: 14px; margin-top: 14px; }
+.char-section:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+.char-head { display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; }
+.char-info { flex: 1; }
+.char-head .big { font-size: 38px; line-height: 1.15; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.meta { color: #4b5563; font-size: 14.5px; margin-top: 4px; }
+.stroke-box { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: none; }
+.stroke { width: 150px; height: 150px; border-radius: 10px; border: 2px solid #d6d1c4; background-color: #fff;
+  background-image: linear-gradient(to right, transparent 49.5%, #e5e0d5 49.5%, #e5e0d5 50.5%, transparent 50.5%), linear-gradient(to bottom, transparent 49.5%, #e5e0d5 49.5%, #e5e0d5 50.5%, transparent 50.5%), linear-gradient(45deg, transparent 49.5%, #f3f0e8 49.5%, #f3f0e8 50.5%, transparent 50.5%), linear-gradient(-45deg, transparent 49.5%, #f3f0e8 49.5%, #f3f0e8 50.5%, transparent 50.5%);
+  touch-action: none; user-select: none; -webkit-user-select: none; cursor: crosshair; }
+.stroke.quiz-active { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+.stroke-controls { display: flex; gap: 4px; }
+.btn-sm { font-size: 12px; padding: 5px 9px; border-radius: 6px; border: 1px solid #d1d5db; background: #f9fafb; cursor: pointer; color: #374151; font-weight: 600; }
+.btn-sm:hover { background: #f3f4f6; }
+.btn-sm.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+.quiz-status { font-size: 12px; color: #2563eb; min-height: 18px; font-weight: 600; text-align: center; }
+.tts-btn { background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 6px; cursor: pointer; font-size: 14px; padding: 3px 8px; vertical-align: middle; }
+.tts-btn:hover { background: #e5e7eb; }
+.label { font-weight: 700; margin-top: 10px; font-size: 14px; color: #374151; }
+table { border-collapse: collapse; width: 100%; margin: 6px 0; font-size: 13.5px; }
+td, th { border-bottom: 1px solid #ece7db; padding: 5px 6px; text-align: left; vertical-align: top; }
+th { color: #6b7280; font-weight: 600; }
+.mn { background: #fdf6e3; border-left: 3px solid #f59e0b; border-radius: 6px; padding: 8px 12px; font-size: 14px; margin-top: 4px; }
+.colloc { background: #f0fdf4; border-left: 3px solid #16a34a; border-radius: 6px; padding: 8px 12px; font-size: 14px; margin-top: 4px; }
+.sentence-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; margin-top: 6px; }
+.sentence-zh { font-size: 18px; font-weight: 600; }
+.sentence-sub { font-size: 14px; color: #475569; margin-top: 4px; transition: filter 0.2s; }
+.blur { filter: blur(5px); cursor: pointer; user-select: none; }
+.blur:hover { filter: blur(2px); }
+.q-item { margin: 10px 0; padding: 10px 12px; background: #faf8f5; border-radius: 8px; }
+.hint { color: #6b7280; font-size: 13px; }
+.input-check { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; flex-wrap: wrap; position: relative; }
+.input-check input { padding: 6px 28px 6px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; width: 185px; }
+.input-check input:focus { outline: none; border-color: #2563eb; box-shadow: 0 0 0 2px rgba(37,99,235,0.15); }
+.btn-primary { padding: 6px 12px; background: #2563eb; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; }
+.btn-primary:hover { background: #1d4ed8; }
+.feedback { font-size: 13px; font-weight: 600; margin-left: 4px; }
+.ok { color: #15803d; } .err { color: #b91c1c; }
+
+/* ====== Khung Gợi ý Bộ gõ Pinyin (Hỗ trợ Phân trang) ====== */
+.py-wrap { position: relative; display: inline-block; }
+.py-badge {
+  position: absolute; right: 7px; top: 50%; transform: translateY(-50%);
+  font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px;
+  background: #dbeafe; color: #1e40af; pointer-events: none;
+}
+.py-badge.off { background: #e5e7eb; color: #6b7280; }
+.py-popup {
+  display: none; position: absolute; top: calc(100% + 5px); left: 0; z-index: 60;
+  background: #ffffff; border: 1.5px solid #2563eb; border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.16); padding: 7px 9px; min-width: 300px; max-width: 94vw;
+  user-select: none; -webkit-user-select: none;
+}
+.py-popup.show { display: block; }
+.py-header {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; margin-bottom: 6px;
+}
+.py-code { font-size: 13px; color: #1d4ed8; font-weight: 700; letter-spacing: 0.3px; }
+.py-pager { display: inline-flex; align-items: center; gap: 4px; }
+.py-page-info { font-size: 11.5px; color: #475569; font-weight: 600; min-width: 36px; text-align: center; }
+.py-page-btn {
+  border: 1px solid #cbd5e1; background: #f8fafc; color: #1e293b;
+  border-radius: 5px; padding: 2px 7px; font-size: 11px; font-weight: 700;
+  cursor: pointer; line-height: 1.3; transition: all 0.1s;
+}
+.py-page-btn:hover:not(:disabled) { background: #2563eb; color: #fff; border-color: #2563eb; }
+.py-page-btn:disabled { opacity: 0.35; cursor: default; }
+.py-cand-list { display: flex; flex-wrap: wrap; gap: 5px; min-height: 32px; align-items: center; }
+.py-cand {
+  display: inline-flex; align-items: baseline; gap: 3px; padding: 4px 9px;
+  border-radius: 6px; border: 1px solid #e2e8f0; background: #f8fafc;
+  cursor: pointer; font-size: 16px; font-weight: 600; color: #1e293b; transition: all 0.1s;
+}
+.py-cand:hover, .py-cand.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+.py-cand .py-idx { font-size: 11px; color: #64748b; font-weight: 700; margin-right: 1px; }
+.py-cand:hover .py-idx, .py-cand.active .py-idx { color: #dbeafe; }
+.py-footer {
+  margin-top: 5px; padding-top: 4px; border-top: 1px dashed #e2e8f0;
+  font-size: 10.5px; color: #64748b; display: flex; justify-content: space-between;
+}
+
+.mc-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+@media (max-width: 520px) { .mc-options { grid-template-columns: 1fr; } }
+.mc-btn { text-align: left; padding: 8px 12px; background: #fff; border: 1px solid #cbd5e1; border-radius: 8px; cursor: pointer; font-size: 14.5px; transition: all 0.15s; }
+.mc-btn:hover { background: #f1f5f9; }
+.mc-btn.correct { background: #dcfce7; border-color: #16a34a; color: #14532d; font-weight: 600; }
+.mc-btn.wrong { background: #fee2e2; border-color: #dc2626; color: #7f1d1d; }
+.reveal { display: none; margin-top: 8px; font-size: 16px; background: #eff6ff; border-left: 3px solid #2563eb; border-radius: 6px; padding: 6px 10px; }
+.match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+.match-col { display: flex; flex-direction: column; gap: 8px; }
+.match-card { padding: 10px 12px; background: #faf8f5; border: 2px solid #e2e8f0; border-radius: 8px; cursor: pointer; text-align: center; font-weight: 600; font-size: 15px; transition: all 0.15s; user-select: none; }
+.match-card.selected { border-color: #2563eb; background: #eff6ff; color: #1d4ed8; }
+.match-card.matched { border-color: #16a34a; background: #dcfce7; color: #15803d; cursor: default; opacity: 0.65; }
+.match-card.wrong-flash { border-color: #dc2626; background: #fee2e2; }
+.cloze-passage { font-size: 16.5px; line-height: 2.1; background: #faf8f5; padding: 14px; border-radius: 10px; }
+.cloze-select { font-size: 15px; padding: 3px 6px; border: 1px solid #94a3b8; border-radius: 6px; background: #fff; font-weight: 600; color: #1e293b; }
+
+/* ====== Bài đọc hiểu đoạn văn ====== */
+.reading-box {
+  background: #f8fafc; border: 1px solid #cbd5e1; border-left: 4px solid #2563eb;
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 14px;
+}
+.reading-zh { font-size: 17.5px; line-height: 1.95; font-weight: 500; color: #1e293b; }
+.reading-Controls { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.reading-help {
+  display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #cbd5e1;
+  font-size: 14px; color: #475569; line-height: 1.65;
+}
+.reading-help.show { display: block; }
+
+.scramble-box { margin: 12px 0; padding: 12px; background: #faf8f5; border-radius: 10px; }
+.word-bank, .answer-zone { display: flex; flex-wrap: wrap; gap: 8px; min-height: 44px; padding: 8px; border-radius: 8px; margin-top: 6px; align-items: center; }
+.word-bank { background: #eef2f6; }
+.answer-zone { background: #fff; border: 1px dashed #94a3b8; }
+.tile { padding: 5px 12px; background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.05); user-select: none; }
+.tile:hover { background: #f1f5f9; }
+.summary-list { font-size: 14px; margin: 8px 0; padding-left: 18px; }
+.footer { color: #6b7280; font-size: 14px; text-align: center; margin-top: 24px; }
+
+/* ====== Tối ưu điện thoại (bổ sung 2026-11-04 theo phản hồi của anh) ====== */
+img, svg { max-width: 100%; }
+@media (max-width: 640px) {
+  .wrap { padding: 10px 10px 40px; }
+  h1 { font-size: 19px; }
+  .card { padding: 14px 13px; margin: 12px 0; border-radius: 12px; }
+  .card h2 { font-size: 16px; flex-wrap: wrap; gap: 6px; }
+  .char-head { flex-direction: column; }
+  .char-info { width: 100%; }
+  .stroke-box { align-self: center; }
+  .char-head .big { font-size: 34px; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+  .input-check input { width: auto; flex: 1 1 130px; min-width: 0; }
+  .py-wrap { flex: 1 1 130px; min-width: 0; }
+  .py-wrap input { width: 100%; }
+  .py-popup { min-width: 0; width: min(320px, 92vw); }
+  .cloze-passage { font-size: 15.5px; line-height: 2.0; padding: 11px; }
+  .cloze-select { max-width: 40vw; }
+  .reading-zh { font-size: 16.5px; }
+  .sentence-zh { font-size: 17px; }
+  .progress-bar { font-size: 12px; }
+  .mc-btn { font-size: 14px; }
+}
+
+/* ====== Pinyin ruby trên đầu chữ Hán (phần đoạn văn) ====== */
+.reading-zh { line-height: 2.15; }
+.reading-zh ruby rt { font-size: 0.52em; color: #2563eb; font-weight: 400; }
+.reading-zh.hide-ruby { line-height: 1.95; }
+.reading-zh.hide-ruby rt { display: none; }
+
+
+  /* ====== Flashcard ôn tập ====== */
+  .flash-scene { perspective: 900px; margin: 10px 0; position: relative; }
+  .flash-nav-hint { position: absolute; top: 50%; transform: translateY(-50%); font-size: 30px; font-weight: 800; color: rgba(30, 58, 138, .30); z-index: 2; pointer-events: none; line-height: 1; }
+  .flash-nav-hint.left { left: 8px; }
+  .flash-nav-hint.right { right: 8px; }
+  .flash-card { position: relative; width: 100%; height: 170px; cursor: pointer; transform-style: preserve-3d; transition: transform 0.55s; }
+  .flash-card.flipped { transform: rotateY(180deg); }
+  .flash-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border-radius: 14px; padding: 14px; text-align: center; }
+  .flash-front { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 2px solid #93c5fd; }
+  .flash-back { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border: 2px solid #6ee7b7; transform: rotateY(180deg); }
+  .flash-hanzi { font-size: 2.6rem; font-weight: 800; color: #1e3a8a; line-height: 1.15; }
+  .flash-meaning { font-size: 1.45rem; font-weight: 700; color: #065f46; line-height: 1.3; }
+  .flash-sub { font-size: 1rem; color: #475569; }
+  .flash-tag { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; color: #64748b; text-transform: uppercase; }
+  .flash-Controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+  .flash-count { font-weight: 700; color: #334155; }
+
+/* --- Che bằng khối màu (thay blur) --- */
+.sentence-sub.cover { cursor: pointer; border-radius: 8px; padding: 6px 8px; }
+.sentence-sub.cover.covered { background: #e7dfcf; color: transparent; user-select: none; position: relative; }
+.sentence-sub.cover.covered::after { content: "👁 Bấm để xem pinyin + dịch nghĩa"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #6b7280; font-size: 13px; font-weight: 600; }
+/* --- Nghĩa tiếng Việt của từ mới (ngay dưới tiêu đề thẻ từ) --- */
+.word-meaning { font-size: 15px; color: #1e293b; margin: 2px 0 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="progress-bar">
+    <span>🎯 Tiến độ:</span>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+    <b id="prog-text">0 / 28</b>
+    <button class="btn-sm active" id="ime-toggle-btn" onclick="toggleIME()" title="Bật/tắt chế độ gõ Pinyin trực tiếp">⌨️ Gõ Pinyin: BẬT</button>
+    <button class="btn-sm" onclick="resetAll()" title="Xoá tiến độ làm lại">↺</button>
+  </div>
+
+  <h1>📚 Trung cấp 3 — Bài 5 · Day 21</h1>
+  <div class="sub">5 từ mới: 电子书 · 洞洞书 · 发展 · 好处 · 画册</div>
+<div class="card">
+<h2>⏰ Bài 1: Ôn nhanh bài cũ <span class="badge">Gõ Pinyin (hỗ trợ nhiều trang)</span></h2>
+<div class="q-item" id="rev-1" data-ans="重视">
+<div><b>Câu 1.</b> 老师很＿＿学生的健康。 <span class="hint">(zhòngshì — coi trọng)</span></div>
+<div class="input-check"><input type="text" placeholder="Gõ pinyin: zhongshi..."><button class="btn-primary" onclick="checkInput(this)">Kiểm tra</button><span class="feedback"></span></div></div>
+<div class="q-item" id="rev-2" data-ans="专心">
+<div><b>Câu 2.</b> Pinyin: <i>zhuānxīn</i> · Hán Việt: <i>chuyên tâm</i> · Nghĩa: “chuyên tâm, tập trung”.</div>
+<div class="input-check"><input type="text" placeholder="Gõ pinyin: zhuanxin..."><button class="btn-primary" onclick="checkInput(this)">Kiểm tra</button><span class="feedback"></span></div></div>
+<div class="q-item" id="rev-3" data-ans="装备">
+<div><b>Câu 3.</b> 去爬山要带很多＿＿。 <span class="hint">(zhuāngbèi — trang bị, thiết bị)</span></div>
+<div class="input-check"><input type="text" placeholder="Gõ pinyin: zhuangbei..."><button class="btn-primary" onclick="checkInput(this)">Kiểm tra</button><span class="feedback"></span></div></div>
+<div class="q-item" id="rev-4" data-ans="必需品">
+<div><b>Câu 4.</b> Pinyin: <i>bìxūpǐn</i> · Hán Việt: <i>tất nhu phẩm</i> · Nghĩa: “đồ dùng thiết yếu”.</div>
+<div class="input-check"><input type="text" placeholder="Gõ pinyin: bixupin..."><button class="btn-primary" onclick="checkInput(this)">Kiểm tra</button><span class="feedback"></span></div></div>
+<div class="q-item" id="rev-5" data-ans="电子商务">
+<div><b>Câu 5.</b> 现在很多人用＿＿买东西。 <span class="hint">(diànzǐshāngwù — thương mại điện tử)</span></div>
+<div class="input-check"><input type="text" placeholder="Gõ pinyin: dianzishangwu..."><button class="btn-primary" onclick="checkInput(this)">Kiểm tra</button><span class="feedback"></span></div></div>
+</div>
+<div class="card" id="flash-wrap">
+<h2>🃏 Flashcard ôn nhanh — 20 từ gần nhất trước hôm nay <span class="badge">20 từ · lật thẻ ngẫu nhiên</span></h2>
+<div class="sub">Mỗi thẻ ngẫu nhiên một chiều: khi thì mặt trước là chữ Hán, khi thì là nghĩa tiếng Việt. Chạm giữa thẻ để lật · chạm góc trái để xem thẻ trước, góc phải để xem thẻ sau.</div>
+<div class="flash-scene"><div class="flash-card" id="flash-card" onclick="flashTap(event)">
+<div class="flash-face flash-front" id="flash-front"></div>
+<div class="flash-face flash-back" id="flash-back"></div>
+</div><span class="flash-nav-hint left">‹</span><span class="flash-nav-hint right">›</span></div>
+<div class="flash-Controls">
+<button class="btn-sm" onclick="flashPrev()">⬅ Trước</button>
+<button class="btn-primary" onclick="flashFlip()">🔄 Lật thẻ</button>
+<button class="btn-sm" onclick="flashNext()">Tiếp ➡</button>
+<button class="btn-sm" onclick="flashReshuffle()">🔀 Trộn lại</button>
+<span class="flash-count" id="flash-count"></span>
+</div></div>
+<div class="card">
+<h2>1. 电子书 — diànzǐshū · điện tử thư <span class="badge">Danh từ</span></h2>
+<div class="word-meaning">Nghĩa: <b>sách điện tử</b></div>
+<div class="char-section"><div class="char-head"><div class="char-info">
+<div class="big">电 <button class="tts-btn" onclick="speak('电')">🔊</button></div>
+<div class="meta">Pinyin: <b>diàn</b> · Hán Việt: <b>điện</b> · Bộ thủ: <b>田 (Điền — ruộng)</b></div>
+<div><span class="label">Nghĩa:</span> điện</div>
+<div class="label">Chiết tự</div>
+<div><b>日 + 乚</b></div>
+<div style="margin-top:4px;">Phồn thể: <b>電</b> — Phồn thể 電 gồm 日 và 申; giản thể rút gọn thành 电.</div>
+<div class="label">Loại chữ</div>
+<div>Hội ý — 日 (ngày, mặt trời) + 乚 (nét móc, hầm mỏ) hợp lại thành nghĩa “điện”.</div>
+<div class="label">Từng thành phần</div>
+<table><tr><th>Thành phần</th><th>Pinyin · Hán Việt</th><th>Nghĩa riêng</th><th>Vai trò</th></tr>
+<tr><td><b>日</b></td><td>rì · nhật</td><td>ngày, mặt trời</td><td>Mặt trời</td></tr>
+<tr><td><b>乚</b></td><td>yǐn · ẩn</td><td>nét móc, hầm mỏ</td><td>Dây dẫn hình hầm mỏ</td></tr>
+</table></div>
+<div class="stroke-box">
+<div class="stroke" id="stroke-d21w0c0"></div>
+<div class="stroke-controls">
+<button class="btn-sm active" onclick="setMode('stroke-d21w0c0', '电', 'anim', this)">▶ Xem nét</button>
+<button class="btn-sm" onclick="setMode('stroke-d21w0c0', '电', 'quiz', this)">✍️ Tập viết</button>
+</div>
+<div class="quiz-status" id="status-stroke-d21w0c0">Đang chạy nét mẫu</div>
+</div></div>
+<div class="mn"><b>Cách nhớ:</b> Hãy nhìn kỹ phần lưới điện này. Dòng điện đi vào hay ra qua sợi dây hình mỏ hầm, rồi tỏa ra theo hình mặt trời qua các dây khác.</div>
+</div>
+<div class="char-section"><div class="char-head"><div class="char-info">
+<div class="big">子 <button class="tts-btn" onclick="speak('子')">🔊</button></div>
+<div class="meta">Pinyin: <b>zǐ</b> · Hán Việt: <b>tử</b> · Bộ thủ: <b>子 (Tử — con)</b></div>
+<div><span class="label">Nghĩa:</span> con, đứa trẻ</div>
+<div class="label">Chiết tự</div>
+<div><b>子</b></div>
+<div class="label">Loại chữ</div>
+<div>Tượng hình — hình vẽ con, đứa trẻ.</div>
+<div class="label">Từng thành phần</div>
+<table><tr><th>Thành phần</th><th>Pinyin · Hán Việt</th><th>Nghĩa riêng</th><th>Vai trò</th></tr>
+<tr><td><b>子</b></td><td>zǐ · tử</td><td>con</td><td>Cả chữ, vừa là bộ thủ vừa gợi nghĩa</td></tr>
+</table></div>
+<div class="stroke-box">
+<div class="stroke" id="stroke-d21w0c1"></div>
+<div class="stroke-controls">
+<button class="btn-sm active" onclick="setMode('stroke-d21w0c1', '子', 'anim', this)">▶ Xem nét</button>
+<button class="btn-sm" onclick="setMode('stroke-d21w0c1', '子', 'quiz', this)">✍️ Tập viết</button>
+</div>
+<div class="quiz-status" id="status-stroke-d21w0c1">Đang chạy nét mẫu</div>
+</div></div>
+<div class="mn"><b>Cách nhớ:</b> Không có thay đổi nào trong đời đột ngột bằng sự ra đời của một đứa trẻ.</div>
+</div>
+<div class="char-section"><div class="char-head"><div class="char-info">
+<div class="big">书 <button class="tts-btn" onclick="speak('书')">🔊</button></div>
+<div class="meta">Pinyin: <b>shū</b> · Hán Việt: <b>thư</b> · Bộ thủ: <b>乛 (Ất — nét móc)</b></div>
+<div><span class="label">Nghĩa:</span> sách</div>
+<div class="label">Chiết tự</div>
+<div><b>聿 + 丶</b></div>
+<div style="margin-top:4px;">Phồn thể: <b>書</b> — Phồn thể 書 gồm 聿 (bút) và 曰; giản thể rút gọn thành 书.</div>
+<div class="label">Loại chữ</div>
+<div>Hội ý — 聿 (bút lông) + 丶 (nét chấm) hợp lại thành nghĩa “sách”.</div>
+<div class="label">Từng thành phần</div>
+<table><tr><th>Thành phần</th><th>Pinyin · Hán Việt</th><th>Nghĩa riêng</th><th>Vai trò</th></tr>
+<tr><td><b>聿</b></td><td>yù · duật</td><td>bút lông</td><td>Phần chính: cây bút viết nên sách</td></tr>
+<tr><td><b>丶</b></td><td>diǎn · chủy</td><td>nét chấm</td><td>Nét chấm trang trí</td></tr>
+</table></div>
+<div class="stroke-box">
+<div class="stroke" id="stroke-d21w0c2"></div>
+<div class="stroke-controls">
+<button class="btn-sm active" onclick="setMode('stroke-d21w0c2', '书', 'anim', this)">▶ Xem nét</button>
+<button class="btn-sm" onclick="setMode('stroke-d21w0c2', '书', 'quiz', this)">✍️ Tập viết</button>
+</div>
+<div class="quiz-status" id="status-stroke-d21w0c2">Đang chạy nét mẫu</div>
+</div></div>
+<div class="mn"><b>Cách nhớ:</b> Ít trải nghiệm nào giống như lạc vào một cuốn sách hay. Sách là nơi trú ẩn tuyệt vời, có lẽ vì vậy thành phần này xuất hiện hai lần. Hơn nữa, sách ban ơn cho mọi người, từ người giàu có quyền trượng đến người chẳng có gì.</div>
+</div>
+<div class="colloc"><b>Cấu trúc &amp; Cụm từ:</b> <b>看电子书</b> (kàn diànzǐshū: đọc sách điện tử) · <b>电子书很好</b> (diànzǐshū hěn hǎo: sách điện tử rất tốt) · <b>买电子书</b> (mǎi diànzǐshū: mua sách điện tử).</div>
+<div class="sentence-box">
+<div class="sentence-zh">我喜欢在手机上看电子书。 <button class="tts-btn" onclick="speak('我喜欢在手机上看电子书。')">🔊</button></div>
+<div class="sentence-sub cover covered" onclick="this.classList.toggle('covered')">Wǒ xǐhuan zài shǒujī shang kàn diànzǐshū. — Ngã hỉ hoan tại thủ cơ thượng khán điện tử thư. — Tôi thích đọc sách điện tử trên điện thoại.</div>
+</div>
+<div class="q-item" id="chk-1" data-ans="电子书">
+<div><b>Tự kiểm tra:</b> 我喜欢在手机上看＿＿。 <span class="hint">(diànzǐshū — sách điện tử)</span></div>
+<div class="input-check">
+<input type="text" placeholder="Gõ pinyin: dianzishu...">
+<button class="btn-primary" onclick="checkInput(this)">Kiểm tra</button>
+<span class="feedback"></span></div></div>
+</div>
+<div class="card">
+<h2>2. 洞洞书 — dòngdòngshū · động động thư <span class="badge">Danh từ</span></h2>
+<div class="word-meaning">Nghĩa: <b>sách lỗ (sách đục lỗ cho trẻ em)</b></div>
+<div class="char-section"><div class="char-head"><div class="char-info">
+<div class="big">洞 <button class="tts-btn" onclick="speak('洞')">🔊</button></div>
+<div class="meta">Pinyin: <b>dòng</b> · Hán Việt: <b>động</b> · Bộ thủ: <b>氵 (Thủy — nước)</b></div>
+<div><span class="label">Nghĩa:</span> hang, lỗ</div>
+<div class="label">Chiết tự</div>
+<div><b>氵 + 同</b></div>
+<div class="label">Loại chữ</div>
+<div>Hình thanh — 氵 gợi nghĩa (nước), 同 gợi âm (âm cổ gần với dòng).</div>
+<div class="label">Từng thành phần</div>
+<table><tr><th>Thành phần</th><th>Pinyin · Hán Việt</th><th>Nghĩa riêng</th><th>Vai trò</th></tr>
+<tr><td><b>氵</b></td><td>shuǐ · thủy</td><td>nước</td><td>Gợi nghĩa (bộ thủ)</td></tr>
+<tr><td><b>同</b></td><td>tóng · đồng</td><td>cùng, giống</td><td>Gợi âm</td></tr>
+</table></div>
+<div class="stroke-box">
+<div class="stroke" id="stroke-d21w1c0"></div>
+<div class="stroke-controls">
+<button class="btn-sm active" onclick="setMode('stroke-d21w1c0', '洞', 'anim', this)">▶ Xem nét</button>
+<button class="btn-sm" onclick="setMode('stroke-d21w1c0', '洞', 'quiz', this)">✍️ Tập viết</button>
+</div>
+<div class="quiz-status" id="status-stroke-d21w1c0">Đang chạy nét mẫu</div>
+</div></div>
+<div class="mn"><b>Cách nhớ:</b> Nước, từng giọt một, mài mòn bề mặt đá theo cùng một cách. Cuối cùng, nó có thể khoét xuyên qua thành một cái lỗ.</div>
+</div>
+<div class="char-section"><div class="char-head"><div class="char-info">
+<div class="big">洞 <button class="tts-btn" onclick="speak('洞')">🔊</button></div>
+<div class="meta">Pinyin: <b>dòng</b> · Hán Việt: <b>động</b> · Bộ thủ: <b>氵 (Thủy — nước)</b></div>
+<div><span class="label">Nghĩa:</span> hang, lỗ</div>
+<div class="mn"><b>Lưu ý:</b> Chữ 洞 đã giải thích đầy đủ ở từ 洞洞书 phía trên trong bài này — xem lại phần chiết tự và tập viết ở đó nhé.</div>
+</div></div></div>
+<div class="char-section"><div class="char-head"><div class="char-info">
+<div class="big">书 <button class="tts-btn" onclick="speak('书')">🔊</button></div>
+<div class="meta">Pinyin: <b>shū</b> · Hán Việt: <b>thư</b> · Bộ thủ: <b>乛 (Ất — nét móc)</b></div>
+<div><span class="label">Nghĩa:</span> sách</div>
+<div class="mn"><b>Lưu ý:</b> Chữ 书 đã giải thích đầy đủ ở từ 电子书 phía trên trong bài này — xem lại phần chiết tự và tập viết ở đó nhé.</div>
+</div></div></div>
+<div class="colloc"><b>Cấu trúc &amp; Cụm từ:</b> <b>一本洞洞书</b> (yì běn dòngdòngshū: một cuốn sách lỗ) · <b>洞洞书很好</b> (dòngdòngshū hěn hǎo: sách lỗ rất hay) · <b>看洞洞书</b> (kàn dòngdòngshū: đọc sách lỗ).</div>
+<div class="sentence-box">
+<div class="sentence-zh">这本洞洞书很好看，小朋友很喜欢。 <button class="tts-btn" onclick="speak('这本洞洞书很好看，小朋友很喜欢。')">🔊</button></div>
+<div class="sentence-sub cover covered" onclick="this.classList.toggle('covered')">Zhè běn dòngdòngshū hěn hǎokàn, xiǎopéngyou hěn xǐhuan. — Giá bản động động thư ngận hảo khán, tiểu bằng hữu ngận hỉ hoan. — Cuốn sách lỗ này rất hay, các bạn nhỏ rất thích.</div>
+</div>
+<div class="q-item" id="chk-2" data-ans="洞洞书">
+<div><b>Tự kiểm tra:</b> 这本＿＿很好看，小朋友很喜欢。 <span class="hint">(dòngdòngshū — sách lỗ (sách đục lỗ cho trẻ em))</span></div>
+<div class="input-check">
+<input type="text" placeholder="Gõ pinyin: dongdongshu...">
+<button class="btn-primary" onclick="checkInput(this)">Kiểm tra</button>
+<span class="feedback"></span></div></div>
+</div>
+<div class="card">
+<h2>3. 发展 — fāzhǎn · phát triển <span class="badge">Động từ</span></h2>
+<div class="word-meaning">Nghĩa: <b>phát triển</b></div>
+<div class="char-section"><div class="char-head"><div class="char-info">
+<div class="big">发 <button class="tts-btn" onclick="speak('发')">🔊</button></div>
+<div class="meta">Pinyin: <b>fā</b> · Hán Việt: <b>phát</b> · Bộ thủ: <b>癶 (Bát — bước chân)</b></div>
+<div><span class="label">Nghĩa:</span> phát ra, phát triển</div>
+<div class="label">Chiết tự</div>
+<div><b>癶 + 友</b></div>
+<div style="margin-top:4px;">Phồn thể: <b>發</b> — Phồn thể 發 gồm 癶 và 殳; giản thể rút gọn thành 发 với 癶 và 友.</div>
+<div class="label">Loại chữ</div>
+<div>Hội ý — 癶 (bước chân) + 友 (bạn bè) hợp lại thành nghĩa “phát ra, phát triển”.</div>
+<div class="label">Từng thành phần</div>
+<table><tr><th>Thành phần</th><th>Pinyin · Hán Việt</th><th>Nghĩa riêng</th><th>Vai trò</th></tr>
+<tr><td><b>癶</b></td><td>bō · bát</td><td>bước chân</td><td>Hai bàn chân bước đi</td></tr>
+<tr><td><b>友</b></td><td>yǒu · hữu</td><td>bạn bè</td><td>Bạn bè cùng đi</td></tr>
+</table></div>
+<div class="stroke-box">
+<div class="stroke" id="stroke-d21w2c0"></div>
+<div class="stroke-controls">
+<button class="btn-sm active" onclick="setMode('stroke-d21w2c0', '发', 'anim', this)">▶ Xem nét</button>
+<button class="btn-sm" onclick="setMode('stroke-d21w2c0', '发', 'quiz', this)">✍️ Tập viết</button>
+</div>
+<div class="quiz-status" id="status-stroke-d21w2c0">Đang chạy nét mẫu</div>
+</div></div>
+<div class="mn"><b>Cách nhớ:</b> Bạn cần gửi thông điệp của mình ra thế giới. Tám người bạn tình nguyện làm sứ giả cho bạn.</div>
+</div>
+<div class="char-section"><div class="char-head"><div class="char-info">
+<div class="big">展 <button class="tts-btn" onclick="speak('展')">🔊</button></div>
+<div class="meta">Pinyin: <b>zhǎn</b> · Hán Việt: <b>triển</b> · Bộ thủ: <b>尸 (Thi — xác chết)</b></div>
+<div><span class="label">Nghĩa:</span> mở ra, phát triển</div>
+<div class="label">Chiết tự</div>
+<div><b>尸 + 衣</b></div>
+<div class="label">Loại chữ</div>
+<div>Hội ý — 尸 (xác chết) + 衣 (áo, quần áo) hợp lại thành nghĩa “mở ra, phát triển”.</div>
+<div class="label">Từng thành phần</div>
+<table><tr><th>Thành phần</th><th>Pinyin · Hán Việt</th><th>Nghĩa riêng</th><th>Vai trò</th></tr>
+<tr><td><b>尸</b></td><td>shī · thi</td><td>xác chết</td><td>Xác chết</td></tr>
+<tr><td><b>衣</b></td><td>yī · y</td><td>áo, quần áo</td><td>Quần áo phủ lên</td></tr>
+</table></div>
+<div class="stroke-box">
+<div class="stroke" id="stroke-d21w2c1"></div>
+<div class="stroke-controls">
+<button class="btn-sm active" onclick="setMode('stroke-d21w2c1', '展', 'anim', this)">▶ Xem nét</button>
+<button class="btn-sm" onclick="setMode('stroke-d21w2c1', '展', 'quiz', this)">✍️ Tập viết</button>
+</div>
+<div class="quiz-status" id="status-stroke-d21w2c1">Đang chạy nét mẫu</div>
+</div></div>
+<div class="mn"><b>Cách nhớ:</b> Một vụ tai nạn giao thông xấu xí. Người ta trải quần áo phủ lên thi thể vì tôn trọng nạn nhân và những người khác ở hiện trường.</div>
+</div>
+<div class="colloc"><b>Cấu trúc &amp; Cụm từ:</b> <b>发展很快</b> (fāzhǎn hěn kuài: phát triển rất nhanh) · <b>发展很好</b> (fāzhǎn hěn hǎo: phát triển rất tốt) · <b>发展经济</b> (fāzhǎn jīngjì: phát triển kinh tế).</div>
+<div class="sentence-box">
+<div class="sentence-zh">电子商务发展很快，很多人喜欢用。 <button class="tts-btn" onclick="speak('电子商务发展很快，很多人喜欢用。')">🔊</button></div>
+<div class="sentence-sub cover covered" onclick="this.classList.toggle('covered')">Diànzǐshāngwù fāzhǎn hěn kuài, hěn duō rén xǐhuan yòng. — Điện tử thương vụ phát triển ngận khoái, ngận đa nhân hỉ hoan dụng. — Thương mại điện tử phát triển rất nhanh, rất nhiều người thích dùng.</div>
+</div>
+<div class="q-item" id="chk-3" data-ans="发展">
+<div><b>Tự kiểm tra:</b> 电子商务＿＿很快，很多人喜欢用。 <span class="hint">(fāzhǎn — phát triển)</span></div>
+<div class="input-check">
+<input type="text" placeholder="Gõ pinyin: fazhan...">
+<button class="btn-primary" onclick="checkInput(this)">Kiểm tra</button>
+<span class="feedback"></span></div></div>
+</div>
+<div class="card">
+<h2>4. 好处 — hǎochù · hảo xứ <span class="badge">Danh từ</span></h2>
+<div class="word-meaning">Nghĩa: <b>lợi ích, cái hay</b></div>
+<div class="char-section"><div class="char-head"><div class="char-info">
+<div class="big">好 <button class="tts-btn" onclick="speak('好')">🔊</button></div>
+<div class="meta">Pinyin: <b>hǎo</b> · Hán Việt: <b>hảo</b> · Bộ thủ: <b>女 (Nữ — đàn bà)</b></div>
+<div><span class="label">Nghĩa:</span> tốt</div>
+<div class="label">Chiết tự</div>
+<div><b>女 + 子</b></div>
+<div class="label">Loại chữ</div>
+<div>Hội ý — 女 (đàn bà, phụ nữ) + 子 (con, đứa trẻ) hợp lại thành nghĩa “tốt”.</div>
+<div class="label">Từng thành phần</div>
+<table><tr><th>Thành phần</th><th>Pinyin · Hán Việt</th><th>Nghĩa riêng</th><th>Vai trò</th></tr>
+<tr><td><b>女</b></td><td>nǚ · nữ</td><td>đàn bà, phụ nữ</td><td>Người phụ nữ</td></tr>
+<tr><td><b>子</b></td><td>zǐ · tử</td><td>con, đứa trẻ</td><td>Đứa con</td></tr>
+</table></div>
+<div class="stroke-box">
+<div class="stroke" id="stroke-d21w3c0"></div>
+<div class="stroke-controls">
+<button class="btn-sm active" onclick="setMode('stroke-d21w3c0', '好', 'anim', this)">▶ Xem nét</button>
+<button class="btn-sm" onclick="setMode('stroke-d21w3c0', '好', 'quiz', this)">✍️ Tập viết</button>
+</div>
+<div class="quiz-status" id="status-stroke-d21w3c0">Đang chạy nét mẫu</div>
+</div></div>
+<div class="mn"><b>Cách nhớ:</b> Không cảnh nào gợi ý về sự tốt đẹp hơn hình ảnh người phụ nữ cùng đứa con của mình.</div>
+</div>
+<div class="char-section"><div class="char-head"><div class="char-info">
+<div class="big">处 <button class="tts-btn" onclick="speak('处')">🔊</button></div>
+<div class="meta">Pinyin: <b>chù</b> · Hán Việt: <b>xứ</b> · Bộ thủ: <b>夂 (Tuy — đi chậm)</b></div>
+<div><span class="label">Nghĩa:</span> chỗ, nơi; lợi ích</div>
+<div class="label">Chiết tự</div>
+<div><b>夂 + 卜</b></div>
+<div style="margin-top:4px;">Phồn thể: <b>處</b> — Phồn thể 處 gồm 虍 và 夂; giản thể rút gọn thành 处.</div>
+<div class="label">Loại chữ</div>
+<div>Hội ý — 夂 (bước đi chậm) + 卜 (bói, dự đoán) hợp lại thành nghĩa “chỗ, nơi; lợi ích”.</div>
+<div class="label">Từng thành phần</div>
+<table><tr><th>Thành phần</th><th>Pinyin · Hán Việt</th><th>Nghĩa riêng</th><th>Vai trò</th></tr>
+<tr><td><b>夂</b></td><td>zhǐ · tuy</td><td>bước đi chậm</td><td>Bước chân đi tới</td></tr>
+<tr><td><b>卜</b></td><td>bǔ · bốc</td><td>bói, dự đoán</td><td>Đoán trước</td></tr>
+</table></div>
+<div class="stroke-box">
+<div class="stroke" id="stroke-d21w3c1"></div>
+<div class="stroke-controls">
+<button class="btn-sm active" onclick="setMode('stroke-d21w3c1', '处', 'anim', this)">▶ Xem nét</button>
+<button class="btn-sm" onclick="setMode('stroke-d21w3c1', '处', 'quiz', this)">✍️ Tập viết</button>
+</div>
+<div class="quiz-status" id="status-stroke-d21w3c1">Đang chạy nét mẫu</div>
+</div></div>
+<div class="mn"><b>Cách nhớ:</b> Có một lý do khiến anh chàng này luôn tiến lên trong đời: dường như anh ta có thể đoán trước tính cách người khác, nhờ đó hòa hợp được với mọi người.</div>
+</div>
+<div class="colloc"><b>Cấu trúc &amp; Cụm từ:</b> <b>有很多好处</b> (yǒu hěn duō hǎochù: có rất nhiều lợi ích) · <b>好处很多</b> (hǎochù hěn duō: lợi ích rất nhiều) · <b>跑步的好处</b> (pǎobù de hǎochù: lợi ích của việc chạy bộ).</div>
+<div class="sentence-box">
+<div class="sentence-zh">跑步有很多好处，身体很健康。 <button class="tts-btn" onclick="speak('跑步有很多好处，身体很健康。')">🔊</button></div>
+<div class="sentence-sub cover covered" onclick="this.classList.toggle('covered')">Pǎobù yǒu hěn duō hǎochù, shēntǐ hěn jiànkāng. — Bào bộ hữu ngận đa hảo xứ, thân thể ngận kiện khang. — Chạy bộ có rất nhiều lợi ích, cơ thể rất khỏe mạnh.</div>
+</div>
+<div class="q-item" id="chk-4" data-ans="好处">
+<div><b>Tự kiểm tra:</b> 跑步有很多＿＿，身体很健康。 <span class="hint">(hǎochù — lợi ích, cái hay)</span></div>
+<div class="input-check">
+<input type="text" placeholder="Gõ pinyin: haochu...">
+<button class="btn-primary" onclick="checkInput(this)">Kiểm tra</button>
+<span class="feedback"></span></div></div>
+</div>
+<div class="card">
+<h2>5. 画册 — huàcè · họa sách <span class="badge">Danh từ</span></h2>
+<div class="word-meaning">Nghĩa: <b>tập tranh, album tranh</b></div>
+<div class="char-section"><div class="char-head"><div class="char-info">
+<div class="big">画 <button class="tts-btn" onclick="speak('画')">🔊</button></div>
+<div class="meta">Pinyin: <b>huà</b> · Hán Việt: <b>họa</b> · Bộ thủ: <b>田 (Điền — ruộng)</b></div>
+<div><span class="label">Nghĩa:</span> vẽ, tranh</div>
+<div class="label">Chiết tự</div>
+<div><b>一 + 田 + 凵</b></div>
+<div style="margin-top:4px;">Phồn thể: <b>畫</b> — Phồn thể 畫 gồm 聿 và 田; giản thể rút gọn thành 画.</div>
+<div class="label">Loại chữ</div>
+<div>Hội ý — 一 (một) + 田 (ruộng) + 凵 (khung chứa) hợp lại thành nghĩa “vẽ, tranh”.</div>
+<div class="label">Từng thành phần</div>
+<table><tr><th>Thành phần</th><th>Pinyin · Hán Việt</th><th>Nghĩa riêng</th><th>Vai trò</th></tr>
+<tr><td><b>一</b></td><td>yī · nhất</td><td>một</td><td>Khung trên</td></tr>
+<tr><td><b>田</b></td><td>tián · điền</td><td>ruộng</td><td>Cánh đồng</td></tr>
+<tr><td><b>凵</b></td><td>kǎn · khảm</td><td>khung chứa</td><td>Khung chứa bên dưới</td></tr>
+</table></div>
+<div class="stroke-box">
+<div class="stroke" id="stroke-d21w4c0"></div>
+<div class="stroke-controls">
+<button class="btn-sm active" onclick="setMode('stroke-d21w4c0', '画', 'anim', this)">▶ Xem nét</button>
+<button class="btn-sm" onclick="setMode('stroke-d21w4c0', '画', 'quiz', this)">✍️ Tập viết</button>
+</div>
+<div class="quiz-status" id="status-stroke-d21w4c0">Đang chạy nét mẫu</div>
+</div></div>
+<div class="mn"><b>Cách nhớ:</b> Còn gì tượng trưng cho phong cảnh bạn đang vẽ hơn là một cánh đồng. Các nhà phê bình tinh ý vẫn nói tranh của bạn lớn hơn đời thật — xem kìa, bức vẽ bùng nổ ra khỏi khung tạo bởi &#x27;một&#x27; và &#x27;khung chứa&#x27;!</div>
+</div>
+<div class="char-section"><div class="char-head"><div class="char-info">
+<div class="big">册 <button class="tts-btn" onclick="speak('册')">🔊</button></div>
+<div class="meta">Pinyin: <b>cè</b> · Hán Việt: <b>sách</b> · Bộ thủ: <b>冂 (Quynh — vây quanh)</b></div>
+<div><span class="label">Nghĩa:</span> tập sách, quyển</div>
+<div class="label">Chiết tự</div>
+<div><b>冂 + 冂 + 一</b></div>
+<div class="label">Loại chữ</div>
+<div>Hội ý — 冂 (vây quanh) + 一 (một) hợp lại thành nghĩa “tập sách, quyển”.</div>
+<div class="label">Từng thành phần</div>
+<table><tr><th>Thành phần</th><th>Pinyin · Hán Việt</th><th>Nghĩa riêng</th><th>Vai trò</th></tr>
+<tr><td><b>冂</b></td><td>jiōng · quynh</td><td>vây quanh</td><td>Khung viền (x2: hai tập giấy)</td></tr>
+<tr><td><b>一</b></td><td>yī · nhất</td><td>một</td><td>Nét ngang nối hai tập lại</td></tr>
+</table></div>
+<div class="stroke-box">
+<div class="stroke" id="stroke-d21w4c1"></div>
+<div class="stroke-controls">
+<button class="btn-sm active" onclick="setMode('stroke-d21w4c1', '册', 'anim', this)">▶ Xem nét</button>
+<button class="btn-sm" onclick="setMode('stroke-d21w4c1', '册', 'quiz', this)">✍️ Tập viết</button>
+</div>
+<div class="quiz-status" id="status-stroke-d21w4c1">Đang chạy nét mẫu</div>
+</div></div>
+<div class="mn"><b>Cách nhớ:</b> Cầm một cuốn sách cũ đứng thẳng và nhìn xuống mép trên: sách là tập hợp các tờ gấp lại, khâu với nhau. Chữ này là sơ đồ của cấu trúc đó — hai tập giấy khâu lại thành một cuốn sách nhỏ.</div>
+</div>
+<div class="colloc"><b>Cấu trúc &amp; Cụm từ:</b> <b>一本画册</b> (yì běn huàcè: một tập tranh) · <b>画册很漂亮</b> (huàcè hěn piàoliang: tập tranh rất đẹp) · <b>看画册</b> (kàn huàcè: xem tập tranh).</div>
+<div class="sentence-box">
+<div class="sentence-zh">这本画册很漂亮，我很喜欢。 <button class="tts-btn" onclick="speak('这本画册很漂亮，我很喜欢。')">🔊</button></div>
+<div class="sentence-sub cover covered" onclick="this.classList.toggle('covered')">Zhè běn huàcè hěn piàoliang, wǒ hěn xǐhuan. — Giá bản họa sách ngận phiêu lượng, ngã ngận hỉ hoan. — Tập tranh này rất đẹp, tôi rất thích.</div>
+</div>
+<div class="q-item" id="chk-5" data-ans="画册">
+<div><b>Tự kiểm tra:</b> 这本＿＿很漂亮，我很喜欢。 <span class="hint">(huàcè — tập tranh, album tranh)</span></div>
+<div class="input-check">
+<input type="text" placeholder="Gõ pinyin: huace...">
+<button class="btn-primary" onclick="checkInput(this)">Kiểm tra</button>
+<span class="feedback"></span></div></div>
+</div>
+<div class="card">
+<h2>🎧 Bài 2: Phản xạ Nghe – Chọn đáp án <span class="badge">Luyện nghe Trung cấp 3</span></h2>
+<div class="sub" style="margin-bottom:8px;">Bấm 🔊 để nghe (hoặc 🐢 nghe chậm) câu tiếng Trung và chọn nghĩa đúng. Trả lời đúng xong, chữ Hán của câu sẽ hiện ra để anh đối chiếu.</div>
+<div class="q-item" id="lis-1">
+<div><b>Câu 1:</b> <button class="tts-btn" onclick="speakRate('我喜欢在手机上看电子书。', 0.88)">🔊 Nghe câu 1</button> <button class="tts-btn" onclick="speakRate('我喜欢在手机上看电子书。', 0.6)">🐢 Nghe chậm</button></div>
+<div class="mc-options">
+<button class="mc-btn" onclick="checkMC(this, false, 'lis-1', '✗ Chưa đúng, nghe lại nhé!')">A. Anh ấy chuyên tâm học, không xem điện thoại.</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'lis-1', '✓ Chính xác!', '我喜欢在手机上看电子书。')">B. Tôi thích đọc sách điện tử trên điện thoại.</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'lis-1', '✗ Chưa đúng, nghe lại nhé!')">C. Cuốn sách lỗ này rất hay, các bạn nhỏ rất thích.</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'lis-1', '✗ Chưa đúng, nghe lại nhé!')">D. Đi leo núi phải mang theo rất nhiều trang bị.</button>
+</div>
+<div class="feedback" style="margin-top:6px;"></div>
+<div class="reveal">Câu vừa nghe: <b>我喜欢在手机上看电子书。</b></div>
+</div>
+<div class="q-item" id="lis-2">
+<div><b>Câu 2:</b> <button class="tts-btn" onclick="speakRate('电子商务发展很快，很多人喜欢用。', 0.88)">🔊 Nghe câu 2</button> <button class="tts-btn" onclick="speakRate('电子商务发展很快，很多人喜欢用。', 0.6)">🐢 Nghe chậm</button></div>
+<div class="mc-options">
+<button class="mc-btn" onclick="checkMC(this, true, 'lis-2', '✓ Chính xác!', '电子商务发展很快，很多人喜欢用。')">A. Thương mại điện tử phát triển rất nhanh, rất nhiều người thích dùng.</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'lis-2', '✗ Chưa đúng, nghe lại nhé!')">B. Anh ấy chuyên tâm học, không xem điện thoại.</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'lis-2', '✗ Chưa đúng, nghe lại nhé!')">C. Thầy giáo rất coi trọng sức khỏe của học sinh.</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'lis-2', '✗ Chưa đúng, nghe lại nhé!')">D. Đi leo núi phải mang theo rất nhiều trang bị.</button>
+</div>
+<div class="feedback" style="margin-top:6px;"></div>
+<div class="reveal">Câu vừa nghe: <b>电子商务发展很快，很多人喜欢用。</b></div>
+</div>
+</div>
+<div class="card">
+<h2>🔗 Bài 3: Ghép cặp từ vựng (连连看) <span class="badge">Phản xạ mặt chữ</span></h2>
+<div class="sub" style="margin-bottom:8px;">Chạm 1 ô chữ Hán bên trái rồi chạm 1 ô Pinyin + Nghĩa tương ứng bên phải.</div>
+<div class="match-grid" id="match-board">
+<div class="match-col" id="match-left"></div>
+<div class="match-col" id="match-right"></div>
+</div>
+<div class="feedback" id="match-feedback" style="margin-top:10px;"></div>
+</div>
+<div class="card">
+<h2>⚖️ Bài 4: Bắt lỗi ngữ pháp Trung cấp 3 <span class="badge">Tránh bẫy phòng thi</span></h2>
+<div class="sub" style="margin-bottom:8px;">Mỗi cặp dưới đây chỉ có <b>1 câu đúng ngữ pháp</b> (đã ẩn ký hiệu gợi ý). Hãy chọn câu đúng:</div>
+<div class="q-item" id="gram-1">
+<div><b>1. Câu có 了 chỉ sự việc đã xảy ra:</b> (Tôi hôm qua đã mua đồ)</div>
+<div class="mc-options">
+<button class="mc-btn" onclick="checkMC(this, true, 'gram-1', '✓ Đúng! 了 ở cuối câu đánh dấu sự việc đã hoàn thành.')">A. 我昨天买了东西。</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'gram-1', '✗ Sai: việc đã xảy ra hôm qua cần 了 ở cuối câu — 我昨天买了东西 mới đúng.')">B. 我昨天买东西。</button>
+</div>
+<div class="feedback" style="margin-top:6px;"></div></div>
+<div class="q-item" id="gram-2">
+<div><b>2. So sánh với 比 không dùng 很:</b> (Đội Trung Quốc mạnh hơn đội Nhật Bản)</div>
+<div class="mc-options">
+<button class="mc-btn" onclick="checkMC(this, true, 'gram-2', '✓ Đúng! Cấu trúc: A + 比 + B + tính từ, không thêm 很。')">A. 中国队比日本队强。</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'gram-2', '✗ Sai: câu so sánh 比 KHÔNG dùng 很 trước tính từ — bỏ 很 đi.')">B. 中国队比日本队很强。</button>
+</div>
+<div class="feedback" style="margin-top:6px;"></div></div>
+</div>
+<div class="card">
+<h2>📖 Bài 5: Hoàn thành đoạn văn ngắn <span class="badge">Điền từ vào chỗ trống</span></h2>
+<div class="sub" style="margin-bottom:8px;">Chọn từ thích hợp điền vào đoạn văn — đoạn văn dùng cả 5 từ mới hôm nay:</div>
+<div class="cloze-passage" id="cloze-box">
+我喜欢在手机上看<select class="cloze-select" data-ans="电子书"><option value="">-- chọn --</option><option>电子书</option><option>洞洞书</option><option>发展</option><option>好处</option><option>画册</option></select>。
+这本<select class="cloze-select" data-ans="洞洞书"><option value="">-- chọn --</option><option>电子书</option><option>洞洞书</option><option>发展</option><option>好处</option><option>画册</option></select>很好看，小朋友很喜欢。
+电子商务<select class="cloze-select" data-ans="发展"><option value="">-- chọn --</option><option>电子书</option><option>洞洞书</option><option>发展</option><option>好处</option><option>画册</option></select>很快，很多人喜欢用。
+跑步有很多<select class="cloze-select" data-ans="好处"><option value="">-- chọn --</option><option>电子书</option><option>洞洞书</option><option>发展</option><option>好处</option><option>画册</option></select>，身体很健康。
+这本<select class="cloze-select" data-ans="画册"><option value="">-- chọn --</option><option>电子书</option><option>洞洞书</option><option>发展</option><option>好处</option><option>画册</option></select>很漂亮，我很喜欢。
+</div>
+<div class="input-check" style="margin-top:10px;">
+<button class="btn-primary" onclick="checkCloze()">Kiểm tra đoạn văn</button>
+<button class="btn-sm" onclick="speak('我喜欢在手机上看电子书。这本洞洞书很好看，小朋友很喜欢。电子商务发展很快，很多人喜欢用。跑步有很多好处，身体很健康。这本画册很漂亮，我很喜欢。')">🔊 Nghe cả đoạn</button>
+<span class="feedback" id="cloze-fb"></span></div></div>
+<div class="card">
+<h2>🧩 Bài 6: Sắp xếp câu (连词成句) <span class="badge">Tư duy trật tự từ</span></h2>
+<div class="sub" style="margin-bottom:8px;">Chạm vào từng từ ở khung xám để ghép thành câu hoàn chỉnh:</div>
+<div class="scramble-box" id="scr-1" data-target="我喜欢在手机上看电子书。">
+<div><b>Câu 1:</b> Tôi thích đọc sách điện tử trên điện thoại.</div>
+<div class="answer-zone"></div>
+<div class="word-bank" data-words="手机|。|看|上|在|电子书|我|喜欢"></div>
+<div class="input-check"><button class="btn-primary" onclick="checkScramble(this)">Kiểm tra câu</button><button class="btn-sm" onclick="resetScramble(this)">Làm lại</button><span class="feedback"></span></div>
+</div>
+<div class="scramble-box" id="scr-2" data-target="电子商务发展很快，很多人喜欢用。">
+<div><b>Câu 2:</b> Thương mại điện tử phát triển rất nhanh, rất nhiều người thích dùng.</div>
+<div class="answer-zone"></div>
+<div class="word-bank" data-words="很|。|，|喜欢|用|多|发展|电子商务|快|人|很"></div>
+<div class="input-check"><button class="btn-primary" onclick="checkScramble(this)">Kiểm tra câu</button><button class="btn-sm" onclick="resetScramble(this)">Làm lại</button><span class="feedback"></span></div>
+</div>
+<div class="scramble-box" id="scr-3" data-target="这本洞洞书很好看，小朋友很喜欢。">
+<div><b>Câu 3:</b> Cuốn sách lỗ này rất hay, các bạn nhỏ rất thích.</div>
+<div class="answer-zone"></div>
+<div class="word-bank" data-words="。|，|很|很|好看|本|小|洞洞书|朋友|这|喜欢"></div>
+<div class="input-check"><button class="btn-primary" onclick="checkScramble(this)">Kiểm tra câu</button><button class="btn-sm" onclick="resetScramble(this)">Làm lại</button><span class="feedback"></span></div>
+</div>
+</div>
+<div class="card">
+<h2>📚 Bài 7: Đọc hiểu đoạn văn – Chọn đáp án <span class="badge">Đọc hiểu Trung cấp 3 · Tổng kết tuần</span></h2>
+<div class="sub" style="margin-bottom:8px;">Đọc đoạn văn tổng kết tuần dưới đây (dùng các từ đã học trong tuần) rồi chọn đáp án đúng cho 3 câu hỏi bên dưới:</div>
+<div class="reading-box">
+<div class="reading-zh hide-ruby"><ruby>推<rt>Tuī</rt></ruby><ruby>荐<rt>jiàn</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>电<rt>diàn</rt></ruby><ruby>子<rt>zǐ</rt></ruby><ruby>书<rt>shū</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>营<rt>yíng</rt></ruby><ruby>养<rt>yǎng</rt></ruby>，<ruby>脱<rt>tuō</rt></ruby><ruby>脂<rt>zhī</rt></ruby><ruby>牛<rt>niú</rt></ruby><ruby>奶<rt>nǎi</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>喝<rt>hē</rt></ruby>。<ruby>洞<rt>Dòng</rt></ruby><ruby>洞<rt>dòng</rt></ruby><ruby>书<rt>shū</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>香<rt>xiāng</rt></ruby><ruby>味<rt>wèi</rt></ruby>，<ruby>画<rt>huà</rt></ruby><ruby>册<rt>cè</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>漂<rt>piào</rt></ruby><ruby>亮<rt>liang</rt></ruby>。<ruby>买<rt>Mǎi</rt></ruby><ruby>必<rt>bì</rt></ruby><ruby>需<rt>xū</rt></ruby><ruby>品<rt>pǐn</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>处<rt>chù</rt></ruby>，<ruby>发<rt>fā</rt></ruby><ruby>展<rt>zhǎn</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>快<rt>kuài</rt></ruby>。<ruby>天<rt>Tiān</rt></ruby><ruby>才<rt>cái</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>优<rt>yōu</rt></ruby><ruby>雅<rt>yǎ</rt></ruby>，<ruby>相<rt>xiāng</rt></ruby><ruby>反<rt>fǎn</rt></ruby>，<ruby>他<rt>tā</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>专<rt>zhuān</rt></ruby><ruby>心<rt>xīn</rt></ruby>。<ruby>户<rt>Hù</rt></ruby><ruby>外<rt>wài</rt></ruby><ruby>接<rt>jiē</rt></ruby><ruby>球<rt>qiú</rt></ruby>，<ruby>精<rt>jīng</rt></ruby><ruby>神<rt>shen</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>好<rt>hǎo</rt></ruby>，<ruby>量<rt>liàng</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>大<rt>dà</rt></ruby>。</div>
+<div class="reading-Controls">
+<button class="tts-btn" onclick="speakRate('推荐的电子书很有营养，脱脂牛奶很好喝。洞洞书有香味，画册很漂亮。买必需品有好处，发展很快。天才很优雅，相反，他很专心。户外接球，精神很好，量很大。', 0.88)">🔊 Nghe đoạn văn</button>
+<button class="tts-btn" onclick="speakRate('推荐的电子书很有营养，脱脂牛奶很好喝。洞洞书有香味，画册很漂亮。买必需品有好处，发展很快。天才很优雅，相反，他很专心。户外接球，精神很好，量很大。', 0.62)">🐢 Nghe chậm</button>
+<button class="btn-sm" onclick="document.getElementById('read-help').classList.toggle('show')">👁️ Ẩn/Hiện Dịch nghĩa</button>
+<button class="btn-sm" onclick="document.querySelector('.reading-zh').classList.toggle('hide-ruby')">🔤 Ẩn/Hiện Pinyin trên chữ</button>
+</div>
+<div class="reading-help" id="read-help"><div><b>Dịch nghĩa:</b> Sách điện tử được giới thiệu rất bổ dưỡng, sữa tách béo rất ngon. Sách lỗ có mùi thơm, tập tranh rất đẹp. Mua đồ thiết yếu có lợi ích, phát triển rất nhanh. Thiên tài rất tao nhã, ngược lại, anh ấy rất tập trung. Đón bóng ngoài trời, tinh thần rất tốt, lượng rất lớn.</div></div>
+</div>
+<div class="q-item" id="read-1">
+<div><b>Câu 1.</b> 推荐的电子书怎么样？ <span class="hint">(Sách điện tử được giới thiệu thế nào？)</span></div>
+<div class="mc-options">
+<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 推荐的电子书很有营养，脱脂牛奶很好喝。')">A. 很贵</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'read-1', '✓ Chính xác! 推荐的电子书很有营养，脱脂牛奶很好喝。')">B. 很有营养</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 推荐的电子书很有营养，脱脂牛奶很好喝。')">C. 很辣</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-1', '✗ Chưa đúng: 推荐的电子书很有营养，脱脂牛奶很好喝。')">D. 很苦</button>
+</div>
+<div class="feedback" style="margin-top:6px;"></div></div>
+<div class="q-item" id="read-2">
+<div><b>Câu 2.</b> 买必需品，电子商务发展怎么样？ <span class="hint">(Mua đồ thiết yếu, thương mại điện tử phát triển thế nào？)</span></div>
+<div class="mc-options">
+<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 买必需品有好处，发展很快。')">A. 很贵</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'read-2', '✓ Chính xác! 买必需品有好处，发展很快。')">B. 很快</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 买必需品有好处，发展很快。')">C. 很累</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-2', '✗ Chưa đúng: 买必需品有好处，发展很快。')">D. 很慢</button>
+</div>
+<div class="feedback" style="margin-top:6px;"></div></div>
+<div class="q-item" id="read-3">
+<div><b>Câu 3.</b> 户外接球，精神怎么样？ <span class="hint">(Đón bóng ngoài trời, tinh thần thế nào？)</span></div>
+<div class="mc-options">
+<button class="mc-btn" onclick="checkMC(this, true, 'read-3', '✓ Chính xác! 户外接球，精神很好，量很大。')">A. 很好</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: 户外接球，精神很好，量很大。')">B. 很累</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: 户外接球，精神很好，量很大。')">C. 很难过</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'read-3', '✗ Chưa đúng: 户外接球，精神很好，量很大。')">D. 很忙</button>
+</div>
+<div class="feedback" style="margin-top:6px;"></div></div>
+</div>
+<div class="card">
+<h2>🔤 Bài phụ: Chọn pinyin đúng <span class="badge">Chữ dễ nhầm âm</span></h2>
+<div class="sub" style="margin-bottom:8px;">Chạm vào đáp án đúng — không cần gõ dấu thanh đâu anh.</div>
+<div class="q-item" id="py-1">
+<div><b>Câu 1.</b> Từ <b>电子书</b> (sách điện tử) đọc đúng là:</div>
+<div class="mc-options">
+<button class="mc-btn" onclick="checkMC(this, false, 'py-1', '✗ Chưa đúng: 电子书 đọc diànzǐshū, không phải tiànzǐshū.')">A. tiànzǐshū</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'py-1', '✗ Chưa đúng: 电子书 đọc diànzǐshū, không phải diānzǐshū.')">B. diānzǐshū</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'py-1', '✓ Đúng! 电子书 đọc diànzǐshū.')">C. diànzǐshū</button>
+</div>
+<div class="feedback" style="margin-top:6px;"></div></div>
+<div class="q-item" id="py-2">
+<div><b>Câu 2.</b> Từ <b>洞洞书</b> (sách lỗ (sách đục lỗ cho trẻ em)) đọc đúng là:</div>
+<div class="mc-options">
+<button class="mc-btn" onclick="checkMC(this, false, 'py-2', '✗ Chưa đúng: 洞洞书 đọc dòngdòngshū, không phải tòngdòngshū.')">A. tòngdòngshū</button>
+<button class="mc-btn" onclick="checkMC(this, true, 'py-2', '✓ Đúng! 洞洞书 đọc dòngdòngshū.')">B. dòngdòngshū</button>
+<button class="mc-btn" onclick="checkMC(this, false, 'py-2', '✗ Chưa đúng: 洞洞书 đọc dòngdòngshū, không phải dōngdòngshū.')">C. dōngdòngshū</button>
+</div>
+<div class="feedback" style="margin-top:6px;"></div></div>
+</div>
+<div class="card">
+<h2>📋 Tổng kết để gửi em <span class="badge">Câu cần ôn lại</span></h2>
+<div>Đúng <b id="sum-score">0 / 28</b> mục.</div>
+<ul class="summary-list" id="wrong-list"><li>Chưa có câu sai nào — anh làm đến đâu, câu sai sẽ tự gom vào đây.</li></ul>
+<div class="input-check">
+<button class="btn-primary" onclick="copySummary()">📋 Chép kết quả</button>
+<button class="btn-sm" onclick="resetAll()">↺ Làm lại từ đầu</button>
+<span class="feedback" id="copy-fb"></span>
+</div>
+<div class="hint" style="margin-top:6px;">Chép xong, anh dán kết quả gửi em qua WhatsApp — em sẽ đưa các từ anh sai vào danh sách “Cần ôn thêm”. Tiến độ của anh được lưu ngay trong máy, mở lại trang vẫn còn nguyên.</div>
+</div>
+<div class="card">
+<h2>✅ Đáp án toàn bài</h2>
+<details>
+<summary style="cursor:pointer; font-weight:700;">Chạm để mở đáp án khi đã làm xong</summary>
+<p><b>Bài 1 (Ôn nhanh):</b> 1. 重视 &nbsp; 2. 专心 &nbsp; 3. 装备 &nbsp; 4. 必需品 &nbsp; 5. 电子商务</p>
+<p><b>Tự kiểm tra 5 từ:</b> 1. 电子书 &nbsp; 2. 洞洞书 &nbsp; 3. 发展 &nbsp; 4. 好处 &nbsp; 5. 画册</p>
+<p><b>Bài 2 (Nghe):</b> Câu 1: B — 我喜欢在手机上看电子书。 &nbsp;|&nbsp; Câu 2: A — 电子商务发展很快，很多人喜欢用。</p>
+<p><b>Bài phụ (Pinyin):</b> Câu 1: C — diànzǐshū &nbsp;|&nbsp; Câu 2: B — dòngdòngshū</p>
+<p><b>Bài 3 (Ghép cặp):</b> 电子书 = diànzǐshū · 洞洞书 = dòngdòngshū · 发展 = fāzhǎn · 好处 = hǎochù · 画册 = huàcè</p>
+<p><b>Bài 4 (Ngữ pháp):</b> 1. A — 我昨天买了东西。 &nbsp;|&nbsp; 2. A — 中国队比日本队强。</p>
+<p><b>Bài 5 (Đoạn văn):</b> 电子书 → 洞洞书 → 发展 → 好处 → 画册</p>
+<p><b>Bài 6 (Sắp xếp câu):</b><br>1. 我喜欢在手机上看电子书。<br>2. 电子商务发展很快，很多人喜欢用。<br>3. 这本洞洞书很好看，小朋友很喜欢。</p>
+<p><b>Bài 7 (Đọc hiểu):</b> 1. B — 很有营养 &nbsp;|&nbsp; 2. B — 很快 &nbsp;|&nbsp; 3. A — 很好</p>
+</details>
+</div>
+<div class="footer">Học tốt nhé anh! Làm xong anh chép phần Tổng kết gửi em nhé — câu nào sai em sẽ đưa vào danh sách “Cần ôn thêm”.</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5.0/dist/hanzi-writer.min.js"></script>
+<script>
+// ====== Trạng thái + lưu trữ (localStorage) ======
+var LS_KEY = 'trungcap3-Day-21';
+var TOTAL_TASKS = 28;
+var ITEM_INFO = {
+  "rev-1": [
+    "Ôn nhanh 1 (重视)",
+    "重视"
+  ],
+  "rev-2": [
+    "Ôn nhanh 2 (专心)",
+    "专心"
+  ],
+  "rev-3": [
+    "Ôn nhanh 3 (装备)",
+    "装备"
+  ],
+  "rev-4": [
+    "Ôn nhanh 4 (必需品)",
+    "必需品"
+  ],
+  "rev-5": [
+    "Ôn nhanh 5 (电子商务)",
+    "电子商务"
+  ],
+  "chk-1": [
+    "Tự kiểm tra: 电子书",
+    "电子书"
+  ],
+  "chk-2": [
+    "Tự kiểm tra: 洞洞书",
+    "洞洞书"
+  ],
+  "chk-3": [
+    "Tự kiểm tra: 发展",
+    "发展"
+  ],
+  "chk-4": [
+    "Tự kiểm tra: 好处",
+    "好处"
+  ],
+  "chk-5": [
+    "Tự kiểm tra: 画册",
+    "画册"
+  ],
+  "lis-1": [
+    "Nghe câu 1",
+    "B — 我喜欢在手机上看电子书。"
+  ],
+  "lis-2": [
+    "Nghe câu 2",
+    "A — 电子商务发展很快，很多人喜欢用。"
+  ],
+  "match-m1": [
+    "Ghép cặp: 电子书",
+    "diànzǐshū — sách điện tử"
+  ],
+  "match-m2": [
+    "Ghép cặp: 洞洞书",
+    "dòngdòngshū — sách lỗ (sách đục lỗ cho trẻ em)"
+  ],
+  "match-m3": [
+    "Ghép cặp: 发展",
+    "fāzhǎn — phát triển"
+  ],
+  "match-m4": [
+    "Ghép cặp: 好处",
+    "hǎochù — lợi ích, cái hay"
+  ],
+  "match-m5": [
+    "Ghép cặp: 画册",
+    "huàcè — tập tranh, album tranh"
+  ],
+  "gram-1": [
+    "Ngữ pháp 1 (Câu có 了 chỉ sự việc đã xảy ra)",
+    "A — 我昨天买了东西。"
+  ],
+  "gram-2": [
+    "Ngữ pháp 2 (So sánh với 比 không dùng 很)",
+    "A — 中国队比日本队强。"
+  ],
+  "cloze-task": [
+    "Đoạn văn (5 chỗ trống)",
+    "电子书 → 洞洞书 → 发展 → 好处 → 画册"
+  ],
+  "scr-1": [
+    "Sắp xếp câu 1",
+    "我喜欢在手机上看电子书。"
+  ],
+  "scr-2": [
+    "Sắp xếp câu 2",
+    "电子商务发展很快，很多人喜欢用。"
+  ],
+  "scr-3": [
+    "Sắp xếp câu 3",
+    "这本洞洞书很好看，小朋友很喜欢。"
+  ],
+  "read-1": [
+    "Đọc hiểu câu 1",
+    "B — 很有营养"
+  ],
+  "read-2": [
+    "Đọc hiểu câu 2",
+    "B — 很快"
+  ],
+  "read-3": [
+    "Đọc hiểu câu 3",
+    "A — 很好"
+  ],
+  "py-1": [
+    "Pinyin: 电子书",
+    "C — diànzǐshū"
+  ],
+  "py-2": [
+    "Pinyin: 洞洞书",
+    "B — dòngdòngshū"
+  ]
+};
+var state = { done: {}, wrong: {}, inputs: {}, selects: [], mc: {}, matched: [], scr: {}, imeOn: true };
+try { var raw = localStorage.getItem(LS_KEY); if (raw) { var p = JSON.parse(raw); for (var k in p) state[k] = p[k]; } } catch (e) {}
+if (typeof state.imeOn !== 'boolean') state.imeOn = true;
+
+function save() { try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {} }
+function doneCount() { return Object.keys(state.done).length; }
+function updateProgress() {
+  var d = doneCount();
+  document.getElementById('prog-fill').style.width = Math.min(100, Math.round(d / TOTAL_TASKS * 100)) + '%';
+  document.getElementById('prog-text').textContent = d + ' / ' + TOTAL_TASKS;
+  var sc = document.getElementById('sum-score'); if (sc) sc.textContent = d + ' / ' + TOTAL_TASKS;
+}
+function renderSummary() {
+  var ul = document.getElementById('wrong-list'); if (!ul) return;
+  var ids = Object.keys(state.wrong);
+  if (!ids.length) { ul.innerHTML = '<li>Chưa có câu sai nào — anh làm đến đâu, câu sai sẽ tự gom vào đây.</li>'; return; }
+  ul.innerHTML = ids.map(function (id) { var inf = ITEM_INFO[id]; return '<li>' + inf[0] + ' → đáp án: <b>' + inf[1] + '</b></li>'; }).join('');
+}
+function markDone(id) { state.done[id] = true; delete state.wrong[id]; save(); updateProgress(); renderSummary(); }
+function recordWrong(id) { if (!state.done[id]) state.wrong[id] = true; save(); renderSummary(); }
+function resetAll() { if (!confirm('Xoá toàn bộ tiến độ đã lưu và làm lại từ đầu?')) return; try { localStorage.removeItem(LS_KEY); } catch (e) {} location.reload(); }
+
+// ====== TTS ======
+function speakRate(text, rate) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(text); u.lang = 'zh-CN'; u.rate = rate || 0.88;
+  window.speechSynthesis.speak(u);
+}
+function speak(text) { speakRate(text, 0.88); }
+
+// ====== BỘ GÕ PINYIN NHIỀU TRANG (Offline HSK Dictionary + Cloud 30 Candidates) ======
+var PAGE_SIZE = 6;
+var LOCAL_PY_DICT = {
+  "chuangdan": [
+    "床单"
+  ],
+  "dagong": [
+    "打工"
+  ],
+  "haoburongyi": [
+    "好不容易"
+  ],
+  "huazhuangpin": [
+    "化妆品"
+  ],
+  "jiaohuan": [
+    "交换"
+  ],
+  "jingran": [
+    "竟然"
+  ],
+  "jiudian": [
+    "酒店"
+  ],
+  "lingshi": [
+    "零食"
+  ],
+  "lvtu": [
+    "旅途"
+  ],
+  "lvyou": [
+    "旅游"
+  ],
+  "maojin": [
+    "毛巾"
+  ],
+  "mima": [
+    "密码"
+  ],
+  "nande": [
+    "难得"
+  ],
+  "shuangjianbao": [
+    "双肩包"
+  ],
+  "shunli": [
+    "顺利"
+  ],
+  "suishen": [
+    "随身"
+  ],
+  "suo": [
+    "锁"
+  ],
+  "tixudao": [
+    "剃须刀"
+  ],
+  "tuoyun": [
+    "托运"
+  ],
+  "xiang": [
+    "箱",
+    "想",
+    "享",
+    "香",
+    "相",
+    "像",
+    "乡"
+  ],
+  "xiangdao": [
+    "想到"
+  ],
+  "xiezi": [
+    "鞋子"
+  ],
+  "xinqing": [
+    "心情"
+  ],
+  "xingli": [
+    "行李"
+  ],
+  "ziliao": [
+    "资料"
+  ],
+  "chabuduo": [
+    "差不多"
+  ],
+  "chaojia": [
+    "吵架"
+  ],
+  "gongxiangdanche": [
+    "共享单车"
+  ],
+  "guli": [
+    "鼓励"
+  ],
+  "guashi": [
+    "挂失"
+  ],
+  "jiaju": [
+    "家居"
+  ],
+  "jiao": [
+    "交",
+    "胶",
+    "教",
+    "焦"
+  ],
+  "jinguan": [
+    "尽管"
+  ],
+  "kaixue": [
+    "开学"
+  ],
+  "kending": [
+    "肯定"
+  ],
+  "qiao": [
+    "巧"
+  ],
+  "qu": [
+    "取",
+    "曲"
+  ],
+  "tingshuo": [
+    "听说"
+  ],
+  "xiazai": [
+    "下载"
+  ],
+  "xuefei": [
+    "学费"
+  ],
+  "yingyeting": [
+    "营业厅"
+  ],
+  "yingyongruanjian": [
+    "应用软件"
+  ],
+  "yongpin": [
+    "用品"
+  ],
+  "zhida": [
+    "直达"
+  ],
+  "zixi": [
+    "仔细"
+  ],
+  "zidongqukuanji": [
+    "自动取款机"
+  ],
+  "chabei": [
+    "茶杯"
+  ],
+  "chahu": [
+    "茶壶"
+  ],
+  "daipaocha": [
+    "袋泡茶"
+  ],
+  "dengji": [
+    "等级"
+  ],
+  "guaerkafei": [
+    "挂耳咖啡"
+  ],
+  "hongcha": [
+    "红茶"
+  ],
+  "jianfei": [
+    "减肥"
+  ],
+  "jiaonangkafei": [
+    "胶囊咖啡"
+  ],
+  "juhuacha": [
+    "菊花茶"
+  ],
+  "kafei": [
+    "咖啡"
+  ],
+  "kafeiji": [
+    "咖啡机"
+  ],
+  "kaluli": [
+    "卡路里"
+  ],
+  "kougan": [
+    "口感"
+  ],
+  "ku": [
+    "苦"
+  ],
+  "la": [
+    "辣",
+    "拉",
+    "蜡"
+  ],
+  "longjingcha": [
+    "龙井茶"
+  ],
+  "lvcha": [
+    "绿茶"
+  ],
+  "minyishiweitian": [
+    "民以食为天"
+  ],
+  "reliang": [
+    "热量"
+  ],
+  "shouchongkafei": [
+    "手冲咖啡"
+  ],
+  "shoubuliao": [
+    "受不了"
+  ],
+  "shucai": [
+    "蔬菜"
+  ],
+  "surong": [
+    "速溶"
+  ],
+  "tianmafan": [
+    "添麻烦"
+  ],
+  "tuijian": [
+    "推荐"
+  ],
+  "tuozhi": [
+    "脱脂"
+  ],
+  "xiangwei": [
+    "香味"
+  ],
+  "yingyang": [
+    "营养"
+  ],
+  "youpengziyuanfanglaibuyilehu": [
+    "有朋自远方来，不亦乐乎"
+  ],
+  "buguan": [
+    "不管"
+  ],
+  "chuhan": [
+    "出汗"
+  ],
+  "huwai": [
+    "户外"
+  ],
+  "huaxue": [
+    "滑雪"
+  ],
+  "jiankang": [
+    "健康"
+  ],
+  "jianshenfang": [
+    "健身房"
+  ],
+  "jiaolian": [
+    "教练"
+  ],
+  "jieqiu": [
+    "接球"
+  ],
+  "jingshen": [
+    "精神"
+  ],
+  "liang": [
+    "量",
+    "粮"
+  ],
+  "malasong": [
+    "马拉松"
+  ],
+  "pashan": [
+    "爬山"
+  ],
+  "qianshui": [
+    "潜水"
+  ],
+  "que": [
+    "却"
+  ],
+  "remen": [
+    "热门"
+  ],
+  "taijiquan": [
+    "太极拳"
+  ],
+  "tiancai": [
+    "天才"
+  ],
+  "wangqiu": [
+    "网球"
+  ],
+  "xiangfan": [
+    "相反"
+  ],
+  "youya": [
+    "优雅"
+  ],
+  "zhongshi": [
+    "重视"
+  ],
+  "zhuanxin": [
+    "专心"
+  ],
+  "zhuangbei": [
+    "装备"
+  ],
+  "bixupin": [
+    "必需品"
+  ],
+  "dianzishangwu": [
+    "电子商务"
+  ],
+  "dianzishu": [
+    "电子书"
+  ],
+  "dongdongshu": [
+    "洞洞书"
+  ],
+  "fazhan": [
+    "发展"
+  ],
+  "haochu": [
+    "好处"
+  ],
+  "huace": [
+    "画册"
+  ],
+  "huanbao": [
+    "环保"
+  ],
+  "jiyou": [
+    "集邮"
+  ],
+  "laibuji": [
+    "来不及"
+  ],
+  "lengbingbing": [
+    "冷冰冰"
+  ],
+  "litishu": [
+    "立体书"
+  ],
+  "shejiaomeiti": [
+    "社交媒体"
+  ],
+  "tidai": [
+    "替代"
+  ],
+  "wanneng": [
+    "万能"
+  ],
+  "wufa": [
+    "无法"
+  ],
+  "xiaoshi": [
+    "消失"
+  ],
+  "xiedai": [
+    "携带"
+  ],
+  "xuanze": [
+    "选择"
+  ],
+  "youpiao": [
+    "邮票"
+  ],
+  "zhan": [
+    "占",
+    "展"
+  ],
+  "zhizhang": [
+    "纸张"
+  ],
+  "zhizhishu": [
+    "纸质书"
+  ],
+  "zhinengshouji": [
+    "智能手机"
+  ],
+  "zhongliang": [
+    "重量"
+  ],
+  "changshou": [
+    "长寿"
+  ],
+  "chongdian": [
+    "充电"
+  ],
+  "chuantong": [
+    "传统"
+  ],
+  "dangao": [
+    "蛋糕"
+  ],
+  "daoli": [
+    "道理"
+  ],
+  "dian": [
+    "点",
+    "店",
+    "电"
+  ],
+  "dushengnv": [
+    "独生女"
+  ],
+  "faxian": [
+    "发现"
+  ],
+  "gancui": [
+    "干脆"
+  ],
+  "jili": [
+    "吉利"
+  ],
+  "jiaren": [
+    "家人"
+  ],
+  "lazhu": [
+    "蜡烛"
+  ],
+  "rili": [
+    "日历"
+  ],
+  "shiji": [
+    "世纪"
+  ],
+  "waidi": [
+    "外地"
+  ],
+  "xu": [
+    "许",
+    "须",
+    "需",
+    "恤"
+  ],
+  "yangli": [
+    "阳历"
+  ],
+  "yinli": [
+    "阴历"
+  ],
+  "yuanwang": [
+    "愿望"
+  ],
+  "zhichi": [
+    "支持"
+  ],
+  "zhufu": [
+    "祝福"
+  ],
+  "bijing": [
+    "毕竟"
+  ],
+  "chuangzuo": [
+    "创作"
+  ],
+  "dejiang": [
+    "得奖"
+  ],
+  "emeng": [
+    "噩梦"
+  ],
+  "gangqin": [
+    "钢琴"
+  ],
+  "gequ": [
+    "歌曲"
+  ],
+  "gexing": [
+    "歌星"
+  ],
+  "guaibude": [
+    "怪不得"
+  ],
+  "jishi": [
+    "即使"
+  ],
+  "jiemu": [
+    "节目"
+  ],
+  "kexi": [
+    "可惜"
+  ],
+  "manzu": [
+    "满足"
+  ],
+  "qici": [
+    "其次"
+  ],
+  "shouxian": [
+    "首先"
+  ],
+  "taoyan": [
+    "讨厌"
+  ],
+  "xunlian": [
+    "训练"
+  ],
+  "yueqi": [
+    "乐器"
+  ],
+  "zhuanjia": [
+    "专家"
+  ],
+  "ziran": [
+    "自然"
+  ],
+  "ziyuzile": [
+    "自娱自乐"
+  ],
+  "zoudiaor": [
+    "走调儿"
+  ],
+  "chongwu": [
+    "宠物"
+  ],
+  "darao": [
+    "打扰"
+  ],
+  "dazhaohu": [
+    "打招呼"
+  ],
+  "dongwuyuan": [
+    "动物园"
+  ],
+  "feng": [
+    "疯",
+    "逢",
+    "风"
+  ],
+  "fumo": [
+    "抚摸"
+  ],
+  "gudu": [
+    "孤独"
+  ],
+  "haoxiang": [
+    "好像"
+  ],
+  "hushi": [
+    "护士"
+  ],
+  "jian": [
+    "捡",
+    "肩",
+    "件",
+    "减",
+    "荐",
+    "健",
+    "建",
+    "间",
+    "见",
+    "简",
+    "剑",
+    "检",
+    "坚",
+    "艰",
+    "兼",
+    "监",
+    "渐",
+    "箭",
+    "浅",
+    "房间",
+    "健康",
+    "见面",
+    "简单"
+  ],
+  "jiu": [
+    "救",
+    "酒"
+  ],
+  "liaoyangyuan": [
+    "疗养院"
+  ],
+  "liulang": [
+    "流浪"
+  ],
+  "mao": [
+    "猫",
+    "毛"
+  ],
+  "maoliang": [
+    "猫粮"
+  ],
+  "miao": [
+    "喵"
+  ],
+  "nao": [
+    "挠"
+  ],
+  "qinmi": [
+    "亲密"
+  ],
+  "shanghai": [
+    "伤害"
+  ],
+  "shuxi": [
+    "熟悉"
+  ],
+  "tongban": [
+    "同伴"
+  ],
+  "xinren": [
+    "信任"
+  ],
+  "ziyou": [
+    "自由"
+  ],
+  "bisa": [
+    "比萨"
+  ],
+  "dengbuji": [
+    "等不及"
+  ],
+  "duzaiyixiangweiyikemeifengjiajiebeisiqin": [
+    "独在异乡为异客，每逢佳节倍思亲"
+  ],
+  "duan": [
+    "段"
+  ],
+  "ganqing": [
+    "感情"
+  ],
+  "huxi": [
+    "呼吸"
+  ],
+  "jidong": [
+    "激动"
+  ],
+  "jiaozao": [
+    "焦躁"
+  ],
+  "jingli": [
+    "经历"
+  ],
+  "juti": [
+    "具体"
+  ],
+  "kao": [
+    "靠"
+  ],
+  "mianduimian": [
+    "面对面"
+  ],
+  "pan": [
+    "盼"
+  ],
+  "qinren": [
+    "亲人"
+  ],
+  "qingjing": [
+    "情景"
+  ],
+  "shangyue": [
+    "赏月"
+  ],
+  "shipin": [
+    "视频"
+  ],
+  "tuanyuan": [
+    "团圆"
+  ],
+  "weiba": [
+    "尾巴"
+  ],
+  "xiande": [
+    "显得"
+  ],
+  "yao": [
+    "摇"
+  ],
+  "yuebing": [
+    "月饼"
+  ],
+  "zhuanyan": [
+    "转眼"
+  ],
+  "chuxian": [
+    "出现"
+  ],
+  "dajiaodao": [
+    "打交道"
+  ],
+  "daziran": [
+    "大自然"
+  ],
+  "daoyou": [
+    "导游"
+  ],
+  "fenwei": [
+    "氛围"
+  ],
+  "fengjing": [
+    "风景"
+  ],
+  "ganshou": [
+    "感受"
+  ],
+  "gudai": [
+    "古代"
+  ],
+  "guyue": [
+    "古乐"
+  ],
+  "jianzhu": [
+    "建筑"
+  ],
+  "jiaoyu": [
+    "教育"
+  ],
+  "juan": [
+    "卷"
+  ],
+  "keji": [
+    "科技"
+  ],
+  "lianren": [
+    "恋人"
+  ],
+  "lvxingtuan": [
+    "旅行团"
+  ],
+  "shangren": [
+    "商人"
+  ],
+  "shaoshuminzu": [
+    "少数民族"
+  ],
+  "shuodao": [
+    "说到"
+  ],
+  "weida": [
+    "伟大"
+  ],
+  "wenzi": [
+    "文字"
+  ],
+  "xiandai": [
+    "现代"
+  ],
+  "xing": [
+    "行",
+    "星",
+    "形"
+  ],
+  "xingzhuang": [
+    "形状"
+  ],
+  "yue": [
+    "乐",
+    "月"
+  ],
+  "ziyouxing": [
+    "自由行"
+  ],
+  "heliangshuidousaiya": [
+    "喝凉水都塞牙"
+  ],
+  "jianli": [
+    "简历"
+  ],
+  "jieguo": [
+    "结果"
+  ],
+  "liangshui": [
+    "凉水"
+  ],
+  "roumodoufu": [
+    "肉末豆腐"
+  ],
+  "saiya": [
+    "塞牙"
+  ],
+  "saiwengshimayanzhifeifu": [
+    "塞翁失马，焉知非福"
+  ],
+  "shilaiyunzhuan": [
+    "时来运转"
+  ],
+  "shoushang": [
+    "受伤"
+  ],
+  "shuaijiao": [
+    "摔跤"
+  ],
+  "tiwen": [
+    "提问"
+  ],
+  "wen": [
+    "闻",
+    "文"
+  ],
+  "xianrbing": [
+    "馅儿饼"
+  ],
+  "xingyun": [
+    "幸运"
+  ],
+  "yifu": [
+    "姨父"
+  ],
+  "yima": [
+    "姨妈"
+  ],
+  "yunqi": [
+    "运气"
+  ],
+  "zhuanmen": [
+    "专门"
+  ],
+  "zoushenr": [
+    "走神儿"
+  ],
+  "chuang": [
+    "床",
+    "创"
+  ],
+  "dan": [
+    "单",
+    "蛋"
+  ],
+  "da": [
+    "打",
+    "达",
+    "大"
+  ],
+  "gong": [
+    "工",
+    "共"
+  ],
+  "hao": [
+    "好"
+  ],
+  "bu": [
+    "不"
+  ],
+  "rong": [
+    "容",
+    "溶"
+  ],
+  "yi": [
+    "易",
+    "以",
+    "亦",
+    "异"
+  ],
+  "hua": [
+    "化",
+    "花",
+    "滑",
+    "画"
+  ],
+  "zhuang": [
+    "妆",
+    "装",
+    "状"
+  ],
+  "pin": [
+    "品",
+    "频"
+  ],
+  "huan": [
+    "换",
+    "环"
+  ],
+  "jing": [
+    "竟",
+    "井",
+    "精",
+    "经",
+    "景",
+    "京",
+    "睛",
+    "静",
+    "惊",
+    "警",
+    "敬",
+    "境",
+    "镜",
+    "竞",
+    "净",
+    "颈",
+    "晶",
+    "精彩",
+    "经常",
+    "经过",
+    "北京",
+    "眼睛"
+  ],
+  "ran": [
+    "然"
+  ],
+  "ling": [
+    "零"
+  ],
+  "shi": [
+    "食",
+    "失",
+    "视",
+    "世",
+    "使",
+    "士",
+    "市",
+    "是",
+    "时",
+    "事",
+    "室",
+    "试",
+    "师",
+    "十",
+    "石",
+    "识",
+    "实",
+    "史",
+    "始",
+    "式",
+    "势",
+    "示",
+    "适",
+    "时间",
+    "时候",
+    "事情"
+  ],
+  "lv": [
+    "旅",
+    "绿"
+  ],
+  "tu": [
+    "途"
+  ],
+  "you": [
+    "游",
+    "有",
+    "优",
+    "邮",
+    "由",
+    "油",
+    "又",
+    "友",
+    "右",
+    "忧",
+    "幽",
+    "悠",
+    "尤",
+    "犹",
+    "诱",
+    "幼",
+    "朋友",
+    "游泳",
+    "有名",
+    "有点儿"
+  ],
+  "jin": [
+    "巾",
+    "尽",
+    "紧",
+    "进",
+    "近",
+    "今",
+    "斤",
+    "金",
+    "仅",
+    "禁",
+    "劲",
+    "锦",
+    "谨",
+    "津",
+    "筋",
+    "紧张",
+    "今天",
+    "进去",
+    "最近"
+  ],
+  "mi": [
+    "密",
+    "迷",
+    "米",
+    "蜜",
+    "谜",
+    "弥",
+    "觅",
+    "秘",
+    "眯",
+    "靡",
+    "球迷",
+    "迷上",
+    "迷路",
+    "米饭"
+  ],
+  "ma": [
+    "码",
+    "麻",
+    "马"
+  ],
+  "nan": [
+    "难"
+  ],
+  "de": [
+    "得"
+  ],
+  "shuang": [
+    "双"
+  ],
+  "bao": [
+    "包",
+    "保"
+  ],
+  "shun": [
+    "顺"
+  ],
+  "li": [
+    "利",
+    "李",
+    "励",
+    "里",
+    "立",
+    "理",
+    "历"
+  ],
+  "sui": [
+    "随"
+  ],
+  "shen": [
+    "身",
+    "神"
+  ],
+  "ti": [
+    "剃",
+    "体",
+    "替"
+  ],
+  "dao": [
+    "刀",
+    "到",
+    "道",
+    "导"
+  ],
+  "tuo": [
+    "托",
+    "脱"
+  ],
+  "yun": [
+    "运"
+  ],
+  "xie": [
+    "鞋",
+    "携"
+  ],
+  "zi": [
+    "子",
+    "资",
+    "仔",
+    "自",
+    "字"
+  ],
+  "xin": [
+    "心",
+    "信"
+  ],
+  "qing": [
+    "情"
+  ],
+  "liao": [
+    "料",
+    "了",
+    "疗"
+  ],
+  "cha": [
+    "差",
+    "茶"
+  ],
+  "duo": [
+    "多"
+  ],
+  "chao": [
+    "吵"
+  ],
+  "jia": [
+    "架",
+    "家",
+    "佳",
+    "加",
+    "假",
+    "价",
+    "驾",
+    "嫁",
+    "夹",
+    "甲",
+    "钾",
+    "稼",
+    "加油",
+    "大家",
+    "家庭",
+    "参加"
+  ],
+  "che": [
+    "车"
+  ],
+  "gu": [
+    "鼓",
+    "孤",
+    "古"
+  ],
+  "gua": [
+    "挂"
+  ],
+  "ju": [
+    "居",
+    "菊",
+    "具"
+  ],
+  "guan": [
+    "管"
+  ],
+  "kai": [
+    "开"
+  ],
+  "xue": [
+    "学",
+    "雪"
+  ],
+  "ken": [
+    "肯"
+  ],
+  "ding": [
+    "定"
+  ],
+  "ting": [
+    "听",
+    "厅"
+  ],
+  "shuo": [
+    "说"
+  ],
+  "xia": [
+    "下"
+  ],
+  "zai": [
+    "载",
+    "在"
+  ],
+  "fei": [
+    "费",
+    "啡",
+    "肥"
+  ],
+  "ying": [
+    "营",
+    "应"
+  ],
+  "ye": [
+    "业"
+  ],
+  "yong": [
+    "用"
+  ],
+  "ruan": [
+    "软"
+  ],
+  "zhi": [
+    "直",
+    "脂",
+    "纸",
+    "质",
+    "智",
+    "支",
+    "制"
+  ],
+  "xi": [
+    "细",
+    "惜",
+    "悉",
+    "吸"
+  ],
+  "dong": [
+    "动",
+    "洞"
+  ],
+  "kuan": [
+    "款"
+  ],
+  "ji": [
+    "机",
+    "级",
+    "极",
+    "集",
+    "及",
+    "吉",
+    "纪",
+    "即",
+    "激",
+    "技",
+    "几",
+    "记",
+    "急",
+    "己",
+    "计",
+    "季",
+    "际",
+    "继",
+    "寄",
+    "既",
+    "鸡",
+    "积",
+    "基",
+    "击",
+    "饥",
+    "机会",
+    "技术",
+    "自己"
+  ],
+  "bei": [
+    "杯",
+    "备",
+    "倍",
+    "北",
+    "被",
+    "背",
+    "悲",
+    "碑",
+    "辈",
+    "贝",
+    "臂",
+    "卑",
+    "北边",
+    "北方",
+    "北京"
+  ],
+  "hu": [
+    "壶",
+    "乎",
+    "户",
+    "呼",
+    "护"
+  ],
+  "dai": [
+    "袋",
+    "代",
+    "带"
+  ],
+  "pao": [
+    "泡"
+  ],
+  "deng": [
+    "等"
+  ],
+  "er": [
+    "耳",
+    "儿"
+  ],
+  "ka": [
+    "咖",
+    "卡"
+  ],
+  "hong": [
+    "红"
+  ],
+  "nang": [
+    "囊"
+  ],
+  "lu": [
+    "路"
+  ],
+  "kou": [
+    "口"
+  ],
+  "gan": [
+    "感",
+    "干"
+  ],
+  "long": [
+    "龙"
+  ],
+  "min": [
+    "民"
+  ],
+  "wei": [
+    "为",
+    "味",
+    "尾",
+    "围",
+    "伟"
+  ],
+  "tian": [
+    "天",
+    "添"
+  ],
+  "re": [
+    "热"
+  ],
+  "shou": [
+    "手",
+    "受",
+    "寿",
+    "首"
+  ],
+  "chong": [
+    "冲",
+    "充",
+    "宠"
+  ],
+  "shu": [
+    "蔬",
+    "书",
+    "熟",
+    "数",
+    "术",
+    "束",
+    "树",
+    "叔",
+    "输",
+    "舒",
+    "暑",
+    "属",
+    "署",
+    "鼠",
+    "梳",
+    "竖",
+    "恕",
+    "数学",
+    "舒服",
+    "暑假"
+  ],
+  "cai": [
+    "菜",
+    "才",
+    "彩",
+    "猜",
+    "采",
+    "财",
+    "裁",
+    "材",
+    "踩",
+    "睬",
+    "精彩",
+    "刚才",
+    "菜单"
+  ],
+  "su": [
+    "速"
+  ],
+  "fan": [
+    "烦",
+    "反"
+  ],
+  "tui": [
+    "推"
+  ],
+  "yang": [
+    "养",
+    "阳"
+  ],
+  "peng": [
+    "朋"
+  ],
+  "yuan": [
+    "远",
+    "愿",
+    "园",
+    "院",
+    "圆"
+  ],
+  "fang": [
+    "方",
+    "房",
+    "放",
+    "访",
+    "防",
+    "芳",
+    "仿",
+    "妨",
+    "纺",
+    "坊",
+    "房间",
+    "方法",
+    "方向",
+    "方面"
+  ],
+  "lai": [
+    "来"
+  ],
+  "le": [
+    "乐"
+  ],
+  "chu": [
+    "出",
+    "处"
+  ],
+  "han": [
+    "汗"
+  ],
+  "wai": [
+    "外"
+  ],
+  "kang": [
+    "康"
+  ],
+  "lian": [
+    "练",
+    "恋"
+  ],
+  "jie": [
+    "接",
+    "节",
+    "结",
+    "姐",
+    "借",
+    "街",
+    "界",
+    "解",
+    "届",
+    "戒",
+    "杰",
+    "洁",
+    "捷",
+    "竭",
+    "截",
+    "皆",
+    "阶",
+    "结束",
+    "节目",
+    "姐姐",
+    "介绍"
+  ],
+  "qiu": [
+    "球"
+  ],
+  "song": [
+    "松"
+  ],
+  "pa": [
+    "爬"
+  ],
+  "shan": [
+    "山"
+  ],
+  "qian": [
+    "潜"
+  ],
+  "shui": [
+    "水"
+  ],
+  "men": [
+    "门"
+  ],
+  "tai": [
+    "太"
+  ],
+  "quan": [
+    "拳"
+  ],
+  "wang": [
+    "网",
+    "望"
+  ],
+  "ya": [
+    "雅"
+  ],
+  "zhong": [
+    "重"
+  ],
+  "zhuan": [
+    "专",
+    "转"
+  ],
+  "bi": [
+    "必",
+    "毕",
+    "比",
+    "笔",
+    "鼻",
+    "币",
+    "闭",
+    "避",
+    "壁",
+    "臂",
+    "碧",
+    "逼",
+    "彼",
+    "比较",
+    "比赛",
+    "笔记本"
+  ],
+  "shang": [
+    "商",
+    "伤",
+    "赏"
+  ],
+  "wu": [
+    "务",
+    "无",
+    "物"
+  ],
+  "fa": [
+    "发",
+    "法"
+  ],
+  "ce": [
+    "册"
+  ],
+  "leng": [
+    "冷"
+  ],
+  "bing": [
+    "冰",
+    "饼"
+  ],
+  "she": [
+    "社"
+  ],
+  "mei": [
+    "媒",
+    "每"
+  ],
+  "wan": [
+    "万"
+  ],
+  "neng": [
+    "能"
+  ],
+  "xiao": [
+    "消"
+  ],
+  "xuan": [
+    "选"
+  ],
+  "ze": [
+    "择"
+  ],
+  "piao": [
+    "票"
+  ],
+  "zhang": [
+    "张",
+    "长",
+    "丈",
+    "账",
+    "章",
+    "掌",
+    "涨",
+    "障",
+    "帐",
+    "杖",
+    "樟",
+    "彰",
+    "紧张",
+    "校长",
+    "队长"
+  ],
+  "chang": [
+    "长"
+  ],
+  "chuan": [
+    "传"
+  ],
+  "tong": [
+    "统",
+    "同"
+  ],
+  "gao": [
+    "糕"
+  ],
+  "du": [
+    "独"
+  ],
+  "sheng": [
+    "生"
+  ],
+  "nv": [
+    "女"
+  ],
+  "xian": [
+    "现",
+    "先",
+    "显"
+  ],
+  "cui": [
+    "脆"
+  ],
+  "ren": [
+    "人",
+    "任"
+  ],
+  "zhu": [
+    "烛",
+    "祝",
+    "筑"
+  ],
+  "ri": [
+    "日"
+  ],
+  "di": [
+    "地"
+  ],
+  "yin": [
+    "阴"
+  ],
+  "chi": [
+    "持"
+  ],
+  "fu": [
+    "福",
+    "抚"
+  ],
+  "zuo": [
+    "作"
+  ],
+  "jiang": [
+    "奖"
+  ],
+  "e": [
+    "噩"
+  ],
+  "meng": [
+    "梦"
+  ],
+  "gang": [
+    "钢",
+    "刚"
+  ],
+  "qin": [
+    "琴",
+    "亲"
+  ],
+  "ge": [
+    "歌"
+  ],
+  "guai": [
+    "怪"
+  ],
+  "mu": [
+    "目"
+  ],
+  "ke": [
+    "可",
+    "客",
+    "科"
+  ],
+  "man": [
+    "满"
+  ],
+  "zu": [
+    "足",
+    "族"
+  ],
+  "qi": [
+    "其",
+    "器"
+  ],
+  "ci": [
+    "次"
+  ],
+  "tao": [
+    "讨"
+  ],
+  "yan": [
+    "厌",
+    "眼"
+  ],
+  "xun": [
+    "训"
+  ],
+  "yu": [
+    "娱",
+    "育"
+  ],
+  "zou": [
+    "走"
+  ],
+  "diao": [
+    "调"
+  ],
+  "rao": [
+    "扰"
+  ],
+  "zhao": [
+    "招"
+  ],
+  "mo": [
+    "摸"
+  ],
+  "liu": [
+    "流"
+  ],
+  "lang": [
+    "浪"
+  ],
+  "hai": [
+    "害"
+  ],
+  "ban": [
+    "伴"
+  ],
+  "sa": [
+    "萨"
+  ],
+  "si": [
+    "思"
+  ],
+  "zao": [
+    "躁"
+  ],
+  "mian": [
+    "面"
+  ],
+  "dui": [
+    "对",
+    "队",
+    "堆",
+    "兑",
+    "敦",
+    "怼",
+    "队伍",
+    "队长",
+    "排队",
+    "足球队"
+  ],
+  "tuan": [
+    "团"
+  ],
+  "ba": [
+    "巴"
+  ],
+  "fen": [
+    "氛"
+  ],
+  "shao": [
+    "少"
+  ],
+  "deshihou": [
+    "……的时候"
+  ],
+  "yijiu": [
+    "一……就……"
+  ],
+  "beifang": [
+    "北方",
+    "北方的",
+    "倍放",
+    "被访",
+    "备方"
+  ],
+  "beibian": [
+    "北边",
+    "北面",
+    "北部"
+  ],
+  "bian": [
+    "边",
+    "变",
+    "便",
+    "遍",
+    "编",
+    "辩",
+    "扁",
+    "辨",
+    "鞭",
+    "贬",
+    "变化",
+    "方便",
+    "东边",
+    "北边"
+  ],
+  "chengshi": [
+    "城市",
+    "诚实",
+    "程式",
+    "盛事",
+    "成事"
+  ],
+  "cheng": [
+    "城",
+    "成",
+    "程",
+    "乘",
+    "盛",
+    "称",
+    "诚",
+    "承",
+    "呈",
+    "撑",
+    "橙",
+    "惩",
+    "城市",
+    "成功",
+    "成为",
+    "成绩"
+  ],
+  "jihui": [
+    "机会",
+    "集会",
+    "几回",
+    "忌讳",
+    "记会"
+  ],
+  "hui": [
+    "会",
+    "回",
+    "灰",
+    "挥",
+    "辉",
+    "恢",
+    "悔",
+    "毁",
+    "汇",
+    "绘",
+    "惠",
+    "慧",
+    "会议",
+    "回答",
+    "回家"
+  ],
+  "duiwu": [
+    "队伍",
+    "队"
+  ],
+  "bijiao": [
+    "比较",
+    "比"
+  ],
+  "bisai": [
+    "比赛",
+    "比"
+  ],
+  "fangjian": [
+    "房间",
+    "坊间"
+  ],
+  "jishu": [
+    "技术",
+    "记述",
+    "基数",
+    "奇数",
+    "计数"
+  ],
+  "jiayou": [
+    "加油",
+    "家有",
+    "佳友",
+    "加倍",
+    "加油站"
+  ],
+  "jieshu": [
+    "结束",
+    "借书",
+    "接住",
+    "节数",
+    "解说"
+  ],
+  "jinzhang": [
+    "紧张",
+    "进账",
+    "金章",
+    "晋升"
+  ],
+  "jingcai": [
+    "精彩",
+    "精采",
+    "敬才",
+    "竞猜",
+    "净菜"
+  ],
+  "mishang": [
+    "迷上",
+    "米上"
+  ],
+  "qiumi": [
+    "球迷",
+    "求迷"
+  ],
+  "zuqiu": [
+    "足球",
+    "足"
+  ],
+  "women": [
+    "我们",
+    "我"
+  ],
+  "tamen": [
+    "他们",
+    "她们",
+    "它们"
+  ]
+};
+
+function getLocalCandidates(py) {
+  py = py.toLowerCase().replace(/[^a-z]/g, '');
+  if (!py) return [];
+  var res = [];
+  function addList(arr) {
+    if (!arr) return;
+    for (var i = 0; i < arr.length; i++) {
+      if (res.indexOf(arr[i]) < 0) res.push(arr[i]);
+    }
+  }
+  if (LOCAL_PY_DICT[py]) addList(LOCAL_PY_DICT[py]);
+  Object.keys(LOCAL_PY_DICT).forEach(function (k) {
+    if (k !== py && k.indexOf(py) === 0) addList(LOCAL_PY_DICT[k]);
+  });
+  return res;
+}
+
+var imeFetchTimer = null;
+function queryCloudCandidates(py, cb) {
+  if (!navigator.onLine || py.length < 1) return;
+  clearTimeout(imeFetchTimer);
+  imeFetchTimer = setTimeout(function () {
+    var url = 'https://inputtools.google.com/request?text=' + encodeURIComponent(py) + '&itc=zh-t-i0-pinyin&num=30&cp=0&cs=1&ie=utf-8&oe=utf-8';
+    fetch(url).then(function (r) { return r.json(); }).then(function (data) {
+      if (data && data[0] === 'SUCCESS' && data[1] && data[1][0] && data[1][0][1]) {
+        cb(data[1][0][1]);
+      }
+    }).catch(function () {});
+  }, 85);
+}
+
+function toggleIME() {
+  state.imeOn = !state.imeOn;
+  save();
+  syncIMEUI();
+}
+
+function syncIMEUI() {
+  var btn = document.getElementById('ime-toggle-btn');
+  if (btn) {
+    btn.textContent = state.imeOn ? '⌨️ Gõ Pinyin: BẬT' : '⌨️ Gõ Pinyin: TẮT';
+    btn.classList.toggle('active', state.imeOn);
+  }
+  document.querySelectorAll('.py-badge').forEach(function (b) {
+    b.textContent = state.imeOn ? '拼' : 'A';
+    b.classList.toggle('off', !state.imeOn);
+  });
+  if (!state.imeOn) {
+    document.querySelectorAll('.py-popup').forEach(function (p) { p.classList.remove('show'); });
+  }
+}
+
+function attachPinyinIME(inp) {
+  var wrap = document.createElement('div');
+  wrap.className = 'py-wrap';
+  inp.parentNode.insertBefore(wrap, inp);
+  wrap.appendChild(inp);
+
+  var badge = document.createElement('span');
+  badge.className = 'py-badge';
+  badge.textContent = '拼';
+  wrap.appendChild(badge);
+
+  var popup = document.createElement('div');
+  popup.className = 'py-popup';
+  popup.innerHTML =
+    '<div class="py-header">' +
+      '<span class="py-code"></span>' +
+      '<div class="py-pager">' +
+        '<button type="button" class="py-page-btn py-prev" title="Trang trước (- hoặc , hoặc ↑)">◀</button>' +
+        '<span class="py-page-info">1/1</span>' +
+        '<button type="button" class="py-page-btn py-next" title="Trang sau (= hoặc . hoặc ↓)">▶</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="py-cand-list"></div>' +
+    '<div class="py-footer">' +
+      '<span>Chọn: <b>1–6</b> / <b>Space</b></span>' +
+      '<span>Lật trang: <b>- / =</b> · <b>, / .</b> · <b>◀ / ▶</b></span>' +
+    '</div>';
+  wrap.appendChild(popup);
+
+  popup.addEventListener('mousedown', function (e) { e.preventDefault(); });
+  popup.addEventListener('touchstart', function (e) { e.stopPropagation(); }, { passive: true });
+
+  var codeEl = popup.querySelector('.py-code');
+  var pageInfoEl = popup.querySelector('.py-page-info');
+  var prevBtn = popup.querySelector('.py-prev');
+  var nextBtn = popup.querySelector('.py-next');
+  var listEl = popup.querySelector('.py-cand-list');
+
+  var currentCands = [];
+  var currentPage = 0;
+  var activeIdx = 0;
+  var currentPy = '';
+
+  function totalPages() {
+    return Math.max(1, Math.ceil(currentCands.length / PAGE_SIZE));
+  }
+
+  function pageSlice() {
+    var start = currentPage * PAGE_SIZE;
+    return currentCands.slice(start, start + PAGE_SIZE);
+  }
+
+  function changePage(delta) {
+    var tp = totalPages();
+    if (tp <= 1) return;
+    var nextP = currentPage + delta;
+    if (nextP < 0) nextP = tp - 1;
+    if (nextP >= tp) nextP = 0;
+    currentPage = nextP;
+    activeIdx = 0;
+    renderPopup();
+    inp.focus();
+  }
+
+  prevBtn.onclick = function (e) { e.preventDefault(); changePage(-1); };
+  nextBtn.onclick = function (e) { e.preventDefault(); changePage(1); };
+
+  function extractTrailingPinyin(val) {
+    var m = val.match(/([a-zA-Z']+)$/);
+    return m ? m[1] : '';
+  }
+
+  function renderPopup() {
+    if (!state.imeOn || !currentPy || !currentCands.length) {
+      popup.classList.remove('show');
+      return;
+    }
+    var tp = totalPages();
+    if (currentPage >= tp) currentPage = tp - 1;
+    if (currentPage < 0) currentPage = 0;
+
+    var items = pageSlice();
+    if (activeIdx >= items.length) activeIdx = Math.max(0, items.length - 1);
+
+    codeEl.textContent = '🔤 ' + currentPy;
+    pageInfoEl.textContent = (currentPage + 1) + '/' + tp;
+    prevBtn.disabled = tp <= 1;
+    nextBtn.disabled = tp <= 1;
+
+    listEl.innerHTML = '';
+    items.forEach(function (hz, idx) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'py-cand' + (idx === activeIdx ? ' active' : '');
+      btn.innerHTML = '<span class="py-idx">' + (idx + 1) + '.</span>' + hz;
+      btn.onclick = function (e) {
+        e.preventDefault();
+        pickCandidateOnPage(idx);
+      };
+      listEl.appendChild(btn);
+    });
+    popup.classList.add('show');
+  }
+
+  function pickCandidateOnPage(idxOnPage) {
+    var absIdx = currentPage * PAGE_SIZE + idxOnPage;
+    if (!currentCands[absIdx] || !currentPy) return;
+    var chosen = currentCands[absIdx];
+    var val = inp.value;
+    inp.value = val.slice(0, val.length - currentPy.length) + chosen;
+    currentPy = '';
+    currentCands = [];
+    currentPage = 0;
+    activeIdx = 0;
+    popup.classList.remove('show');
+    var box = inp.closest('.q-item');
+    if (box) { state.inputs[box.id] = inp.value; save(); }
+    inp.focus();
+  }
+
+  function updateCandidates() {
+    if (!state.imeOn) { popup.classList.remove('show'); return; }
+    var py = extractTrailingPinyin(inp.value);
+    if (!py) {
+      popup.classList.remove('show');
+      currentPy = '';
+      currentCands = [];
+      currentPage = 0;
+      activeIdx = 0;
+      return;
+    }
+    if (py !== currentPy) {
+      currentPage = 0;
+      activeIdx = 0;
+    }
+    currentPy = py;
+    var local = getLocalCandidates(py);
+    currentCands = local;
+    renderPopup();
+
+    queryCloudCandidates(py, function (cloudList) {
+      if (extractTrailingPinyin(inp.value) !== py) return;
+      var merged = cloudList.slice();
+      local.forEach(function (item) {
+        if (merged.indexOf(item) < 0) merged.push(item);
+      });
+      currentCands = merged;
+      renderPopup();
+    });
+  }
+
+  inp.addEventListener('input', function () {
+    var box = inp.closest('.q-item');
+    if (box) { state.inputs[box.id] = inp.value; save(); }
+    updateCandidates();
+  });
+
+  inp.addEventListener('keydown', function (e) {
+    var isPopupOpen = popup.classList.contains('show') && currentCands.length > 0;
+    if (isPopupOpen) {
+      var items = pageSlice();
+      if (e.key >= '1' && e.key <= '6') {
+        var idx = parseInt(e.key, 10) - 1;
+        if (items[idx]) {
+          e.preventDefault();
+          pickCandidateOnPage(idx);
+          return;
+        }
+      }
+      if (e.key === ' ') {
+        e.preventDefault();
+        pickCandidateOnPage(activeIdx);
+        return;
+      }
+      if (e.key === '=' || e.key === '+' || e.key === '.' || e.key === ']' || e.key === 'PageDown' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        changePage(1);
+        return;
+      }
+      if (e.key === '-' || e.key === '_' || e.key === ',' || e.key === '[' || e.key === 'PageUp' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        changePage(-1);
+        return;
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        if (activeIdx + 1 < items.length) {
+          activeIdx++;
+          renderPopup();
+        } else if (totalPages() > 1) {
+          changePage(1);
+        } else {
+          activeIdx = 0;
+          renderPopup();
+        }
+        return;
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        if (activeIdx > 0) {
+          activeIdx--;
+          renderPopup();
+        } else if (totalPages() > 1) {
+          changePage(-1);
+          activeIdx = pageSlice().length - 1;
+          renderPopup();
+        } else {
+          activeIdx = items.length - 1;
+          renderPopup();
+        }
+        return;
+      }
+      if (e.key === 'Escape') {
+        popup.classList.remove('show');
+        return;
+      }
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        pickCandidateOnPage(activeIdx);
+        return;
+      }
+    }
+    if (e.key === 'Enter') {
+      var b = inp.closest('.input-check').querySelector('.btn-primary');
+      if (b) b.click();
+    }
+  });
+
+  inp.addEventListener('blur', function () {
+    setTimeout(function () { popup.classList.remove('show'); }, 180);
+  });
+  inp.addEventListener('focus', function () {
+    updateCandidates();
+  });
+}
+
+// ====== Hanzi Writer: Xem nét + Tập viết ======
+var writers = {}, modeByBox = {}, loopTimers = {};
+var BOXES = [{"box": "stroke-d21w0c0", "char": "电"}, {"box": "stroke-d21w0c1", "char": "子"}, {"box": "stroke-d21w0c2", "char": "书"}, {"box": "stroke-d21w1c0", "char": "洞"}, {"box": "stroke-d21w2c0", "char": "发"}, {"box": "stroke-d21w2c1", "char": "展"}, {"box": "stroke-d21w3c0", "char": "好"}, {"box": "stroke-d21w3c1", "char": "处"}, {"box": "stroke-d21w4c0", "char": "画"}, {"box": "stroke-d21w4c1", "char": "册"}];
+BOXES.forEach(function (b) {
+  modeByBox[b.box] = 'anim';
+  var w = HanziWriter.create(b.box, b.char, {
+    width: 146, height: 146, padding: 8, showOutline: true, outlineColor: '#cbd5e1',
+    strokeColor: '#171c26', highlightColor: '#dc2626', drawingColor: '#2563eb', drawingWidth: 20,
+    strokeAnimationSpeed: 1, delayBetweenStrokes: 240, showHintAfterMisses: 1
+  });
+  writers[b.box] = w; runAnimLoop(b.box, b.char);
+});
+function runAnimLoop(boxId, ch) {
+  if (modeByBox[boxId] !== 'anim') return;
+  clearTimeout(loopTimers[boxId]);
+  writers[boxId].animateCharacter().then(function () {
+    if (modeByBox[boxId] !== 'anim') return;
+    loopTimers[boxId] = setTimeout(function () { runAnimLoop(boxId, ch); }, 900);
+  });
+}
+function setMode(boxId, ch, mode, btn) {
+  var parent = btn.parentElement;
+  Array.from(parent.children).forEach(function (b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  modeByBox[boxId] = mode; clearTimeout(loopTimers[boxId]);
+  var boxEl = document.getElementById(boxId), statusEl = document.getElementById('status-' + boxId);
+  if (mode === 'anim') {
+    boxEl.classList.remove('quiz-active'); statusEl.style.color = '#6b7280'; statusEl.textContent = 'Đang chạy nét mẫu';
+    writers[boxId].cancelQuiz(); writers[boxId].showCharacter(); runAnimLoop(boxId, ch);
+  } else {
+    boxEl.classList.add('quiz-active'); statusEl.style.color = '#2563eb'; statusEl.textContent = '✍️ Kéo chuột/ngón tay viết nét 1...';
+    writers[boxId].hideCharacter(); writers[boxId].showOutline();
+    writers[boxId].quiz({
+      onMistake: function (sd) { statusEl.style.color = '#dc2626'; statusEl.textContent = 'Sai nét ' + (sd.strokeNum + 1) + ', nhìn gợi ý đỏ nhé!'; },
+      onCorrectStroke: function (sd) { statusEl.style.color = '#2563eb'; statusEl.textContent = 'Đúng nét ' + (sd.strokeNum + 1) + '! Còn ' + sd.strokesRemaining + ' nét'; },
+      onComplete: function (sum) { statusEl.style.color = '#15803d'; statusEl.textContent = '🎉 Tuyệt vời! (Sai ' + sum.totalMistakes + ' lần) - Bấm Xem nét để xem lại'; speak(ch); }
+    });
+  }
+}
+
+// ====== Điền chữ (Ôn nhanh + Tự kiểm tra) ======
+function paintInput(box, okState) {
+  var input = box.querySelector('input'), fb = box.querySelector('.feedback');
+  if (okState) { fb.textContent = '✓ Chính xác!'; fb.className = 'feedback ok'; input.style.borderColor = '#16a34a'; }
+  else { fb.textContent = '✗ Chưa đúng, thử lại!'; fb.className = 'feedback err'; input.style.borderColor = '#dc2626'; }
+}
+function checkInput(btn) {
+  var box = btn.closest('.q-item'), expected = box.getAttribute('data-ans').trim(), input = box.querySelector('input');
+  var trailing = input.value.match(/([a-zA-Z']+)$/);
+  if (state.imeOn && trailing) {
+    var cands = getLocalCandidates(trailing[1]);
+    if (cands.length) {
+      input.value = input.value.slice(0, input.value.length - trailing[1].length) + cands[0];
+    }
+  }
+  state.inputs[box.id] = input.value;
+  if (input.value.trim() === expected) { paintInput(box, true); speak(expected); markDone(box.id); }
+  else { paintInput(box, false); recordWrong(box.id); }
+  save();
+}
+
+document.querySelectorAll('.q-item input').forEach(attachPinyinIME);
+
+// ====== Trắc nghiệm (Nghe / Ngữ pháp / Đọc hiểu / Pinyin) ======
+function checkMC(btn, isCorrect, taskId, expl, speakText) {
+  var box = document.getElementById(taskId), fb = box.querySelector('.feedback');
+  var btns = Array.from(box.querySelectorAll('.mc-btn'));
+  btns.forEach(function (b) { b.classList.remove('correct', 'wrong'); });
+  state.mc[taskId] = { idx: btns.indexOf(btn), correct: !!isCorrect };
+  if (isCorrect) {
+    btn.classList.add('correct'); fb.className = 'feedback ok'; fb.textContent = expl || '✓ Chính xác!';
+    var rev = box.querySelector('.reveal'); if (rev) rev.style.display = 'block';
+    if (speakText) speak(speakText);
+    markDone(taskId);
+  } else {
+    btn.classList.add('wrong'); fb.className = 'feedback err'; fb.textContent = expl || '✗ Chưa đúng, thử lại nhé!';
+    recordWrong(taskId);
+  }
+  save();
+}
+
+// ====== Ghép cặp ======
+var matchPairs = [
+  {
+    "id": "m1",
+    "zh": "电子书",
+    "vi": "diànzǐshū — sách điện tử"
+  },
+  {
+    "id": "m2",
+    "zh": "洞洞书",
+    "vi": "dòngdòngshū — sách lỗ (sách đục lỗ cho trẻ em)"
+  },
+  {
+    "id": "m3",
+    "zh": "发展",
+    "vi": "fāzhǎn — phát triển"
+  },
+  {
+    "id": "m4",
+    "zh": "好处",
+    "vi": "hǎochù — lợi ích, cái hay"
+  },
+  {
+    "id": "m5",
+    "zh": "画册",
+    "vi": "huàcè — tập tranh, album tranh"
+  }
+];
+var leftOrder = ["m1", "m4", "m2", "m3", "m5"]; var rightOrder = ["m4", "m2", "m5", "m3", "m1"];
+var selectedLeft = null, selectedRight = null;
+function pairById(id) { return matchPairs.filter(function (p) { return p.id === id; })[0]; }
+function initMatching() {
+  var leftCol = document.getElementById('match-left'), rightCol = document.getElementById('match-right');
+  leftOrder.forEach(function (id) { var item = pairById(id); var el = document.createElement('div'); el.className = 'match-card'; el.textContent = item.zh; el.dataset.id = item.id; el.onclick = function () { selectMatch(el, 'left', item.zh); }; leftCol.appendChild(el); });
+  rightOrder.forEach(function (id) { var item = pairById(id); var el = document.createElement('div'); el.className = 'match-card'; el.textContent = item.vi; el.dataset.id = item.id; el.onclick = function () { selectMatch(el, 'right'); }; rightCol.appendChild(el); });
+}
+function selectMatch(el, side, zhSpeak) {
+  if (el.classList.contains('matched')) return;
+  if (zhSpeak) speak(zhSpeak);
+  if (side === 'left') { if (selectedLeft) selectedLeft.classList.remove('selected'); selectedLeft = el; el.classList.add('selected'); }
+  else { if (selectedRight) selectedRight.classList.remove('selected'); selectedRight = el; el.classList.add('selected'); }
+  if (selectedLeft && selectedRight) {
+    var l = selectedLeft, r = selectedRight; selectedLeft = null; selectedRight = null;
+    if (l.dataset.id === r.dataset.id) {
+      l.classList.remove('selected'); r.classList.remove('selected'); l.classList.add('matched'); r.classList.add('matched');
+      if (state.matched.indexOf(l.dataset.id) < 0) state.matched.push(l.dataset.id);
+      markDone('match-' + l.dataset.id);
+      if (state.matched.length === matchPairs.length) { var fb = document.getElementById('match-feedback'); fb.className = 'feedback ok'; fb.textContent = '🎉 Đã ghép đúng toàn bộ 5 từ!'; }
+    } else {
+      recordWrong('match-' + l.dataset.id);
+      l.classList.add('wrong-flash'); r.classList.add('wrong-flash');
+      setTimeout(function () { l.classList.remove('selected', 'wrong-flash'); r.classList.remove('selected', 'wrong-flash'); }, 450);
+    }
+    save();
+  }
+}
+
+// ====== Đoạn văn điền từ ======
+function checkCloze() {
+  var selects = document.querySelectorAll('#cloze-box .cloze-select'), allOk = true;
+  selects.forEach(function (sel, i) {
+    state.selects[i] = sel.value;
+    if (sel.value === sel.getAttribute('data-ans')) { sel.style.borderColor = '#16a34a'; sel.style.backgroundColor = '#dcfce7'; }
+    else { sel.style.borderColor = '#dc2626'; sel.style.backgroundColor = '#fee2e2'; allOk = false; }
+  });
+  var fb = document.getElementById('cloze-fb');
+  if (allOk) { fb.className = 'feedback ok'; fb.textContent = '✓ Hoàn hảo! Cả 5 từ đều khớp ngữ cảnh.'; markDone('cloze-task'); }
+  else { fb.className = 'feedback err'; fb.textContent = '✗ Có chỗ trống chưa đúng (ô màu đỏ), hãy kiểm tra lại!'; recordWrong('cloze-task'); }
+  save();
+}
+document.querySelectorAll('#cloze-box .cloze-select').forEach(function (sel, i) {
+  sel.addEventListener('change', function () { state.selects[i] = sel.value; save(); });
+});
+
+// ====== Sắp xếp câu ======
+function makeTile(w, box) {
+  var tile = document.createElement('span'); tile.className = 'tile'; tile.textContent = w;
+  tile.onclick = function () {
+    var bank = box.querySelector('.word-bank'), zone = box.querySelector('.answer-zone');
+    if (tile.parentElement === bank) zone.appendChild(tile); else bank.appendChild(tile);
+    saveScramble(box);
+  };
+  return tile;
+}
+function saveScramble(box) {
+  state.scr[box.id] = Array.from(box.querySelector('.answer-zone').children).map(function (el) { return el.textContent; });
+  save();
+}
+function renderScramble(box) {
+  var bank = box.querySelector('.word-bank'), zone = box.querySelector('.answer-zone'), fb = box.querySelector('.feedback');
+  bank.innerHTML = ''; zone.innerHTML = ''; fb.textContent = '';
+  var words = bank.getAttribute('data-words').split('|');
+  var placed = (state.scr[box.id] || []).slice();
+  var remaining = words.slice();
+  placed.forEach(function (w) { var i = remaining.indexOf(w); if (i >= 0) { remaining.splice(i, 1); zone.appendChild(makeTile(w, box)); } });
+  remaining.forEach(function (w) { bank.appendChild(makeTile(w, box)); });
+}
+function resetScramble(btn) { var box = btn.closest('.scramble-box'); state.scr[box.id] = []; save(); renderScramble(box); }
+function checkScramble(btn) {
+  var box = btn.closest('.scramble-box'), target = box.getAttribute('data-target');
+  var zone = box.querySelector('.answer-zone'), fb = box.querySelector('.feedback');
+  var current = Array.from(zone.children).map(function (el) { return el.textContent; }).join('');
+  saveScramble(box);
+  if (current === target) { fb.textContent = '✓ Chuẩn ngữ pháp!'; fb.className = 'feedback ok'; speak(target); markDone(box.id); }
+  else { fb.textContent = '✗ Trật tự từ chưa đúng, thử xếp lại nhé!'; fb.className = 'feedback err'; recordWrong(box.id); }
+}
+
+// ====== Tổng kết / chép kết quả ======
+function copySummary() {
+  var ids = Object.keys(state.wrong);
+  var lines = ['PHIẾU BÀI TẬP HSK 3 — 05/11/2026 (Bài 10)', 'Đúng ' + doneCount() + ' / ' + TOTAL_TASKS + ' mục.'];
+  if (ids.length) { lines.push('Câu cần ôn lại:'); ids.forEach(function (id) { lines.push('- ' + ITEM_INFO[id][0] + ' → đáp án: ' + ITEM_INFO[id][1]); }); }
+  else lines.push('Không có câu sai nào. 🎉');
+  var text = lines.join('\n'), fb = document.getElementById('copy-fb');
+  function done() { fb.className = 'feedback ok'; fb.textContent = '✓ Đã chép! Anh dán gửi em qua WhatsApp nhé.'; }
+  if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, function () { fallback(); }); } else fallback();
+  function fallback() { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) { fb.className = 'feedback err'; fb.textContent = 'Không chép tự động được, anh mở Tổng kết xem trực tiếp nhé.'; } document.body.removeChild(ta); }
+}
+
+// ====== Khôi phục trạng thái đã lưu ======
+function restore() {
+  syncIMEUI();
+  document.querySelectorAll('.q-item').forEach(function (box) {
+    if (!box.id) return;
+    var input = box.querySelector('input');
+    if (input && state.inputs[box.id] != null) { input.value = state.inputs[box.id]; if (state.done[box.id]) paintInput(box, true); }
+  });
+  document.querySelectorAll('#cloze-box .cloze-select').forEach(function (sel, i) { if (state.selects[i]) sel.value = state.selects[i]; });
+  if (state.done['cloze-task']) { var fb = document.getElementById('cloze-fb'); fb.className = 'feedback ok'; fb.textContent = '✓ Hoàn hảo! Cả 5 từ đều khớp ngữ cảnh.'; document.querySelectorAll('#cloze-box .cloze-select').forEach(function (sel) { sel.style.borderColor = '#16a34a'; sel.style.backgroundColor = '#dcfce7'; }); }
+  Object.keys(state.mc).forEach(function (id) {
+    var box = document.getElementById(id); if (!box) return;
+    var rec = state.mc[id], btns = box.querySelectorAll('.mc-btn'), btn = btns[rec.idx]; if (!btn) return;
+    if (rec.correct) { btn.classList.add('correct'); var fb = box.querySelector('.feedback'); fb.className = 'feedback ok'; fb.textContent = '✓ Đã trả lời đúng.'; var rev = box.querySelector('.reveal'); if (rev) rev.style.display = 'block'; }
+    else btn.classList.add('wrong');
+  });
+  state.matched.forEach(function (id) {
+    document.querySelectorAll('.match-card').forEach(function (el) { if (el.dataset.id === id) el.classList.add('matched'); });
+  });
+  if (state.matched.length === matchPairs.length) { var mfb = document.getElementById('match-feedback'); mfb.className = 'feedback ok'; mfb.textContent = '🎉 Đã ghép đúng toàn bộ 5 từ!'; }
+  document.querySelectorAll('.scramble-box').forEach(function (box) {
+    renderScramble(box);
+    if (state.done[box.id]) { var fb = box.querySelector('.feedback'); fb.textContent = '✓ Chuẩn ngữ pháp!'; fb.className = 'feedback ok'; }
+  });
+  updateProgress(); renderSummary();
+}
+initMatching();
+restore();
+
+</script>
+<script>
+// ====== Flashcard ôn tập (mọi từ đã học các ngày trước; chiều thẻ ngẫu nhiên) ======
+var FLASH_DATA = [{"word": "健身房", "pinyin": "jiànshēnfáng", "hanviet": "kiện thân phòng", "meaning": "phòng tập thể dục"}, {"word": "教练", "pinyin": "jiàoliàn", "hanviet": "giáo luyện", "meaning": "huấn luyện viên"}, {"word": "接球", "pinyin": "jiēqiú", "hanviet": "tiếp cầu", "meaning": "đón bóng, bắt bóng"}, {"word": "精神", "pinyin": "jīngshen", "hanviet": "tinh thần", "meaning": "tinh thần"}, {"word": "量", "pinyin": "liàng", "hanviet": "lượng", "meaning": "lượng, số lượng"}, {"word": "马拉松", "pinyin": "mǎlāsōng", "hanviet": "mã lạp tùng", "meaning": "chạy marathon"}, {"word": "爬山", "pinyin": "páshān", "hanviet": "ba sơn", "meaning": "leo núi"}, {"word": "潜水", "pinyin": "qiánshuǐ", "hanviet": "tiềm thủy", "meaning": "lặn"}, {"word": "却", "pinyin": "què", "hanviet": "khước", "meaning": "nhưng, lại (ngược lại)"}, {"word": "热门", "pinyin": "rèmén", "hanviet": "nhiệt môn", "meaning": "được ưa chuộng, hot"}, {"word": "太极拳", "pinyin": "tàijíquán", "hanviet": "thái cực quyền", "meaning": "Thái cực quyền"}, {"word": "天才", "pinyin": "tiāncái", "hanviet": "thiên tài", "meaning": "thiên tài"}, {"word": "网球", "pinyin": "wǎngqiú", "hanviet": "võng cầu", "meaning": "quần vợt, tennis"}, {"word": "相反", "pinyin": "xiāngfǎn", "hanviet": "tương phản", "meaning": "ngược lại, trái ngược"}, {"word": "优雅", "pinyin": "yōuyǎ", "hanviet": "ưu nhã", "meaning": "tao nhã, thanh lịch"}, {"word": "重视", "pinyin": "zhòngshì", "hanviet": "trọng thị", "meaning": "coi trọng"}, {"word": "专心", "pinyin": "zhuānxīn", "hanviet": "chuyên tâm", "meaning": "chuyên tâm, tập trung"}, {"word": "装备", "pinyin": "zhuāngbèi", "hanviet": "trang bị", "meaning": "trang bị, thiết bị"}, {"word": "必需品", "pinyin": "bìxūpǐn", "hanviet": "tất nhu phẩm", "meaning": "đồ dùng thiết yếu"}, {"word": "电子商务", "pinyin": "diànzǐshāngwù", "hanviet": "điện tử thương vụ", "meaning": "thương mại điện tử"}];
+var flashDeck = [], flashIdx = 0;
+function flashShuffleDeck() {
+  flashDeck = FLASH_DATA.map(function (w) { return { w: w, hanziFront: Math.random() < 0.5 }; });
+  for (var i = flashDeck.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = flashDeck[i]; flashDeck[i] = flashDeck[j]; flashDeck[j] = t; }
+  flashIdx = 0;
+}
+function flashRender() {
+  var wrap = document.getElementById('flash-wrap');
+  if (!wrap) return;
+  if (!FLASH_DATA.length) { wrap.style.display = 'none'; return; }
+  var cur = flashDeck[flashIdx], w = cur.w;
+  var front = document.getElementById('flash-front'), back = document.getElementById('flash-back');
+  if (cur.hanziFront) {
+    front.innerHTML = '<div class="flash-tag">Chữ Hán</div><div class="flash-hanzi">' + w.word + '</div><div class="flash-sub">Chạm giữa để lật · góc trái/phải để chuyển thẻ</div>';
+    back.innerHTML = '<div class="flash-tag">Nghĩa</div><div class="flash-meaning">' + w.meaning + '</div><div class="flash-sub">' + w.pinyin + ' · Hán Việt: ' + w.hanviet + '</div>';
+  } else {
+    front.innerHTML = '<div class="flash-tag">Nghĩa tiếng Việt</div><div class="flash-meaning">' + w.meaning + '</div><div class="flash-sub">Chạm giữa để lật · góc trái/phải để chuyển thẻ</div>';
+    back.innerHTML = '<div class="flash-tag">Chữ Hán</div><div class="flash-hanzi">' + w.word + '</div><div class="flash-sub">' + w.pinyin + ' · Hán Việt: ' + w.hanviet + '</div>';
+  }
+  document.getElementById('flash-card').classList.remove('flipped');
+  document.getElementById('flash-count').textContent = 'Thẻ ' + (flashIdx + 1) + ' / ' + flashDeck.length;
+}
+function flashFlip() { var c = document.getElementById('flash-card'); if (c) c.classList.toggle('flipped'); }
+function flashTap(e) {
+  var c = document.getElementById('flash-card');
+  if (!c) return;
+  if (!e || typeof e.clientX !== 'number') { flashFlip(); return; }
+  var r = c.getBoundingClientRect();
+  var x = (e.clientX - r.left) / r.width;
+  if (x < 0.25) { flashPrev(); }
+  else if (x > 0.75) { flashNext(); }
+  else { flashFlip(); }
+}
+function flashNext() { if (flashIdx < flashDeck.length - 1) { flashIdx++; flashRender(); } }
+function flashPrev() { if (flashIdx > 0) { flashIdx--; flashRender(); } }
+function flashReshuffle() { flashShuffleDeck(); flashRender(); }
+
+flashShuffleDeck(); flashRender();
+</script>
+</body>
+</html>
