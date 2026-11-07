@@ -239,7 +239,7 @@ img, svg { max-width: 100%; }
   <div class="progress-bar">
     <span>🎯 Tiến độ:</span>
     <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
-    <b id="prog-text">0 / 32</b>
+    <b id="prog-text">0 / 33</b>
     <button class="btn-sm active" id="ime-toggle-btn" onclick="toggleIME()" title="Bật/tắt chế độ gõ Pinyin trực tiếp">⌨️ Gõ Pinyin: BẬT</button>
     <button class="btn-sm" onclick="resetAll()" title="Xoá tiến độ làm lại">↺</button>
   </div>
@@ -684,6 +684,12 @@ img, svg { max-width: 100%; }
 <div class="word-bank" data-words="，|我的|明天|因为|心情|我的|行李|鞋子|去|旅游|里|有|很|和|我们|好|资料|，|。"></div>
 <div class="input-check"><button class="btn-primary" onclick="checkScramble(this)">Kiểm tra câu</button><button class="btn-sm" onclick="resetScramble(this)">Làm lại</button><span class="feedback"></span></div>
 </div>
+<div class="scramble-box" id="scr-4" data-target="我的行李里有鞋子，除此之外，还有资料和毛巾。">
+<div><b>Câu 4:</b> Trong hành lý của tôi có giày, ngoài ra còn có tài liệu và khăn.</div>
+<div class="answer-zone"></div>
+<div class="word-bank" data-words="还|和|之|外|资料|。|我的|此|毛巾|鞋子|里|有|，|有|行李|，|除"></div>
+<div class="input-check"><button class="btn-primary" onclick="checkScramble(this)">Kiểm tra câu</button><button class="btn-sm" onclick="resetScramble(this)">Làm lại</button><span class="feedback"></span></div>
+</div>
 </div>
 <div class="card">
 <h2>📚 Bài 7: Đọc hiểu đoạn văn – Chọn đáp án <span class="badge">Đọc hiểu Trung cấp 3 · Tổng kết Bài 1</span></h2>
@@ -848,7 +854,7 @@ img, svg { max-width: 100%; }
 </div>
 <div class="card">
 <h2>📋 Tổng kết để gửi em <span class="badge">Câu cần ôn lại</span></h2>
-<div>Đúng <b id="sum-score">0 / 32</b> mục.</div>
+<div>Đúng <b id="sum-score">0 / 33</b> mục.</div>
 <ul class="summary-list" id="wrong-list"><li>Chưa có câu sai nào — anh làm đến đâu, câu sai sẽ tự gom vào đây.</li></ul>
 <div class="input-check">
 <button class="btn-primary" onclick="copySummary()">📋 Chép kết quả</button>
@@ -879,7 +885,7 @@ img, svg { max-width: 100%; }
 <script>
 // ====== Trạng thái + lưu trữ (localStorage) ======
 var LS_KEY = 'trungcap3-Day-05';
-var TOTAL_TASKS = 32;
+var TOTAL_TASKS = 33;
 var ITEM_INFO = {
   "rev-1": [
     "Ôn nhanh 1 (随身)",
@@ -972,6 +978,10 @@ var ITEM_INFO = {
   "scr-3": [
     "Sắp xếp câu 3",
     "明天我们去旅游，我的心情很好，因为我的行李里有鞋子和资料。"
+  ],
+  "scr-4": [
+    "Sắp xếp câu 4",
+    "我的行李里有鞋子，除此之外，还有资料和毛巾。"
   ],
   "read-1": [
     "Đọc hiểu câu 1",
