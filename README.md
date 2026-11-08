@@ -25,7 +25,7 @@ Bộ bài học Trung cấp 3: 48 ngày, mỗi ngày 5 từ mới, học từ B�
 
 ## Bổ sung (học sau khi xong 48 ngày)
 
-- **📖 Ôn tập Ngữ pháp Trung cấp 3 (40 điểm + 33 bài tập + mục Động từ ly hợp):** [Bai-Hoc-On-Ngu-Phap-TrungCap3.html](https://vinhnd2026.github.io/TrungCap3/Bai-Hoc-On-Ngu-Phap-TrungCap3.html) — pinyin hiện sẵn trong mọi ví dụ.
+- **📖 Ôn tập Ngữ pháp Trung cấp 3 (40 điểm + 33 bài tập):** [Bai-Hoc-On-Ngu-Phap-TrungCap3.html](https://vinhnd2026.github.io/TrungCap3/Bai-Hoc-On-Ngu-Phap-TrungCap3.html) — pinyin hiện sẵn trong mọi ví dụ; kèm mục Động từ ly hợp （离合动词） với ví dụ dạng tách cho từng động từ.
 - **📚 Bài Tổng Kết Trung cấp 3:** [Bai-Hoc-Tong-Ket-TrungCap3.html](https://vinhnd2026.github.io/TrungCap3/Bai-Hoc-Tong-Ket-TrungCap3.html) — flashcard toàn bộ từ, bảng từ vựng 10 bài, 8 bài tập tổng kết (62 bài tập), truyện tổng kết dùng đủ toàn bộ từ vựng.
 
 Bấm vào từng ngày bên dưới để mở thẳng trang bài học của ngày đó.
@@ -79,7 +79,7 @@ Bấm vào từng ngày bên dưới để mở thẳng trang bài học của n
 | Day 44 | Bài 10 | 氛围, 风景, 感受, 古代, 古乐 | [Mở bài học](https://vinhnd2026.github.io/TrungCap3/Day-44.html) |
 | Day 45 | Bài 10 | 建筑, 教育, 卷, 科技, 恋人 | [Mở bài học](https://vinhnd2026.github.io/TrungCap3/Day-45.html) |
 | Day 46 | Bài 10 | 旅行团, 商人, 少数民族, 说到, 伟大 | [Mở bài học](https://vinhnd2026.github.io/TrungCap3/Day-46.html) |
-| Day 47 | Bài 10 | 文字, 现代, 行, 形状, 乐 | [Mở bài học](https://vinhnd2026.github.io/TrungCap3/Day-47.html) |
+| Day 47 | Bài 10 | 文字, 现代, 行, 形状, 岳 | [Mở bài học](https://vinhnd2026.github.io/TrungCap3/Day-47.html) |
 | Day 48 | Bài 10 | 自由行 | [Mở bài học](https://vinhnd2026.github.io/TrungCap3/Day-48.html) |
 
 ## Tài liệu kèm theo
